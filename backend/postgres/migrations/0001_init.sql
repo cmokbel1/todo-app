@@ -10,33 +10,35 @@ CREATE INDEX sessions_expiry_idx ON sessions (expiry);
 
 CREATE TABLE IF NOT EXISTS users
 (
-    id           BIGSERIAL PRIMARY KEY NOT NULL,
-    name         TEXT                  NOT NULL,
-    email        TEXT,
-    api_key      TEXT                  NOT NULL,
-    created_at   TIMESTAMPTZ           NOT NULL,
-    updated_at   TIMESTAMPTZ           NOT NULL
+    id         BIGSERIAL PRIMARY KEY NOT NULL,
+    name       TEXT                  NOT NULL,
+    email      TEXT,
+    created_at TIMESTAMPTZ           NOT NULL,
+    updated_at TIMESTAMPTZ           NOT NULL
 );
 
 CREATE INDEX users_name_idx ON users (name);
 CREATE UNIQUE INDEX users_name_key ON users (LOWER(name));
 CREATE INDEX users_email_idx ON users (email);
 CREATE UNIQUE INDEX users_email_key ON users (LOWER(email));
-CREATE UNIQUE INDEX users_api_key_idx ON users (api_key);
 
--- user_app_credentials represent the list of app user credentials (when auth.source == "app")
-CREATE TABLE IF NOT EXISTS user_app_credentials
+-- user_credentials represent the list of app user credentials (when auth.source == "app")
+CREATE TABLE IF NOT EXISTS user_credentials
 (
     id         BIGSERIAL PRIMARY KEY NOT NULL,
     user_id    BIGINT REFERENCES users (id) ON DELETE CASCADE,
     name       TEXT                  NOT NULL,
     password   TEXT                  NOT NULL,
+    -- api_key can be used to auth in lieu of a name+password combination
+    api_key    TEXT                  NOT NULL,
+
     created_at TIMESTAMPTZ           NOT NULL,
     updated_at TIMESTAMPTZ           NOT NULL
 );
 
-CREATE INDEX user_app_credentials_name_idx ON user_app_credentials (name);
-CREATE UNIQUE INDEX user_app_credentials_name_key ON user_app_credentials (LOWER(name));
+CREATE INDEX user_app_credentials_name_idx ON user_credentials (name);
+CREATE UNIQUE INDEX user_app_credentials_name_key ON user_credentials (LOWER(name));
+CREATE UNIQUE INDEX users_api_key_idx ON user_credentials (api_key);
 
 CREATE TABLE IF NOT EXISTS auths
 (
@@ -53,8 +55,8 @@ CREATE TABLE IF NOT EXISTS auths
     updated_at    TIMESTAMPTZ           NOT NULL
 );
 
-CREATE UNIQUE INDEX auths_user_id_source ON auths (user_id, source); -- one source per user
-CREATE UNIQUE INDEX auths_source_source_id ON auths (source, source_id); -- one auth per source user
+CREATE UNIQUE INDEX auths_user_id_source_key ON auths (user_id, source); -- one source per user
+CREATE UNIQUE INDEX auths_source_source_id_key ON auths (source, source_id); -- one auth per source user
 
 CREATE TABLE IF NOT EXISTS lists
 (
