@@ -1,6 +1,6 @@
 # todo-app
 
-A quick blurb about the app, an overview of the features, etc.
+A todo tracker for learning purposes.
 
 ## develop
 
@@ -18,7 +18,7 @@ Something something requirements, instructions on how to develop.
 
 ### backend
 
-Go **1.18+** and **docker** is required to run and develop the backend.
+Go **1.18+** and **docker** is required to run and develop the backend. 
 
 Go code is formatted using **goimports**, to install it run the following command:
 
@@ -26,7 +26,15 @@ Go code is formatted using **goimports**, to install it run the following comman
 $ go install golang.org/x/tools/cmd/goimports@latest
 ```
 
-To run the backend code, use the following command:
+To run the backend code use the script at **dev/start_backend.sh**.  
+This will create a Postgres Docker container and run migrations, creating initial tables and entering any seed data.
+
+```shell
+# create a Docker container for Postgres, run the backend and all migrations.
+./dev/start_backend.sh
+```
+
+Alternatively, to run the backend code with a custom configuration use the following command:
 
 ```shell
 $ go run backend/cmd/todo-server/*.go --config /path/to/config.json
