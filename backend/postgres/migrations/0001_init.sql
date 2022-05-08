@@ -13,6 +13,8 @@ CREATE TABLE IF NOT EXISTS users
     id         BIGSERIAL PRIMARY KEY NOT NULL,
     name       TEXT                  NOT NULL,
     email      TEXT,
+    -- api_key can be used to auth in lieu of a name+password combination
+    api_key    TEXT                  NOT NULL,
     created_at TIMESTAMPTZ           NOT NULL,
     updated_at TIMESTAMPTZ           NOT NULL
 );
@@ -21,34 +23,17 @@ CREATE INDEX users_name_idx ON users (name);
 CREATE UNIQUE INDEX users_name_key ON users (LOWER(name));
 CREATE INDEX users_email_idx ON users (email);
 CREATE UNIQUE INDEX users_email_key ON users (LOWER(email));
-
--- user_credentials represent the list of app user credentials (when auth.source == "app")
-CREATE TABLE IF NOT EXISTS user_credentials
-(
-    id         BIGSERIAL PRIMARY KEY NOT NULL,
-    user_id    BIGINT REFERENCES users (id) ON DELETE CASCADE,
-    name       TEXT                  NOT NULL,
-    password   TEXT                  NOT NULL,
-    -- api_key can be used to auth in lieu of a name+password combination
-    api_key    TEXT                  NOT NULL,
-
-    created_at TIMESTAMPTZ           NOT NULL,
-    updated_at TIMESTAMPTZ           NOT NULL
-);
-
-CREATE INDEX user_app_credentials_name_idx ON user_credentials (name);
-CREATE UNIQUE INDEX user_app_credentials_name_key ON user_credentials (LOWER(name));
-CREATE UNIQUE INDEX users_api_key_idx ON user_credentials (api_key);
+CREATE UNIQUE INDEX users_apikey_key ON users (api_key);
 
 CREATE TABLE IF NOT EXISTS auths
 (
     id            BIGSERIAL PRIMARY KEY NOT NULL,
     user_id       BIGINT REFERENCES users (id) ON DELETE CASCADE,
-    source        TEXT                  NOT NULL, -- the source of the auth, one of: "app", "github"
+    source        TEXT                  NOT NULL, -- the source of the auth, one of: "github"
     source_id     TEXT                  NOT NULL, -- the id of the user at the source
 
-    access_token  TEXT                  NOT NULL, -- only set when auth created by OAuth
-    refresh_token TEXT                  NOT NULL, -- only set when auth created by OAuth
+    access_token  TEXT                  NOT NULL,
+    refresh_token TEXT                  NOT NULL,
 
     expiry        TIMESTAMPTZ           NOT NULL, -- the time at which this auth context should be considered invalid
     created_at    TIMESTAMPTZ           NOT NULL,
@@ -84,7 +69,6 @@ CREATE TABLE IF NOT EXISTS items
 
 DROP TABLE IF EXISTS items;
 DROP TABLE IF EXISTS lists;
-DROP TABLE IF EXISTS user_app_credentials;
 DROP TABLE IF EXISTS auths;
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS sessions;

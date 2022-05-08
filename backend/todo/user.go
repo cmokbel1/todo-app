@@ -12,9 +12,14 @@ type User struct {
 	Name string `json:"name"`
 	// Email represents the email address associated with this User.
 	Email *string `json:"email,omitempty"`
+	// APIKey for bypassing normal auth flow access.
+	APIKey string `json:"-"`
 
 	CreatedAt time.Time `json:"createdAt"`
 	UpdatedAt time.Time `json:"updatedAt"`
+
+	// Auths is a current list of associated auths
+	Auths []*Auth `json:"auths"`
 }
 
 func (u *User) Validate() error {
@@ -43,9 +48,10 @@ type UserService interface {
 
 type UserFilter struct {
 	// Filter fields
-	ID    *int    `json:"id"`
-	Name  *string `json:"name"`
-	Email *string `json:"email"`
+	ID     *int    `json:"id"`
+	Name   *string `json:"name"`
+	Email  *string `json:"email"`
+	APIKey *string `json:"apiKey"`
 
 	// Range restrictions
 	Offset int `json:"offset"`
@@ -53,66 +59,16 @@ type UserFilter struct {
 }
 
 type UserUpdate struct {
-	Name        *string `json:"name"`
-	Email       *string `json:"email"`
-	DisplayName *string `json:"displayName"`
-	Password    *string `json:"password"`
+	Name  *string `json:"name"`
+	Email *string `json:"email"`
 }
 
 func (upd UserUpdate) Validate() error {
-	if upd.Name == nil &&
-		upd.Email == nil &&
-		upd.DisplayName == nil &&
-		upd.Password == nil {
-		return Err(EINVALID, "one of name, email, password, or display name is required")
+	if upd.Name == nil && upd.Email == nil {
+		return Err(EINVALID, "one of name or email is required")
 	} else if upd.Name != nil && *upd.Name == "" {
 		return Err(EINVALID, "name cannot be empty")
-	} else if upd.DisplayName != nil && *upd.DisplayName == "" {
-		return Err(EINVALID, "display name cannot be empty")
-	} else if upd.Password != nil && *upd.Password == "" {
-		return Err(EINVALID, "password cannot be empty")
 	}
 
 	return nil
-}
-
-type UserCredentials struct {
-	// ID is the unique identifier for this set of credentials.
-	ID int `json:"id"`
-	// UserID is the ID of the User who these credentials belong to.
-	UserID int `json:"userId"`
-	// Name is the login name.
-	Name string `json:"name"`
-	// Password is a hashed password.
-	Password string `json:"password,omitempty"`
-	// APIKey used to impersonate this User when using the CLI, generated randomly when the
-	// user is first created.
-	APIKey string `json:"-"`
-
-	CreatedAt time.Time `json:"createdAt"`
-	UpdatedAt time.Time `json:"updatedAt"`
-}
-
-func (uc *UserCredentials) Validate() error {
-	if uc.ID <= 0 {
-		return Err(EINVALID, "id required")
-	} else if uc.UserID <= 0 {
-		return Err(EINVALID, "user id required")
-	} else if uc.Name == "" {
-		return Err(EINVALID, "name required")
-	} else if uc.Password == "" {
-		return Err(EINVALID, "password required")
-	} else if uc.APIKey == "" {
-		return Err(EINVALID, "api key required")
-	}
-	return nil
-}
-
-type UserCredentialsService interface {
-	// FindByName finds a UserCredentials by name.
-	FindByName(ctx context.Context, name string) (*UserCredentials, error)
-	// FindByUserID finds a UserCredentials by user ID.
-	FindByUserID(ctx context.Context, id string) (*UserCredentials, error)
-	// CreateUserCredentials creates a UserCredentials.
-	CreateUserCredentials(ctx context.Context, uc *UserCredentials) error
 }
