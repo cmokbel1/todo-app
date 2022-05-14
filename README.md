@@ -34,12 +34,22 @@ This will create a Postgres Docker container and run migrations, creating initia
 ./dev/start_backend.sh
 ```
 
-Alternatively, to run the backend code with a custom configuration use the following command:
+To run the backend code with a custom configuration use one of the following commands:
 
 ```shell
 $ go run backend/cmd/todo-server/*.go --config /path/to/config.json
+$ # or use the TODO_CONFIG environment variable
+$ TODO_CONFIG=/path/to/config.json go run backend/cmd/todo-server/*.go
 ```
 
+To run backend tests run one of the following commands:
+
+```shell
+# unit tests with coverage
+$ go test ./backend/... -cover
+# integration tests with coverage (requires running instance of Postgres)
+$ go test ./backend/... -cover -tags integration 
+```
 ## deploy
 
 Something about how to deploy the app

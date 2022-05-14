@@ -100,7 +100,7 @@ func (app *App) ParseFlagsAndLoadConfig(ctx context.Context, args []string) erro
 	var configFile string
 
 	fs := flag.NewFlagSet("todo", flag.ContinueOnError)
-	fs.StringVar(&configFile, "config", os.Getenv("TODO_CONFIG"), "database connection string")
+	fs.StringVar(&configFile, "config", os.Getenv("TODO_CONFIG"), "path to the config file")
 
 	if err := fs.Parse(args); err != nil {
 		return err
