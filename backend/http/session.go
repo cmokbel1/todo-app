@@ -1,7 +1,9 @@
 package http
 
 import (
+	"bytes"
 	"context"
+	"encoding/json"
 	"net/http"
 	"strings"
 	"time"
@@ -16,6 +18,7 @@ func NewSessionManager() *scs.SessionManager {
 	mgr.IdleTimeout = time.Minute * 20
 	mgr.Cookie.Name = "session"
 	mgr.Cookie.Path = "/"
+	mgr.Codec = jsonSessionCodec{}
 	mgr.Cookie.HttpOnly = true
 	return mgr
 }
@@ -59,4 +62,39 @@ func (s *Server) sessionMiddleware(next http.Handler) http.Handler {
 		}
 		next.ServeHTTP(w, r.WithContext(ctx))
 	}))
+}
+
+// jsonSessionCodec is used to serialize the Session object as a JSON.
+type jsonSessionCodec struct{}
+
+func (jsonSessionCodec) Encode(deadline time.Time, values map[string]interface{}) ([]byte, error) {
+	aux := &struct {
+		Values   map[string]interface{} `json:"values"`
+		Deadline time.Time              `json:"deadline"`
+	}{
+		Deadline: deadline,
+		Values:   values,
+	}
+
+	var b bytes.Buffer
+	if err := json.NewEncoder(&b).Encode(&aux); err != nil {
+		return nil, err
+	}
+
+	return b.Bytes(), nil
+}
+
+// Decode converts a byte slice into a session deadline and values.
+func (jsonSessionCodec) Decode(b []byte) (time.Time, map[string]interface{}, error) {
+	aux := &struct {
+		Values   map[string]interface{} `json:"values"`
+		Deadline time.Time              `json:"deadline"`
+	}{}
+
+	r := bytes.NewReader(b)
+	if err := json.NewDecoder(r).Decode(&aux); err != nil {
+		return time.Time{}, nil, err
+	}
+
+	return aux.Deadline, aux.Values, nil
 }
