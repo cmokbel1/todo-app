@@ -5,6 +5,8 @@ go 1.18
 require (
 	github.com/alexedwards/argon2id v0.0.0-20211130144151-3585854a6387
 	github.com/alexedwards/scs/postgresstore v0.0.0-20220216073957-c252878bcf5a
+	github.com/alexedwards/scs/v2 v2.5.0
+	github.com/go-chi/chi v1.5.4
 	github.com/jackc/pgx/v4 v4.16.0
 	github.com/jmoiron/sqlx v1.3.5
 	github.com/pressly/goose/v3 v3.5.3
