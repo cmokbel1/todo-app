@@ -11,6 +11,7 @@ import (
 	"os/signal"
 
 	"github.com/cmokbel1/todo-app/backend/crypto"
+	"github.com/cmokbel1/todo-app/backend/http"
 	"github.com/cmokbel1/todo-app/backend/postgres"
 	"github.com/cmokbel1/todo-app/backend/todo"
 )
@@ -62,16 +63,18 @@ func realMain(logger todo.Logger) int {
 
 func NewApp() *App {
 	return &App{
-		Logger: todo.NewLogger(),
-		DB:     postgres.New(""),
+		Logger:     todo.NewLogger(),
+		DB:         postgres.New(""),
+		HTTPServer: http.NewServer(),
 	}
 }
 
 type App struct {
 	Config Config
 
-	Logger todo.Logger
-	DB     *postgres.DB
+	Logger     todo.Logger
+	HTTPServer *http.Server
+	DB         *postgres.DB
 }
 
 func (app *App) Run(ctx context.Context) error {
@@ -93,6 +96,29 @@ func (app *App) Run(ctx context.Context) error {
 		return fmt.Errorf("failed to migrate db: %v", err)
 	}
 
+	app.HTTPServer.Addr = app.Config.HTTP.Addr
+	app.HTTPServer.APIKey = *app.Config.HTTP.APIKey
+	app.HTTPServer.Domain = app.Config.HTTP.Domain
+	app.HTTPServer.TLS = app.Config.HTTP.TLS
+	app.HTTPServer.Logger = app.Logger
+	app.HTTPServer.ItemListService = postgres.NewItemListService(app.DB)
+	app.HTTPServer.UserService = postgres.NewUserService(app.DB)
+
+	{
+		mgr := http.NewSessionManager()
+		mgr.Store = postgres.NewSessionStore(app.DB)
+		mgr.Cookie.Domain = app.Config.HTTP.Domain
+		mgr.Cookie.Secure = app.Config.HTTP.TLS
+		app.HTTPServer.SessionManager = mgr
+	}
+
+	if err := app.HTTPServer.Listen(); err != nil {
+		return err
+	}
+
+	go func() { http.ListenAndServeDebug() }()
+
+	app.Logger.Infof("server running at %q, debug server running at %q", app.HTTPServer.URL(), "http://localhost:6060")
 	return nil
 }
 
@@ -112,6 +138,12 @@ func (app *App) ParseFlagsAndLoadConfig(ctx context.Context, args []string) erro
 }
 
 func (app *App) Close() error {
+	if app.HTTPServer != nil {
+		if err := app.HTTPServer.Shutdown(); err != nil {
+			return err
+		}
+	}
+
 	if app.DB != nil {
 		if err := app.DB.Close(); err != nil {
 			return err
@@ -128,7 +160,8 @@ type Config struct {
 	} `json:"db"`
 
 	HTTP struct {
-		Addr   string  `json:"addr"`
+		Addr string `json:"addr"`
+		// APIKey is the server's API key to access admin functionality.
 		APIKey *string `json:"api_key,omitempty"`
 		Domain string  `json:"domain"`
 		TLS    bool    `json:"tls"`
