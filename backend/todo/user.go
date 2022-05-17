@@ -2,8 +2,13 @@ package todo
 
 import (
 	"context"
+	"encoding/gob"
 	"time"
 )
+
+func init() {
+	gob.Register(User{})
+}
 
 type User struct {
 	// ID is the unique identifier for this User.
@@ -17,9 +22,6 @@ type User struct {
 
 	CreatedAt time.Time `json:"createdAt"`
 	UpdatedAt time.Time `json:"updatedAt"`
-
-	// Auths is a current list of associated auths
-	Auths []*Auth `json:"auths"`
 }
 
 func (u *User) Validate() error {
