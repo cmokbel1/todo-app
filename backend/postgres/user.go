@@ -141,6 +141,20 @@ func (svc *UserService) FindUserByName(ctx context.Context, name string) (*todo.
 	return user, tx.Commit()
 }
 
+func (svc *UserService) FindUserByAPIKey(ctx context.Context, apiKey string) (*todo.User, error) {
+	tx, err := svc.db.BeginTx(ctx)
+	if err != nil {
+		return nil, err
+	}
+	defer tx.Rollback()
+
+	user, err := findUserByAPIKey(ctx, tx, apiKey)
+	if err != nil {
+		return nil, err
+	}
+	return user, tx.Commit()
+}
+
 func deleteUser(ctx context.Context, tx *Tx, id int) error {
 	result, err := tx.ExecContext(ctx, `DELETE FROM users WHERE id = $1`, id)
 	if err != nil {

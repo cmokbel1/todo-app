@@ -42,6 +42,8 @@ type UserService interface {
 	FindUserByID(ctx context.Context, id int) (*User, error)
 	// FindUserByName finds a User by their Name.
 	FindUserByName(ctx context.Context, name string) (*User, error)
+	// FindUserByAPIKey finds a User by their API key.
+	FindUserByAPIKey(ctx context.Context, apiKey string) (*User, error)
 	// FindUsers finds one or more Users who match the UserFilter.
 	FindUsers(ctx context.Context, f UserFilter) ([]*User, error)
 }
