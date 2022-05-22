@@ -58,7 +58,7 @@ func (s *Server) Listen() (err error) {
 	r.Route("/api", func(r chi.Router) {
 		// TODO(1gm): add these routes when they are created
 		// s.registerTodoRoutes(r)
-		// s.registerUserRoutes(r)
+		s.registerUserRoutes(r)
 		s.registerBuildRoute(r)
 	})
 	r.NotFound(s.notFound)

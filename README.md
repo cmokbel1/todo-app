@@ -42,6 +42,19 @@ $ # or use the TODO_CONFIG environment variable
 $ TODO_CONFIG=/path/to/config.json go run backend/cmd/todo-server/*.go
 ```
 
+#### Creating users
+
+Once the backend is running, use the **apiKey** you set in the config file to create test users. The examples below use
+the default example port and API key.
+
+```shell
+# create a test user named george
+curl -X POST -H "Todo-Api-Key: test" http://localhost:8080/api/users -d '{"name":"george", "email":"george@example.com"}'
+# fetch all users
+curl -H "Todo-Api-Key: test" http://localhost:8080/api/users
+```
+
+#### Tests
 To run backend tests run one of the following commands:
 
 ```shell
