@@ -56,8 +56,7 @@ func (s *Server) Listen() (err error) {
 	r.Use(middleware.StripSlashes)
 
 	r.Route("/api", func(r chi.Router) {
-		// TODO(1gm): add these routes when they are created
-		// s.registerTodoRoutes(r)
+		s.registerTodoRoutes(r)
 		s.registerUserRoutes(r)
 		s.registerBuildRoute(r)
 	})
