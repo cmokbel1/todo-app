@@ -17,7 +17,7 @@ func TestItemListService(t *testing.T) {
 
 	createUser := func(t *testing.T, db *postgres.DB) (context.Context, *todo.User) {
 		t.Helper()
-		user := &todo.User{Name: *randstr(10)}
+		user := &todo.User{Name: *randstr(10), Password: *randstr(10)}
 		s := postgres.NewUserService(db)
 		ctx := context.Background()
 		if err := s.CreateUser(ctx, user); err != nil {

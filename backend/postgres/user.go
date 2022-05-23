@@ -22,6 +22,49 @@ type UserService struct {
 	db *DB
 }
 
+func (svc *UserService) LoginUser(ctx context.Context, user *todo.User) error {
+	tx, err := svc.db.BeginTx(ctx)
+	if err != nil {
+		return err
+	}
+	defer tx.Rollback()
+
+	if err = loginUser(ctx, tx, user); err != nil {
+		return err
+	}
+
+	return tx.Commit()
+}
+
+func loginUser(ctx context.Context, tx *Tx, user *todo.User) error {
+	if user.APIKey != "" {
+		other, err := findUserByAPIKey(ctx, tx, user.APIKey)
+		if err != nil {
+			return todo.Err(todo.EUNAUTHORIZED, "invalid api key")
+		}
+		*user = *other
+		return nil
+	}
+
+	if user.Name == "" || user.Password == "" {
+		return todo.Err(todo.EINVALID, "name and password required")
+	}
+
+	other, err := findUserByName(ctx, tx, user.Name)
+	if err != nil {
+		return err
+	}
+
+	if matches, err := crypto.ComparePasswordAndHash(user.Password, other.Password); err != nil {
+		return todo.Err(todo.EUNAUTHORIZED, "%s", err)
+	} else if !matches {
+		return todo.Err(todo.EUNAUTHORIZED, "password mismatch for user %q", user.Name)
+	}
+
+	*user = *other
+	return nil
+}
+
 func (svc *UserService) CreateUser(ctx context.Context, user *todo.User) error {
 	tx, err := svc.db.BeginTx(ctx)
 	if err != nil {
@@ -42,6 +85,12 @@ func createUser(ctx context.Context, tx *Tx, user *todo.User) (err error) {
 	if user.Name == "" {
 		return todo.Err(todo.EINVALID, "name is required")
 	}
+	if user.Password == "" {
+		return todo.Err(todo.EINVALID, "password is required")
+	}
+	if user.Password, err = crypto.CreateHash(user.Password); err != nil {
+		return err
+	}
 	user.APIKey = crypto.RandomString()
 
 	// create the user if they don't already exist
@@ -53,11 +102,12 @@ func createUser(ctx context.Context, tx *Tx, user *todo.User) (err error) {
 
 	var id int64
 	err = tx.QueryRowContext(ctx, `
-INSERT INTO users (name, email, api_key, created_at, updated_at) 
-VALUES ($1,$2,$3,$4,$5)
+INSERT INTO users (name, email, password, api_key, created_at, updated_at) 
+VALUES ($1,$2,$3,$4,$5,$6)
 RETURNING id`,
 		user.Name,
 		user.Email,
+		user.Password,
 		user.APIKey,
 		user.CreatedAt,
 		user.UpdatedAt).Scan(&id)
@@ -251,7 +301,8 @@ func findUsers(ctx context.Context, tx *Tx, f todo.UserFilter) ([]*todo.User, er
 	SELECT 
 		id,
 		name, 
-		email, 
+		email,
+		password,
 		api_key,
 		created_at, 
 		updated_at
@@ -271,6 +322,7 @@ func findUsers(ctx context.Context, tx *Tx, f todo.UserFilter) ([]*todo.User, er
 			&user.ID,
 			&user.Name,
 			&user.Email,
+			&user.Password,
 			&user.APIKey,
 			(*Time)(&user.CreatedAt),
 			(*Time)(&user.UpdatedAt),

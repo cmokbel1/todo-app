@@ -23,3 +23,6 @@ go.work
 # IDEs
 .idea
 .code
+
+# README example code cookie
+httpcookie

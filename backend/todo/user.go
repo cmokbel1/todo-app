@@ -17,6 +17,8 @@ type User struct {
 	Name string `json:"name"`
 	// Email represents the email address associated with this User.
 	Email *string `json:"email,omitempty"`
+	// Password is the user's hashed password
+	Password string `json:"password,omitempty"`
 	// APIKey for bypassing normal auth flow access.
 	APIKey string `json:"-"`
 
@@ -34,6 +36,9 @@ func (u *User) Validate() error {
 }
 
 type UserService interface {
+	// LoginUser attempts to authenticate the user by username and password or API key. If the login attempt is
+	// successful, all the properties on the User object will be filled out.
+	LoginUser(ctx context.Context, user *User) error
 	// CreateUser creates a User and an attached UserLogin with a random password.
 	CreateUser(ctx context.Context, user *User) error
 	// DeleteUser deletes a User, their UserCredentials and all associated Auths.

@@ -13,6 +13,7 @@ CREATE TABLE IF NOT EXISTS users
     id         BIGSERIAL PRIMARY KEY NOT NULL,
     name       TEXT                  NOT NULL,
     email      TEXT,
+    password   TEXT                  NOT NULL,
     -- api_key can be used to auth in lieu of an identity provider
     api_key    TEXT                  NOT NULL,
     created_at TIMESTAMPTZ           NOT NULL,

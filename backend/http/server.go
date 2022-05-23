@@ -179,10 +179,11 @@ func (s *Server) requireAPIKey(next http.Handler) http.Handler {
 
 func (s *Server) requireNoAuth(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		if user := todo.UserFromContext(r.Context()); user != nil {
+		if user := todo.UserFromContext(r.Context()); user == nil {
 			next.ServeHTTP(w, r)
 			return
 		}
+		s.Logger.Debug("requireNoAuth user should not be authd to access this route")
 		s.error(w, r, todo.Unauthorized)
 		return
 	})
@@ -194,6 +195,7 @@ func (s *Server) requireAuth(next http.Handler) http.Handler {
 			next.ServeHTTP(w, r)
 			return
 		}
+		s.Logger.Debugf("requireAuth user is not authorized")
 		s.error(w, r, todo.Unauthorized)
 		return
 	})

@@ -15,7 +15,61 @@ import (
 
 func newUser() *todo.User {
 	v := *randstr(10)
-	return &todo.User{Name: v}
+	return &todo.User{Name: v, Password: v}
+}
+
+func TestUserService_LoginUser(t *testing.T) {
+	t.Parallel()
+
+	createUser := func(t *testing.T, db *postgres.DB, name string, password string) (context.Context, *todo.User) {
+		t.Helper()
+		user := &todo.User{
+			Name:     name,
+			Password: password,
+		}
+		s := postgres.NewUserService(db)
+		ctx := context.Background()
+		if err := s.CreateUser(ctx, user); err != nil {
+			t.Fatal(err)
+		}
+		return todo.NewContextWithUser(ctx, user), user
+	}
+
+	db := OpenDB(t)
+	s := postgres.NewUserService(db)
+
+	t.Run("SuccessByUsernamePassword", func(t *testing.T) {
+		user := &todo.User{Name: *randstr(10), Password: *randstr(10)}
+		ctx, want := createUser(t, db, user.Name, user.Password)
+		if err := s.LoginUser(ctx, user); err != nil {
+			t.Fatal(err)
+		} else if got := user; !reflect.DeepEqual(got, want) {
+			t.Errorf("want user %v got %v", want, got)
+		}
+	})
+
+	t.Run("SuccessByAPIKey", func(t *testing.T) {
+		ctx, want := createUser(t, db, *randstr(10), *randstr(10))
+		user := &todo.User{APIKey: want.APIKey}
+		if err := s.LoginUser(ctx, user); err != nil {
+			t.Fatal(err)
+		} else if got := user; !reflect.DeepEqual(got, want) {
+			t.Errorf("want user %v got %v", want, got)
+		}
+	})
+
+	t.Run("ErrUnauthorizedAPIKey", func(t *testing.T) {
+		if got, want := s.LoginUser(context.Background(), &todo.User{APIKey: *randstr(10)}), todo.Unauthorized; !errors.Is(got, want) {
+			t.Fatalf("want error %v got %v", want, got)
+		}
+	})
+
+	t.Run("ErrUnauthorizedNamePassword", func(t *testing.T) {
+		ctx, user := createUser(t, db, *randstr(10), *randstr(10))
+		if got, want := s.LoginUser(ctx, &todo.User{Name: user.Name, Password: *randstr(11)}), todo.Unauthorized; !errors.Is(got, want) {
+			t.Fatalf("want error %v got %v", want, got)
+		}
+	})
 }
 
 func TestUserService_CreateUser(t *testing.T) {

@@ -12,7 +12,6 @@ import (
 func (s *Server) registerUserRoutes(r chi.Router) {
 	r.With(s.requireAuth).Get("/user", s.handleMe)
 	r.With(s.requireAuth).Get("/user/key", s.handleApiKey)
-	// The login route requires no authentication, only an API key.
 	r.With(s.requireNoAuth).Post("/user/login", s.handleLogin)
 	r.With(s.requireAuth).Delete("/user/logout", s.handleLogout)
 
@@ -37,6 +36,7 @@ func (s *Server) handleMe(w http.ResponseWriter, r *http.Request) {
 }
 
 func (s *Server) handleApiKey(w http.ResponseWriter, r *http.Request) {
+	s.Logger.Debug("in handleApiKey")
 	ctx := r.Context()
 	user := todo.UserFromContext(ctx)
 	latest, err := s.UserService.FindUserByID(ctx, user.ID)
@@ -48,16 +48,15 @@ func (s *Server) handleApiKey(w http.ResponseWriter, r *http.Request) {
 }
 
 func (s *Server) handleLogin(w http.ResponseWriter, r *http.Request) {
-	req := struct {
-		APIKey string `json:"apiKey"`
-	}{}
-	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+	var user *todo.User
+	if err := json.NewDecoder(r.Body).Decode(&user); err != nil {
+		s.Logger.E(err)
 		s.error(w, r, err)
 		return
 	}
 
-	user, err := s.UserService.FindUserByAPIKey(r.Context(), req.APIKey)
-	if err != nil {
+	if err := s.UserService.LoginUser(r.Context(), user); err != nil {
+		s.Logger.E(err)
 		s.error(w, r, fmt.Errorf("invalid credentials: %w", err))
 		return
 	}
@@ -67,7 +66,6 @@ func (s *Server) handleLogin(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	s.Logger.Debugf("user %q logged in via API key", user.ID)
 	s.json(w, r, http.StatusOK, *user)
 	return
 }

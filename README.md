@@ -49,9 +49,17 @@ the default example port and API key.
 
 ```shell
 # create a test user named george
-curl -X POST -H "Todo-Api-Key: test" http://localhost:8080/api/users -d '{"name":"george", "email":"george@example.com"}'
+curl -X POST -H "Todo-Api-Key: test" http://localhost:8080/api/users -d '{"name":"george", "password":"password"}'
 # fetch all users
 curl -H "Todo-Api-Key: test" http://localhost:8080/api/users
+# login with the newly created user named george and save the cookie in a file name httpcookie
+curl -X POST -d '{"name":"george","password":"password"}' http://localhost:8080/api/user/login -c httpcookie
+# use the login cookie to read the API key
+curl -b httpcookie http://localhost:8080/api/user/key
+# read the user info
+curl -b httpcookie http://localhost:8080/api/user
+# logout and delete the cookie
+curl -X DELETE -b httpcookie http://localhost:8080/api/user/logout && rm httpcookie
 ```
 
 #### Tests
