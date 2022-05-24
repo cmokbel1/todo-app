@@ -206,7 +206,7 @@ func (s *Server) cors(next http.Handler) http.Handler {
 		headers := w.Header()
 		if s.Domain == "localhost" {
 			// TODO(1gm): Let's make this a config setting for dev environment.
-			headers.Set("Access-Control-Allow-Origin", "http://localhost:5000")
+			headers.Set("Access-Control-Allow-Origin", "http://localhost:3000")
 			headers.Set("Access-Control-Allow-Headers", "Content-Type, Origin, Accept")
 			headers.Set("Access-Control-Expose-Headers", "Link")
 			headers.Set("Access-Control-Allow-Methods", "GET, POST, PUT, PATCH, OPTIONS, DELETE")
