@@ -32,6 +32,7 @@ func (s *Server) handleMe(w http.ResponseWriter, r *http.Request) {
 		s.error(w, r, err)
 		return
 	}
+	latest.Password = ""
 	s.json(w, r, http.StatusOK, latest)
 }
 
@@ -66,6 +67,8 @@ func (s *Server) handleLogin(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// do not render the password
+	user.Password = ""
 	s.json(w, r, http.StatusOK, *user)
 	return
 }
