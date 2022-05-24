@@ -860,6 +860,462 @@
 					]
 				}
 			]
+		},
+		{
+			"name": "Lists/Items",
+			"item": [
+				{
+					"name": "Get All",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": [
+						{
+							"name": "Example (401 - not logged in)",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BACKEND_URL}}/api/todos",
+									"host": [
+										"{{BACKEND_URL}}"
+									],
+									"path": [
+										"api",
+										"todos"
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Content-Type, Origin, Accept"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "GET, POST, PUT, PATCH, OPTIONS, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "http://localhost:5000"
+								},
+								{
+									"key": "Access-Control-Expose-Headers",
+									"value": "Link"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Cookie"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 24 May 2022 18:48:22 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "25"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": \"unauthorized\"\n}"
+						},
+						{
+							"name": "Example (200 - No lists)",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BACKEND_URL}}/api/todos",
+									"host": [
+										"{{BACKEND_URL}}"
+									],
+									"path": [
+										"api",
+										"todos"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Content-Type, Origin, Accept"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "GET, POST, PUT, PATCH, OPTIONS, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "http://localhost:5000"
+								},
+								{
+									"key": "Access-Control-Expose-Headers",
+									"value": "Link"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache=\"Set-Cookie\""
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Set-Cookie",
+									"value": "session=Xsa39SjzbwsDh9kIUwA9pTYBdN5EYURDBOww-A0G9zM; Path=/; Domain=localhost; Expires=Tue, 24 May 2022 19:08:51 GMT; Max-Age=1200; HttpOnly; SameSite=Lax"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Cookie"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 24 May 2022 18:48:50 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "3"
+								}
+							],
+							"cookie": [],
+							"body": "[]"
+						},
+						{
+							"name": "Example (200 - Few lists, items)",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BACKEND_URL}}/api/todos",
+									"host": [
+										"{{BACKEND_URL}}"
+									],
+									"path": [
+										"api",
+										"todos"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Content-Type, Origin, Accept"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "GET, POST, PUT, PATCH, OPTIONS, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "http://localhost:5000"
+								},
+								{
+									"key": "Access-Control-Expose-Headers",
+									"value": "Link"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache=\"Set-Cookie\""
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Set-Cookie",
+									"value": "session=-Vi1V6fGrhb25VyvnP1aquRv1uGRDgAfgF-pdbNmi_0; Path=/; Domain=localhost; Expires=Tue, 24 May 2022 20:36:12 GMT; Max-Age=1200; HttpOnly; SameSite=Lax"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Cookie"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 24 May 2022 20:16:11 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "619"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"id\": 1,\n        \"userId\": 2,\n        \"name\": \"list name 1\",\n        \"completed\": false,\n        \"items\": [],\n        \"createdAt\": \"2022-05-24T18:51:01.433341Z\",\n        \"updatedAt\": \"2022-05-24T18:51:01.433341Z\"\n    },\n    {\n        \"id\": 2,\n        \"userId\": 2,\n        \"name\": \"list name 1\",\n        \"completed\": false,\n        \"items\": [],\n        \"createdAt\": \"2022-05-24T18:59:54.194188Z\",\n        \"updatedAt\": \"2022-05-24T18:59:54.194188Z\"\n    },\n    {\n        \"id\": 3,\n        \"userId\": 2,\n        \"name\": \"list name 1\",\n        \"completed\": false,\n        \"items\": [\n            {\n                \"id\": 1,\n                \"userId\": 2,\n                \"listId\": 3,\n                \"name\": \"new item name\",\n                \"completed\": false,\n                \"createdAt\": \"2022-05-24T19:00:46.588309Z\",\n                \"updatedAt\": \"2022-05-24T19:00:46.588309Z\"\n            }\n        ],\n        \"createdAt\": \"2022-05-24T19:00:41.733219Z\",\n        \"updatedAt\": \"2022-05-24T19:00:41.733219Z\"\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "Create List",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Your test name\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.globals.set(\"LIST_ID\", jsonData.id);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"list name 1\",\n    \"completed\":false\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BACKEND_URL}}/api/todos",
+							"host": [
+								"{{BACKEND_URL}}"
+							],
+							"path": [
+								"api",
+								"todos"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Example (201)",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\":\"list name 1\",\n    \"completed\":false\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BACKEND_URL}}/api/todos",
+									"host": [
+										"{{BACKEND_URL}}"
+									],
+									"path": [
+										"api",
+										"todos"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Content-Type, Origin, Accept"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "GET, POST, PUT, PATCH, OPTIONS, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "http://localhost:5000"
+								},
+								{
+									"key": "Access-Control-Expose-Headers",
+									"value": "Link"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache=\"Set-Cookie\""
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Set-Cookie",
+									"value": "session=Xsa39SjzbwsDh9kIUwA9pTYBdN5EYURDBOww-A0G9zM; Path=/; Domain=localhost; Expires=Tue, 24 May 2022 19:11:02 GMT; Max-Age=1200; HttpOnly; SameSite=Lax"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Cookie"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 24 May 2022 18:51:01 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "154"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 1,\n    \"userId\": 2,\n    \"name\": \"list name 1\",\n    \"completed\": false,\n    \"items\": [],\n    \"createdAt\": \"2022-05-24T18:51:01.433341Z\",\n    \"updatedAt\": \"2022-05-24T18:51:01.433341Z\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Create Item (Requires List ID)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"new item name\",\n    \"completed\": false\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BACKEND_URL}}/api/todos/{{LIST_ID}}",
+							"host": [
+								"{{BACKEND_URL}}"
+							],
+							"path": [
+								"api",
+								"todos",
+								"{{LIST_ID}}"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Example (201)",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\":\"new item name\",\n    \"completed\": false\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BACKEND_URL}}/api/todos/{{LIST_ID}}",
+									"host": [
+										"{{BACKEND_URL}}"
+									],
+									"path": [
+										"api",
+										"todos",
+										"{{LIST_ID}}"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Content-Type, Origin, Accept"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "GET, POST, PUT, PATCH, OPTIONS, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "http://localhost:5000"
+								},
+								{
+									"key": "Access-Control-Expose-Headers",
+									"value": "Link"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache=\"Set-Cookie\""
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Set-Cookie",
+									"value": "session=Xsa39SjzbwsDh9kIUwA9pTYBdN5EYURDBOww-A0G9zM; Path=/; Domain=localhost; Expires=Tue, 24 May 2022 19:20:47 GMT; Max-Age=1200; HttpOnly; SameSite=Lax"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Cookie"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 24 May 2022 19:00:46 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "156"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 1,\n    \"userId\": 2,\n    \"listId\": 3,\n    \"name\": \"new item name\",\n    \"completed\": false,\n    \"createdAt\": \"2022-05-24T19:00:46.588309Z\",\n    \"updatedAt\": \"2022-05-24T19:00:46.588309Z\"\n}"
+						}
+					]
+				}
+			]
 		}
 	],
 	"event": [
