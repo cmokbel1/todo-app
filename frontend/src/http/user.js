@@ -1,19 +1,27 @@
 async function loginUser(username, password) {
     const data = { name: username, password: password };
     try {
-        await fetch('http://localhost:8080/api/user/login', { method: 'POST', body: JSON.stringify(data) })
-            .then(response => response.json())
-            .then(data => console.log(data));
-    } catch (error) {
-        console.log(error);
+       const res = await fetch('http://localhost:8080/api/user/login', { method: 'POST', body: JSON.stringify(data) })
+        const jsonResponse = await res.json();
+        console.log(jsonResponse);
+        return jsonResponse;
+    } catch (err) {
+        console.log(err);
+        return err;
     }
 }
 
-async function checkUser() {
+function checkUser() {
     try {
-    await fetch('http://localhost:8080/api/user', {method: 'GET'}).then(response => response.json())
-    } catch(error) {
-        console.log(error)
+        const res = fetch('http://localhost:8080/api/user');
+        if (!res.ok) {
+            return res.status
+        } else {
+            return 'Success!'
+        }
+    } catch (error) {
+        console.log(error);
+        return error;
     }
 }
 export { loginUser, checkUser };
