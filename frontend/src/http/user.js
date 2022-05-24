@@ -9,4 +9,11 @@ async function loginUser(username, password) {
     }
 }
 
-export { loginUser };
+async function checkUser() {
+    try {
+    await fetch('http://localhost:8080/api/user', {method: 'GET'}).then(response => response.json())
+    } catch(error) {
+        console.log(error)
+    }
+}
+export { loginUser, checkUser };

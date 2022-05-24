@@ -1,13 +1,17 @@
+import { useEffect } from 'react'
 import './App.css';
 import { default as Login } from './components/login'
+import { checkUser } from './http/user'
+
 
 function App() {
-  return (
-    <>
-    <h1>hello</h1>
-    <Login/>
-    </>
-  );
+  useEffect(() => {
+    checkUser();
+  }, [])
+
+    return (
+      <Login />
+    )
 }
 
 export default App;

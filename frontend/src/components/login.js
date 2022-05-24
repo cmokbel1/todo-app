@@ -16,13 +16,14 @@ const Login = () => {
 
     return (
         <>
-            <form className="card align-middle" style={{ width: '18em' }}>
+            <form className="card" style={{ width: '18em' }}>
+                <p className="card-title">You must login to continue</p>
                 <div className="input col-sm-8 mb-3">
-                    <h5 className="input-text" id="username">username</h5>
+                    <p className="input-text" id="username">username</p>
                     <input type="text" name="username" className="form-control" aria-label="username-input" aria-describedby="username-input" onChange={handleInputChange} />
                 </div>
                 <div className="input col-sm-8 mb-3">
-                    <h5 className="input-text" id="password">password</h5>
+                    <p className="input-text" id="password">password</p>
                     <input type="password" name="password" className="form-control" aria-label="password-input" aria-describedby="password-input" onChange={handleInputChange} />
                 </div>
                 <button type="submit" className="btn btn-primary" onClick={handleLogin}>Login</button>
