@@ -2,18 +2,20 @@ import { useState } from 'react';
 import { loginUser } from '../http/user'
 
 const Login = ({ userState, setUserState }) => {
-    const [user, setUser] = useState({
-        username: '',
-        password: ''
-    })
+    const [user, setUser] = useState('');
+    const [password, setPassword] = useState('');
+    const [errorState, setErrorState] = useState('');
 
-    const handleInputChange = ({ target: { name, value } }) => { setUser({ ...user, [name]: value }) }
 
     const handleLogin = event => {
         event.preventDefault();
-        loginUser(user.username, user.password);
-        setUserState(true)
-        console.log(userState)
+        const res = loginUser(user, password);
+        if (res.name) {
+            setUserState(res.name);
+        } else {
+            setErrorState(res);
+        }
+        console.log(res);
     }
 
     return (
@@ -21,14 +23,16 @@ const Login = ({ userState, setUserState }) => {
             <form className="card" style={{ width: '18em' }}>
                 <p className="card-title">You must login to continue</p>
                 <div className="input col-sm-8 mb-3">
-                    <p className="input-text" id="username">username</p>
-                    <input type="text" name="username" className="form-control" aria-label="username-input" aria-describedby="username-input" onChange={handleInputChange} />
+                    <label className="input-text" htmlFor="username">username</label>
+                    <input type="text" id="username" name="username" className="form-control" aria-label="username-input" aria-describedby="username-input" onChange={(e) => setUser(e.target.value)} />
                 </div>
                 <div className="input col-sm-8 mb-3">
-                    <p className="input-text" id="password">password</p>
-                    <input type="password" name="password" className="form-control" aria-label="password-input" aria-describedby="password-input" onChange={handleInputChange} />
+                    <label className="input-text" htmlFor="password">password</label>
+                    <input type="password" id="password" name="password" className="form-control" aria-label="password-input" aria-describedby="password-input" onChange={(e) => setPassword(e.target.value)} />
                 </div>
+                <p style={{color: 'red'}}>{errorState}</p>
                 <button type="submit" className="btn btn-primary" onClick={handleLogin}>Login</button>
+                
             </form>
         </>
     )

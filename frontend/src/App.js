@@ -6,7 +6,7 @@ import { checkUser } from './http/user'
 
 function App() {
 
-  const [userState, setUserState] = useState(false)
+  const [userState, setUserState] = useState()
 
   useEffect(() => {
     checkUser();
