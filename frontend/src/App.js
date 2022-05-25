@@ -13,12 +13,13 @@ function App() {
   const [returnError, setReturnError] = useState(null)
 
   useEffect(() => {
-    const res = getUser();
-    if (res.name) {
-      setUserState(res.name)
-    } else {
-      setReturnError(res)
-    }
+    getUser().then(res => {
+      if (res.name) {
+        setUserState(res.name)
+      } else {
+        setReturnError(res)
+      }
+    });
   }, [])
 
   if (userState) {
