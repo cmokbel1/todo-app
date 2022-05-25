@@ -5,7 +5,7 @@ async function getLists() {
         console.log(jsonResponse);
         return jsonResponse;
     } catch (err) {
-        console.log(err.error);
+        console.log(err);
         return err.error;
     }
 }

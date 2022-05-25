@@ -39,4 +39,21 @@ async function getUser() {
         return err.error;
     }
 }
-export { loginUser, getUser };
+
+// logout returns an object with an ok and error property. If ok is true then
+// the logout was successful, otherwise, error contains the reason for the failure.
+async function logout() {
+    try {
+      const res = await fetch('/api/user/logout', {method: 'DELETE'})
+      if (res.status === 204) {
+          console.log('Logout Success');
+          return {ok: true};
+      } else {
+          return {error: 'Unauthorized use of button'};
+      }
+    } catch(err) {
+        console.log(err);
+        return err;
+    }
+}
+export { loginUser, getUser, logout };

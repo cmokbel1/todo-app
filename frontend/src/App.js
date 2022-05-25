@@ -4,7 +4,7 @@ import './App.css';
 import { default as Login } from './components/login';
 import { default as ToDoColumn } from './components/ToDoColumn';
 
-import { getUser } from './http/user';
+import { getUser, logout } from './http/user';
 
 
 function App() {
@@ -21,13 +21,23 @@ function App() {
       }
     });
   }, [])
+  
+    const handleLogout = () => {
+      logout().then(res => {
+        if (res.ok) {
+          setUserState();
+        } else {
+          setReturnError(res.error);
+        }
+      })
+    }
 
   if (userState) {
     return (
       <div className="row">
         <ToDoColumn />
         <div className="col" style={{ border: '1px solid blue' }}>
-        <p className="text-end">Hello {userState}</p>
+        <div  className="text-end"><span>Hello {userState} </span><button className="btn btn-primary" onClick={handleLogout}>Logout</button></div>
           <h2>Welcome Home</h2>
         </div>
       </div>
