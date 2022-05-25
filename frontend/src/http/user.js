@@ -12,7 +12,9 @@ async function loginUser(username, password) {
             },
         );
         const jsonResponse = await res.json();
-        console.log(jsonResponse);
+        if (!res.ok) {
+            return jsonResponse.error;
+        }
         return jsonResponse;
     } catch (err) {
         console.log(err);
@@ -31,7 +33,6 @@ async function getUser() {
             return 'internal error';
         }
         const jsonResponse = await res.json();
-        console.log(jsonResponse)
         return jsonResponse;
     } catch (err) {
         console.log(err);
