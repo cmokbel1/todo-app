@@ -13,7 +13,6 @@ async function getList(id) {
     try {
         const res = await fetch(`/api/todos/${id}`);
         const jsonResponse = await res.json();
-        console.log(jsonResponse);
         return jsonResponse;
     } catch(err) {
         console.log(err);
