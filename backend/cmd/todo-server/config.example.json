@@ -7,7 +7,8 @@
     "addr": ":8080",
     "api_key": "test",
     "domain": "localhost",
-    "tls": false
+    "tls": false,
+    "cors_allow_origins": "localhost:3000"
   },
   "log" : {
     "enabled": true,

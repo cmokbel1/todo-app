@@ -100,6 +100,7 @@ func (app *App) Run(ctx context.Context) error {
 	app.HTTPServer.APIKey = *app.Config.HTTP.APIKey
 	app.HTTPServer.Domain = app.Config.HTTP.Domain
 	app.HTTPServer.TLS = app.Config.HTTP.TLS
+	app.HTTPServer.CORSAllowedOrigins = app.Config.HTTP.CORSAllowedOrigins
 	app.HTTPServer.Logger = app.Logger
 	app.HTTPServer.ItemListService = postgres.NewItemListService(app.DB)
 	app.HTTPServer.UserService = postgres.NewUserService(app.DB)
@@ -162,9 +163,10 @@ type Config struct {
 	HTTP struct {
 		Addr string `json:"addr"`
 		// APIKey is the server's API key to access admin functionality.
-		APIKey *string `json:"api_key,omitempty"`
-		Domain string  `json:"domain"`
-		TLS    bool    `json:"tls"`
+		APIKey             *string `json:"api_key,omitempty"`
+		Domain             string  `json:"domain"`
+		TLS                bool    `json:"tls"`
+		CORSAllowedOrigins string  `json:"cors_allowed_origins"`
 	} `json:"http"`
 
 	Log struct {
