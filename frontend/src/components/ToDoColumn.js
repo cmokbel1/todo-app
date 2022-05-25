@@ -10,9 +10,7 @@ const ToDoColumn = ({userState}) => {
     return (
         <div className="col-sm-3" style={{ border: '1px solid red' }}>
             <p className="fs-3 text-center">TODO</p>
-            <ul>
             <ToDoLists userState={userState}/>
-            </ul>
             <div className="text-center">
             <a className="link-dark" target="_blank" rel="noreferrer" href="https://github.com/cmokbel1/todo-app">{gitHub}</a>
             </div>
