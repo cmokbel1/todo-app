@@ -16,10 +16,9 @@ function App() {
   }, [])
 
   if (getUser === 200) {
-    
     return (
       <div className="row">
-        <ToDoColumn />
+        <ToDoColumn userState={userState}/>
         <div className="col" style={{ border: '1px solid blue' }}>
           <h2>Welcome Home</h2>
         </div>
@@ -28,7 +27,7 @@ function App() {
   } else if (getUser === 401) {
     return (
       <div className="row">
-        <ToDoColumn />
+        <ToDoColumn userState={userState} />
         <div className="col" style={{ border: '1px solid blue' }}>
           <Login userState={userState} setUserState={setUserState} />
         </div>
@@ -38,7 +37,7 @@ function App() {
   } else {
     return (
       <div className="row">
-        <ToDoColumn />
+        <ToDoColumn userState={userState} />
         <div className="col" style={{ border: '1px solid blue' }}>
         <h1>Something has gone wrong</h1>
         </div>
