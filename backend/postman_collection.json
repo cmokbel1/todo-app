@@ -1,0 +1,1754 @@
+{
+	"info": {
+		"_postman_id": "50735c60-7a06-469b-ab1c-bf8258d588bd",
+		"name": "Todo API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Create User",
+					"protocolProfileBehavior": {
+						"strictSSL": false
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Todo-Api-Key",
+								"value": "{{SERVER_KEY}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"george\",\n    \"email\":\"george@example.com\",\n    \"password\":\"password\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BACKEND_URL}}/api/users",
+							"host": [
+								"{{BACKEND_URL}}"
+							],
+							"path": [
+								"api",
+								"users"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Example (201)",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Todo-Api-Key",
+										"value": "{{SERVER_KEY}}",
+										"type": "default"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\":\"george\",\n    \"email\":\"george@example.com\",\n    \"password\":\"password\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BACKEND_URL}}/api/users",
+									"host": [
+										"{{BACKEND_URL}}"
+									],
+									"path": [
+										"api",
+										"users"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Content-Type, Origin, Accept"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "GET, POST, PUT, PATCH, OPTIONS, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "http://localhost:5000"
+								},
+								{
+									"key": "Access-Control-Expose-Headers",
+									"value": "Link"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Cookie"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 24 May 2022 18:05:19 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "247"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 1,\n    \"name\": \"george\",\n    \"email\": \"george@example.com\",\n    \"password\": \"$argon2id$v=19$m=65536,t=1,p=2$kM+2vOLt3VDvrUUriZeUGQ$nBsdEk2bP7dU4JNxwEbwEY8QCUb4JUj2SXwKT3ZIS44\",\n    \"createdAt\": \"2022-05-24T18:05:19.24933Z\",\n    \"updatedAt\": \"2022-05-24T18:05:19.24933Z\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Delete User (Requires ID)",
+					"protocolProfileBehavior": {
+						"strictSSL": false
+					},
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Todo-Api-Key",
+								"value": "{{SERVER_KEY}}",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "{{BACKEND_URL}}/api/users/{{ID}}",
+							"host": [
+								"{{BACKEND_URL}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"{{ID}}"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Example (204)",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Todo-Api-Key",
+										"value": "{{SERVER_KEY}}",
+										"type": "default"
+									}
+								],
+								"url": {
+									"raw": "{{BACKEND_URL}}/api/users/1",
+									"host": [
+										"{{BACKEND_URL}}"
+									],
+									"path": [
+										"api",
+										"users",
+										"1"
+									]
+								}
+							},
+							"status": "No Content",
+							"code": 204,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Content-Type, Origin, Accept"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "GET, POST, PUT, PATCH, OPTIONS, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "http://localhost:5000"
+								},
+								{
+									"key": "Access-Control-Expose-Headers",
+									"value": "Link"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Cookie"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 24 May 2022 18:11:37 GMT"
+								}
+							],
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "Example (404 - could not delete user)",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Todo-Api-Key",
+										"value": "{{SERVER_KEY}}",
+										"type": "default"
+									}
+								],
+								"url": {
+									"raw": "{{BACKEND_URL}}/api/users/123123123",
+									"host": [
+										"{{BACKEND_URL}}"
+									],
+									"path": [
+										"api",
+										"users",
+										"123123123"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Content-Type, Origin, Accept"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "GET, POST, PUT, PATCH, OPTIONS, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "http://localhost:5000"
+								},
+								{
+									"key": "Access-Control-Expose-Headers",
+									"value": "Link"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Cookie"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 24 May 2022 18:12:36 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "52"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": \"could not delete user with id 123123123\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"george\",\n    \"password\":\"password\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BACKEND_URL}}/api/user/login",
+							"host": [
+								"{{BACKEND_URL}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Example (200)",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\":\"george\",\n    \"password\":\"password\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BACKEND_URL}}/api/user/login",
+									"host": [
+										"{{BACKEND_URL}}"
+									],
+									"path": [
+										"api",
+										"user",
+										"login"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Content-Type, Origin, Accept"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "GET, POST, PUT, PATCH, OPTIONS, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "http://localhost:5000"
+								},
+								{
+									"key": "Access-Control-Expose-Headers",
+									"value": "Link"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache=\"Set-Cookie\""
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Set-Cookie",
+									"value": "session=iOeNbSJodxuOZlYk1qHu9hiqb2dJbNltYClcPv56A2A; Path=/; Domain=localhost; Expires=Tue, 24 May 2022 18:44:30 GMT; Max-Age=1200; HttpOnly; SameSite=Lax"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Cookie"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 24 May 2022 18:24:29 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "138"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 2,\n    \"name\": \"george\",\n    \"email\": \"george@example.com\",\n    \"createdAt\": \"2022-05-24T18:21:14.773146Z\",\n    \"updatedAt\": \"2022-05-24T18:21:14.773146Z\"\n}"
+						},
+						{
+							"name": "Example (401 - already logged in)",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\":\"george\",\n    \"password\":\"password\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BACKEND_URL}}/api/user/login",
+									"host": [
+										"{{BACKEND_URL}}"
+									],
+									"path": [
+										"api",
+										"user",
+										"login"
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Content-Type, Origin, Accept"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "GET, POST, PUT, PATCH, OPTIONS, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "http://localhost:5000"
+								},
+								{
+									"key": "Access-Control-Expose-Headers",
+									"value": "Link"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache=\"Set-Cookie\""
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Set-Cookie",
+									"value": "session=iOeNbSJodxuOZlYk1qHu9hiqb2dJbNltYClcPv56A2A; Path=/; Domain=localhost; Expires=Tue, 24 May 2022 18:45:10 GMT; Max-Age=1200; HttpOnly; SameSite=Lax"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Cookie"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 24 May 2022 18:25:09 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "25"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": \"unauthorized\"\n}"
+						},
+						{
+							"name": "Example (401 - wrong password)",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\":\"george\",\n    \"password\":\"wrongpassword\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BACKEND_URL}}/api/user/login",
+									"host": [
+										"{{BACKEND_URL}}"
+									],
+									"path": [
+										"api",
+										"user",
+										"login"
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Content-Type, Origin, Accept"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "GET, POST, PUT, PATCH, OPTIONS, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "http://localhost:5000"
+								},
+								{
+									"key": "Access-Control-Expose-Headers",
+									"value": "Link"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Cookie"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 24 May 2022 18:25:43 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "25"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": \"unauthorized\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Logout",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BACKEND_URL}}/api/user/logout",
+							"host": [
+								"{{BACKEND_URL}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"logout"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Example (204)",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{BACKEND_URL}}/api/user/logout",
+									"host": [
+										"{{BACKEND_URL}}"
+									],
+									"path": [
+										"api",
+										"user",
+										"logout"
+									]
+								}
+							},
+							"status": "No Content",
+							"code": 204,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Content-Type, Origin, Accept"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "GET, POST, PUT, PATCH, OPTIONS, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "http://localhost:5000"
+								},
+								{
+									"key": "Access-Control-Expose-Headers",
+									"value": "Link"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache=\"Set-Cookie\""
+								},
+								{
+									"key": "Set-Cookie",
+									"value": "session=; Path=/; Domain=localhost; Expires=Thu, 01 Jan 1970 00:00:01 GMT; Max-Age=0; HttpOnly; SameSite=Lax"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Cookie"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 24 May 2022 18:23:49 GMT"
+								}
+							],
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "Example (401)",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{BACKEND_URL}}/api/user/logout",
+									"host": [
+										"{{BACKEND_URL}}"
+									],
+									"path": [
+										"api",
+										"user",
+										"logout"
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Content-Type, Origin, Accept"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "GET, POST, PUT, PATCH, OPTIONS, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "http://localhost:5000"
+								},
+								{
+									"key": "Access-Control-Expose-Headers",
+									"value": "Link"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Cookie"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 24 May 2022 18:24:08 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "25"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": \"unauthorized\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Me",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BACKEND_URL}}/api/user",
+							"host": [
+								"{{BACKEND_URL}}"
+							],
+							"path": [
+								"api",
+								"user"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Example (200)",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BACKEND_URL}}/api/user",
+									"host": [
+										"{{BACKEND_URL}}"
+									],
+									"path": [
+										"api",
+										"user"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Content-Type, Origin, Accept"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "GET, POST, PUT, PATCH, OPTIONS, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "http://localhost:5000"
+								},
+								{
+									"key": "Access-Control-Expose-Headers",
+									"value": "Link"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache=\"Set-Cookie\""
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Set-Cookie",
+									"value": "session=PQudqe_xsiyPHPyLso-ma2grMWIm_-HfQrjX04b8Evo; Path=/; Domain=localhost; Expires=Tue, 24 May 2022 18:47:29 GMT; Max-Age=1200; HttpOnly; SameSite=Lax"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Cookie"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 24 May 2022 18:27:28 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "138"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 2,\n    \"name\": \"george\",\n    \"email\": \"george@example.com\",\n    \"createdAt\": \"2022-05-24T18:21:14.773146Z\",\n    \"updatedAt\": \"2022-05-24T18:21:14.773146Z\"\n}"
+						},
+						{
+							"name": "Example (401 - not logged in)",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BACKEND_URL}}/api/user",
+									"host": [
+										"{{BACKEND_URL}}"
+									],
+									"path": [
+										"api",
+										"user"
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Content-Type, Origin, Accept"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "GET, POST, PUT, PATCH, OPTIONS, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "http://localhost:5000"
+								},
+								{
+									"key": "Access-Control-Expose-Headers",
+									"value": "Link"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Cookie"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 24 May 2022 18:26:38 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "25"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": \"unauthorized\"\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Lists/Items",
+			"item": [
+				{
+					"name": "Get All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BACKEND_URL}}/api/todos",
+							"host": [
+								"{{BACKEND_URL}}"
+							],
+							"path": [
+								"api",
+								"todos"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Example (401 - not logged in)",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BACKEND_URL}}/api/todos",
+									"host": [
+										"{{BACKEND_URL}}"
+									],
+									"path": [
+										"api",
+										"todos"
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Content-Type, Origin, Accept"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "GET, POST, PUT, PATCH, OPTIONS, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "http://localhost:5000"
+								},
+								{
+									"key": "Access-Control-Expose-Headers",
+									"value": "Link"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Cookie"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 24 May 2022 18:48:22 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "25"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": \"unauthorized\"\n}"
+						},
+						{
+							"name": "Example (200 - No lists)",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BACKEND_URL}}/api/todos",
+									"host": [
+										"{{BACKEND_URL}}"
+									],
+									"path": [
+										"api",
+										"todos"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Content-Type, Origin, Accept"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "GET, POST, PUT, PATCH, OPTIONS, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "http://localhost:5000"
+								},
+								{
+									"key": "Access-Control-Expose-Headers",
+									"value": "Link"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache=\"Set-Cookie\""
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Set-Cookie",
+									"value": "session=Xsa39SjzbwsDh9kIUwA9pTYBdN5EYURDBOww-A0G9zM; Path=/; Domain=localhost; Expires=Tue, 24 May 2022 19:08:51 GMT; Max-Age=1200; HttpOnly; SameSite=Lax"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Cookie"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 24 May 2022 18:48:50 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "3"
+								}
+							],
+							"cookie": [],
+							"body": "[]"
+						},
+						{
+							"name": "Example (200 - Few lists, items)",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BACKEND_URL}}/api/todos",
+									"host": [
+										"{{BACKEND_URL}}"
+									],
+									"path": [
+										"api",
+										"todos"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Content-Type, Origin, Accept"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "GET, POST, PUT, PATCH, OPTIONS, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "http://localhost:5000"
+								},
+								{
+									"key": "Access-Control-Expose-Headers",
+									"value": "Link"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache=\"Set-Cookie\""
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Set-Cookie",
+									"value": "session=-Vi1V6fGrhb25VyvnP1aquRv1uGRDgAfgF-pdbNmi_0; Path=/; Domain=localhost; Expires=Tue, 24 May 2022 20:36:12 GMT; Max-Age=1200; HttpOnly; SameSite=Lax"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Cookie"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 24 May 2022 20:16:11 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "619"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"id\": 1,\n        \"userId\": 2,\n        \"name\": \"list name 1\",\n        \"completed\": false,\n        \"items\": [],\n        \"createdAt\": \"2022-05-24T18:51:01.433341Z\",\n        \"updatedAt\": \"2022-05-24T18:51:01.433341Z\"\n    },\n    {\n        \"id\": 2,\n        \"userId\": 2,\n        \"name\": \"list name 1\",\n        \"completed\": false,\n        \"items\": [],\n        \"createdAt\": \"2022-05-24T18:59:54.194188Z\",\n        \"updatedAt\": \"2022-05-24T18:59:54.194188Z\"\n    },\n    {\n        \"id\": 3,\n        \"userId\": 2,\n        \"name\": \"list name 1\",\n        \"completed\": false,\n        \"items\": [\n            {\n                \"id\": 1,\n                \"userId\": 2,\n                \"listId\": 3,\n                \"name\": \"new item name\",\n                \"completed\": false,\n                \"createdAt\": \"2022-05-24T19:00:46.588309Z\",\n                \"updatedAt\": \"2022-05-24T19:00:46.588309Z\"\n            }\n        ],\n        \"createdAt\": \"2022-05-24T19:00:41.733219Z\",\n        \"updatedAt\": \"2022-05-24T19:00:41.733219Z\"\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "Create List",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Your test name\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.globals.set(\"LIST_ID\", jsonData.id);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"list name 1\",\n    \"completed\":false\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BACKEND_URL}}/api/todos",
+							"host": [
+								"{{BACKEND_URL}}"
+							],
+							"path": [
+								"api",
+								"todos"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Example (201)",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\":\"list name 1\",\n    \"completed\":false\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BACKEND_URL}}/api/todos",
+									"host": [
+										"{{BACKEND_URL}}"
+									],
+									"path": [
+										"api",
+										"todos"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Content-Type, Origin, Accept"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "GET, POST, PUT, PATCH, OPTIONS, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "http://localhost:5000"
+								},
+								{
+									"key": "Access-Control-Expose-Headers",
+									"value": "Link"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache=\"Set-Cookie\""
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Set-Cookie",
+									"value": "session=Xsa39SjzbwsDh9kIUwA9pTYBdN5EYURDBOww-A0G9zM; Path=/; Domain=localhost; Expires=Tue, 24 May 2022 19:11:02 GMT; Max-Age=1200; HttpOnly; SameSite=Lax"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Cookie"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 24 May 2022 18:51:01 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "154"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 1,\n    \"userId\": 2,\n    \"name\": \"list name 1\",\n    \"completed\": false,\n    \"items\": [],\n    \"createdAt\": \"2022-05-24T18:51:01.433341Z\",\n    \"updatedAt\": \"2022-05-24T18:51:01.433341Z\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Create Item (Requires List ID)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Your test name\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.globals.set(\"ITEM_ID\", jsonData.id);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"new item name\",\n    \"completed\": false\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BACKEND_URL}}/api/todos/{{LIST_ID}}",
+							"host": [
+								"{{BACKEND_URL}}"
+							],
+							"path": [
+								"api",
+								"todos",
+								"{{LIST_ID}}"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Example (201)",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\":\"new item name\",\n    \"completed\": false\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BACKEND_URL}}/api/todos/{{LIST_ID}}",
+									"host": [
+										"{{BACKEND_URL}}"
+									],
+									"path": [
+										"api",
+										"todos",
+										"{{LIST_ID}}"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Content-Type, Origin, Accept"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "GET, POST, PUT, PATCH, OPTIONS, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "http://localhost:5000"
+								},
+								{
+									"key": "Access-Control-Expose-Headers",
+									"value": "Link"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache=\"Set-Cookie\""
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Set-Cookie",
+									"value": "session=Xsa39SjzbwsDh9kIUwA9pTYBdN5EYURDBOww-A0G9zM; Path=/; Domain=localhost; Expires=Tue, 24 May 2022 19:20:47 GMT; Max-Age=1200; HttpOnly; SameSite=Lax"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Cookie"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 24 May 2022 19:00:46 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "156"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 1,\n    \"userId\": 2,\n    \"listId\": 3,\n    \"name\": \"new item name\",\n    \"completed\": false,\n    \"createdAt\": \"2022-05-24T19:00:46.588309Z\",\n    \"updatedAt\": \"2022-05-24T19:00:46.588309Z\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Get List",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": [
+						{
+							"name": "Example (200)",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BACKEND_URL}}/api/todos/{{LIST_ID}}",
+									"host": [
+										"{{BACKEND_URL}}"
+									],
+									"path": [
+										"api",
+										"todos",
+										"{{LIST_ID}}"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Content-Type, Origin, Accept"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "GET, POST, PUT, PATCH, OPTIONS, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "http://localhost:5000"
+								},
+								{
+									"key": "Access-Control-Expose-Headers",
+									"value": "Link"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache=\"Set-Cookie\""
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Set-Cookie",
+									"value": "session=6StUfDxUakwrb2Enka2rihJN1JIYVb_6PIpl882Ov0M; Path=/; Domain=localhost; Expires=Tue, 24 May 2022 22:45:41 GMT; Max-Age=1200; HttpOnly; SameSite=Lax"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Cookie"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 24 May 2022 22:25:40 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "309"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 3,\n    \"userId\": 2,\n    \"name\": \"list name 1\",\n    \"completed\": false,\n    \"items\": [\n        {\n            \"id\": 1,\n            \"userId\": 2,\n            \"listId\": 3,\n            \"name\": \"new item name\",\n            \"completed\": false,\n            \"createdAt\": \"2022-05-24T19:00:46.588309Z\",\n            \"updatedAt\": \"2022-05-24T19:00:46.588309Z\"\n        }\n    ],\n    \"createdAt\": \"2022-05-24T19:00:41.733219Z\",\n    \"updatedAt\": \"2022-05-24T19:00:41.733219Z\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Get Item ( Requires List ID and Item ID )",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BACKEND_URL}}/api/todos/{{LIST_ID}}/{{ITEM_ID}}",
+							"host": [
+								"{{BACKEND_URL}}"
+							],
+							"path": [
+								"api",
+								"todos",
+								"{{LIST_ID}}",
+								"{{ITEM_ID}}"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Example (200)",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BACKEND_URL}}/api/todos/{{LIST_ID}}/{{ITEM_ID}}",
+									"host": [
+										"{{BACKEND_URL}}"
+									],
+									"path": [
+										"api",
+										"todos",
+										"{{LIST_ID}}",
+										"{{ITEM_ID}}"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Content-Type, Origin, Accept"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "GET, POST, PUT, PATCH, OPTIONS, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "http://localhost:5000"
+								},
+								{
+									"key": "Access-Control-Expose-Headers",
+									"value": "Link"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache=\"Set-Cookie\""
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Set-Cookie",
+									"value": "session=6StUfDxUakwrb2Enka2rihJN1JIYVb_6PIpl882Ov0M; Path=/; Domain=localhost; Expires=Tue, 24 May 2022 22:49:19 GMT; Max-Age=1200; HttpOnly; SameSite=Lax"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Cookie"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 24 May 2022 22:29:18 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "156"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 2,\n    \"userId\": 2,\n    \"listId\": 3,\n    \"name\": \"new item name\",\n    \"completed\": false,\n    \"createdAt\": \"2022-05-24T22:29:14.185855Z\",\n    \"updatedAt\": \"2022-05-24T22:29:14.185855Z\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Update Item ( Requires List ID and Item ID )",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"completed\":true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BACKEND_URL}}/api/todos/{{LIST_ID}}/{{ITEM_ID}}",
+							"host": [
+								"{{BACKEND_URL}}"
+							],
+							"path": [
+								"api",
+								"todos",
+								"{{LIST_ID}}",
+								"{{ITEM_ID}}"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Example (200)",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"completed\":true\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BACKEND_URL}}/api/todos/{{LIST_ID}}/{{ITEM_ID}}",
+									"host": [
+										"{{BACKEND_URL}}"
+									],
+									"path": [
+										"api",
+										"todos",
+										"{{LIST_ID}}",
+										"{{ITEM_ID}}"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Content-Type, Origin, Accept"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "GET, POST, PUT, PATCH, OPTIONS, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "http://localhost:5000"
+								},
+								{
+									"key": "Access-Control-Expose-Headers",
+									"value": "Link"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache=\"Set-Cookie\""
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Set-Cookie",
+									"value": "session=6StUfDxUakwrb2Enka2rihJN1JIYVb_6PIpl882Ov0M; Path=/; Domain=localhost; Expires=Tue, 24 May 2022 22:50:28 GMT; Max-Age=1200; HttpOnly; SameSite=Lax"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Cookie"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 24 May 2022 22:30:27 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "155"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 2,\n    \"userId\": 2,\n    \"listId\": 3,\n    \"name\": \"new item name\",\n    \"completed\": true,\n    \"createdAt\": \"2022-05-24T22:29:14.185855Z\",\n    \"updatedAt\": \"2022-05-24T22:30:27.866669Z\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Delete Item ( Requires List ID and Item ID )",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BACKEND_URL}}/api/todos/{{LIST_ID}}/{{ITEM_ID}}",
+							"host": [
+								"{{BACKEND_URL}}"
+							],
+							"path": [
+								"api",
+								"todos",
+								"{{LIST_ID}}",
+								"{{ITEM_ID}}"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Example (204)",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{BACKEND_URL}}/api/todos/{{LIST_ID}}/{{ITEM_ID}}",
+									"host": [
+										"{{BACKEND_URL}}"
+									],
+									"path": [
+										"api",
+										"todos",
+										"{{LIST_ID}}",
+										"{{ITEM_ID}}"
+									]
+								}
+							},
+							"status": "No Content",
+							"code": 204,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Content-Type, Origin, Accept"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "GET, POST, PUT, PATCH, OPTIONS, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "http://localhost:5000"
+								},
+								{
+									"key": "Access-Control-Expose-Headers",
+									"value": "Link"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache=\"Set-Cookie\""
+								},
+								{
+									"key": "Set-Cookie",
+									"value": "session=6StUfDxUakwrb2Enka2rihJN1JIYVb_6PIpl882Ov0M; Path=/; Domain=localhost; Expires=Tue, 24 May 2022 22:51:50 GMT; Max-Age=1200; HttpOnly; SameSite=Lax"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Cookie"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 24 May 2022 22:31:49 GMT"
+								}
+							],
+							"cookie": [],
+							"body": null
+						}
+					]
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "BACKEND_URL",
+			"value": "http://localhost:8080",
+			"type": "default"
+		},
+		{
+			"key": "SERVER_KEY",
+			"value": "test",
+			"type": "default"
+		}
+	]
+}
