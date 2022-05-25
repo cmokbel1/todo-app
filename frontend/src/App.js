@@ -10,21 +10,27 @@ import { getUser } from './http/user';
 function App() {
 
   const [userState, setUserState] = useState()
+  const [returnError, setReturnError] = useState(null)
 
   useEffect(() => {
-    getUser();
+    const res = getUser();
+    if (res.name) {
+      setUserState(res.name)
+    } else {
+      setReturnError(res)
+    }
   }, [])
 
-  if (getUser === 200) {
+  if (userState) {
     return (
       <div className="row">
-        <ToDoColumn userState={userState}/>
+        <ToDoColumn userState={userState} />
         <div className="col" style={{ border: '1px solid blue' }}>
           <h2>Welcome Home</h2>
         </div>
       </div>
     )
-  } else if (getUser === 401) {
+  } else if (returnError) {
     return (
       <div className="row">
         <ToDoColumn userState={userState} />
@@ -38,8 +44,8 @@ function App() {
     return (
       <div className="row">
         <ToDoColumn userState={userState} />
-        <div className="col" style={{ border: '1px solid blue' }}>
-        <h1>Something has gone wrong</h1>
+        <div className="col align-middle" style={{ border: '1px solid blue' }}>
+          <h1 className="text-center">Something has gone wrong</h1>
         </div>
       </div>
     )

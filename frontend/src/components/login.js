@@ -9,18 +9,19 @@ const Login = ({ userState, setUserState }) => {
 
     const handleLogin = event => {
         event.preventDefault();
-        const res = loginUser(user, password);
-        if (res.name) {
-            setUserState(res.name);
-        } else {
-            setErrorState(res);
-        }
-        console.log(res);
+        loginUser(user, password).then(res => {
+            if (res.name) {
+                setUserState(res.name);
+            } else {
+                setErrorState(res);
+            }
+            console.log(res);
+        });
     }
 
     return (
         <>
-            <form className="card" style={{ width: '18em' }}>
+            <form className="card justify-content-center" style={{ width: '18em' }}>
                 <p className="card-title">You must login to continue</p>
                 <div className="input col-sm-8 mb-3">
                     <label className="input-text" htmlFor="username">username</label>
