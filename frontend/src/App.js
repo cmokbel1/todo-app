@@ -25,7 +25,7 @@ function App() {
     const handleLogout = () => {
       logout().then(res => {
         if (res.ok) {
-          setUserState();
+          setUserState('');
         } else {
           setReturnError(res.error);
         }
