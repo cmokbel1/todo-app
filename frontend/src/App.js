@@ -15,7 +15,7 @@ function App() {
     getUser();
   }, [])
 
-  if (getUser) {
+  if (getUser === 200) {
     return (
       <div className="row">
         <ToDoList />
@@ -24,7 +24,7 @@ function App() {
         </div>
       </div>
     )
-  } else {
+  } else if (getUser === 401) {
     return (
       <div className="row">
         <ToDoList />
@@ -33,6 +33,15 @@ function App() {
         </div>
       </div>
 
+    )
+  } else {
+    return (
+      <div className="row">
+        <ToDoList />
+        <div className="col" style={{ border: '1px solid blue' }}>
+        <h1>Something has gone wrong</h1>
+        </div>
+      </div>
     )
   }
 }
