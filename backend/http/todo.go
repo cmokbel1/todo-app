@@ -55,7 +55,7 @@ func (s *Server) handleTodoListCreate(w http.ResponseWriter, r *http.Request) {
 		s.error(w, r, err)
 		return
 	}
-	s.json(w, r, http.StatusOK, list)
+	s.json(w, r, http.StatusCreated, list)
 }
 
 func (s *Server) handleTodoListGet(w http.ResponseWriter, r *http.Request) {
