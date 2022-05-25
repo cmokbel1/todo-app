@@ -868,7 +868,17 @@
 					"name": "Get All",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "{{BACKEND_URL}}/api/todos",
+							"host": [
+								"{{BACKEND_URL}}"
+							],
+							"path": [
+								"api",
+								"todos"
+							]
+						}
 					},
 					"response": [
 						{
