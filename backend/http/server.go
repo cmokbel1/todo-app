@@ -20,10 +20,11 @@ type Server struct {
 	server *http.Server
 
 	// config values
-	Addr   string
-	Domain string
-	TLS    bool
-	APIKey string
+	Addr               string
+	Domain             string
+	TLS                bool
+	APIKey             string
+	CORSAllowedOrigins string
 
 	Logger todo.Logger
 	// LoggerMiddleware is exposed for testing purposes.
@@ -45,6 +46,10 @@ func NewServer() *Server {
 func (s *Server) Listen() (err error) {
 	if s.APIKey == "" {
 		s.Logger.Warn("API key is empty")
+	}
+
+	if s.CORSAllowedOrigins == "*" {
+		s.Logger.Warn("CORS allowed origins is '*'")
 	}
 
 	r := chi.NewRouter()
@@ -201,12 +206,13 @@ func (s *Server) requireAuth(next http.Handler) http.Handler {
 	})
 }
 
+// cors is middleware that enables CORS for localhost domains only. This functionality works only if the configured
+// Domain is localhost.
 func (s *Server) cors(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		headers := w.Header()
 		if s.Domain == "localhost" {
-			// TODO(1gm): Let's make this a config setting for dev environment.
-			headers.Set("Access-Control-Allow-Origin", "http://localhost:5000")
+			headers.Set("Access-Control-Allow-Origin", s.CORSAllowedOrigins)
 			headers.Set("Access-Control-Allow-Headers", "Content-Type, Origin, Accept")
 			headers.Set("Access-Control-Expose-Headers", "Link")
 			headers.Set("Access-Control-Allow-Methods", "GET, POST, PUT, PATCH, OPTIONS, DELETE")
