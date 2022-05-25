@@ -109,7 +109,16 @@ func (s *Server) handleUserCreate(w http.ResponseWriter, r *http.Request) {
 		s.error(w, r, err)
 		return
 	}
-	s.Logger.Infof("created user %q (id = %q)", user.Name, user.ID)
+	s.Logger.Infof("created user %q (id = %d)", user.Name, user.ID)
+
+	ctx := todo.NewContextWithUser(r.Context(), user)
+	list := &todo.List{Name: "My first list", Completed: false}
+	if err := s.ItemListService.CreateList(ctx, list); err != nil {
+		s.Logger.Errorf("failed to create list for new user %q: %v", user.Name, err)
+		s.error(w, r, err)
+		return
+	}
+	s.Logger.Infof("created default list for user %q (list id = %d)", user.Name, list.ID)
 	s.json(w, r, http.StatusCreated, user)
 }
 
