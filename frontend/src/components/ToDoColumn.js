@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { ToDoLists } from './ToDoLists'
 import { getLists } from '../http/lists'
-const ToDoColumn = ({userState}) => {
+const ToDoColumn = ({userState, listState, setListState}) => {
     const [lists, setLists] = useState([])
 
     useEffect(() => {
@@ -20,9 +20,9 @@ const ToDoColumn = ({userState}) => {
         <div className="col-sm-3" style={{ border: '1px solid red' }}>
             <p className="fs-3 text-center">TODO</p>
 
-            <ToDoLists lists={lists} />
+            <ToDoLists lists={lists}  listState={listState} setListState={setListState} />
             <div className="text-center">
-                <a className="link-dark" target="_blank" rel="noreferrer" href="https://github.com/cmokbel1/todo-app">{gitHub}</a>
+                <a className="link-dark align-bottom" target="_blank" rel="noreferrer" href="https://github.com/cmokbel1/todo-app">{gitHub}</a>
             </div>
         </div>
     )

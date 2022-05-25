@@ -11,6 +11,7 @@ function App() {
 
   const [userState, setUserState] = useState()
   const [returnError, setReturnError] = useState(null)
+  const [listState, setListState] = useState()
 
   useEffect(() => {
     getUser().then(res => {
@@ -25,7 +26,7 @@ function App() {
     const handleLogout = () => {
       logout().then(res => {
         if (res.ok) {
-          setUserState('');
+          setUserState();
         } else {
           setReturnError(res.error);
         }
@@ -38,14 +39,14 @@ function App() {
         <ToDoColumn userState={userState}/>
         <div className="col" style={{ border: '1px solid blue' }}>
         <div  className="text-end"><span>Hello {userState} </span><button className="btn btn-primary" onClick={handleLogout}>Logout</button></div>
-          <h2>Welcome Home</h2>
+          {listState ? <h1>hello</h1> : <h2>hell no</h2>}
         </div>
       </div>
     )
   } else if (returnError) {
     return (
       <div className="row">
-        <ToDoColumn  userState={userState}/>
+        <ToDoColumn  userState={userState} listState={listState} setListState={setListState}/>
         <div className="col" style={{ border: '1px solid blue' }}>
           <Login userState={userState} setUserState={setUserState} />
         </div>
