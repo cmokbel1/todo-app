@@ -27,7 +27,7 @@ export function Main({ userState, setUserState }) {
     }
     return (
         <>
-            <ToDoLists lists={lists} />
+            <ToDoLists lists={lists} selectedList={selectedList} setSelectedList={setSelectedList} />
             {body}
         </>
     )

@@ -9,11 +9,15 @@ export const ListDetail = ({selectedList, setSelectedList}) => {
         if (event.charCode  === 13) {
             const res = await addItem(selectedList.id, newItemName);
             if (res.error) {
-                setMessageState(res.error);
+                setMessageState("Input required");
             } else {
                 setMessageState('Post Successful');
             }
             setNewItemName('');
+            setTimeout(() => {
+                setMessageState('');
+            }, 1000)
+            
         }
     }
 
