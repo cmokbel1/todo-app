@@ -7,7 +7,6 @@ export const ToDoLists = ({ lists, selectedList, setSelectedList }) => {
     const handleListClick = async (id) => {
         const list = await getList(id);
         if (list.name) {
-            console.log(list)
             setSelectedList(list)
             return selectedList
         } else {
