@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { getList } from '../http/lists'
 
 export const ToDoLists = ({lists, listState, setListState}) => {
