@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { loginUser } from '../http/user'
 
-const Login = ({ userState, setUserState }) => {
+const Login = ({ setUserState }) => {
     const [userInput, setUserInput] = useState('');
     const [passwordInput, setPasswordInput] = useState('');
     const [errorState, setErrorState] = useState('');
