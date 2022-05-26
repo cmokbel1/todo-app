@@ -52,4 +52,4 @@ frontend/yarn-debug.log*
 frontend/yarn-error.log*
 
 #.vscode settings
-.vscode/settings.json
+/.vscode
