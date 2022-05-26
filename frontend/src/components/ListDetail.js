@@ -4,7 +4,10 @@ import { addItem } from "../http/lists";
 export const ListDetail = ({ selectedList, setSelectedList }) => {
     const [messageState, setMessageState] = useState('')
     const [newItemName, setNewItemName] = useState('')
-
+// Takes the value from the input at the bottom of the list
+// and adds it to the list of items within a specific list
+// checks to see if the key pressed was the enter key 
+// we display a message below the input if successful or error
     const handleAddItem = async (event) => {
         if (event.charCode === 13) {
             const res = await addItem(selectedList.id, newItemName);
