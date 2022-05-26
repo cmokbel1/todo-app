@@ -8,6 +8,7 @@ export const ToDoLists = ({lists, listState, setListState}) => {
         const list = await getList(id);
         if (list.ok) {
             setListState(list)
+            return list
         } else {
             return list.error
         }
