@@ -1,4 +1,5 @@
-import { getList } from '../http/lists'
+import { getList } from '../http/lists';
+import { useState } from 'react';
 
 export const ToDoLists = ({ lists, selectedList, setSelectedList }) => {
     // when the list button is clicked the API will return a list item and
@@ -7,8 +8,8 @@ export const ToDoLists = ({ lists, selectedList, setSelectedList }) => {
     const handleListClick = async (id) => {
         const list = await getList(id);
         if (list.name) {
+            console.log(list)
             setSelectedList(list)
-            return selectedList
         } else {
             return list.error
         }
