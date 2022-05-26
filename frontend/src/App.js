@@ -5,7 +5,7 @@ import { default as Login } from './components/Login';
 import { default as ToDoColumn } from './components/ToDoColumn';
 import { List } from './components/List'
 
-import { getUser, logout } from './http/user';
+import { getUser } from './http/user';
 
 
 function App() {
@@ -24,24 +24,13 @@ function App() {
     });
   }, [])
 
-  const handleLogout = () => {
-    logout().then(res => {
-      if (res.ok) {
-        setUserState();
-      } else {
-        setReturnError(res.error);
-      }
-    })
-  }
-
   if (userState) {
     return (
       <div className="row">
-        <ToDoColumn userState={userState} listState={listState} setListState={setListState} />
+        <ToDoColumn userState={userState} setUserState={setUserState} listState={listState} setListState={setListState} setReturnError={setReturnError}/>
         <div className="col">
-          <div className="text-end"><span>Hello {userState} </span><button className="btn btn-primary" onClick={handleLogout}>Logout</button></div>
           {listState ?
-          <List listState={listState} />
+            <List listState={listState} />
             : <h2>List Not Found</h2>}
         </div>
       </div>
