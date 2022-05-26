@@ -2,12 +2,9 @@ import { useState } from 'react';
 import { loginUser } from '../http/user'
 
 const Login = ({ userState, setUserState }) => {
-
     const [userInput, setUserInput] = useState('');
     const [passwordInput, setPasswordInput] = useState('');
-
     const [errorState, setErrorState] = useState('');
-
 
     const handleLogin = event => {
         event.preventDefault();
