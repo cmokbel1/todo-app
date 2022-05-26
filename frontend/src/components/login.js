@@ -11,7 +11,6 @@ const Login = ({ userState, setUserState }) => {
         loginUser(userInput, passwordInput).then(res => {
             if (res.name) {
                  setUserState(res.name);
-                console.log(res.name)
             } else {
                 setErrorState(res);
             }

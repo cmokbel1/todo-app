@@ -4,11 +4,12 @@ export const ToDoLists = ({ lists, listState, setListState }) => {
     // when the list button is clicked the API will return a list item and
     // we want to set that list item to a state which will then be passed up
     // this will allow us to render the current list item onto the main page
-    const handleListClick = async (id) => {
+    const handleListClick = async(id) => {
         const list = await getList(id);
-        if (list.ok) {
+        if (list.name) {
+            console.log(list)
             setListState(list)
-            return list
+            return listState
         } else {
             return list.error
         }

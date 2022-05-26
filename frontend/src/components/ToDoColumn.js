@@ -17,10 +17,10 @@ const ToDoColumn = ({userState, listState, setListState}) => {
     </svg>;
 
     return (
-        <div className="col-sm-3" style={{ border: '1px solid red' }}>
+        <div className="col-sm-3">
             <p className="fs-3 text-center">TODO</p>
 
-            <ToDoLists lists={lists}  listState={listState} setListState={setListState} />
+            <ToDoLists lists={lists} listState={listState} setListState={setListState} />
             <div className="text-center">
                 <a className="link-dark align-bottom" target="_blank" rel="noreferrer" href="https://github.com/cmokbel1/todo-app">{gitHub}</a>
             </div>

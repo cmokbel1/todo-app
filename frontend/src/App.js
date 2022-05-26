@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
 import './App.css';
 
-import { default as Login } from './components/login';
+import { default as Login } from './components/Login';
 import { default as ToDoColumn } from './components/ToDoColumn';
+import { List } from './components/List'
 
 import { getUser, logout } from './http/user';
 
@@ -22,32 +23,34 @@ function App() {
       }
     });
   }, [])
-  
-    const handleLogout = () => {
-      logout().then(res => {
-        if (res.ok) {
-          setUserState();
-        } else {
-          setReturnError(res.error);
-        }
-      })
-    }
+
+  const handleLogout = () => {
+    logout().then(res => {
+      if (res.ok) {
+        setUserState();
+      } else {
+        setReturnError(res.error);
+      }
+    })
+  }
 
   if (userState) {
     return (
       <div className="row">
-        <ToDoColumn userState={userState}/>
-        <div className="col" style={{ border: '1px solid blue' }}>
-        <div  className="text-end"><span>Hello {userState} </span><button className="btn btn-primary" onClick={handleLogout}>Logout</button></div>
-          {listState ? <h1>hello</h1> : <h2>hell no</h2>}
+        <ToDoColumn userState={userState} listState={listState} setListState={setListState} />
+        <div className="col">
+          <div className="text-end"><span>Hello {userState} </span><button className="btn btn-primary" onClick={handleLogout}>Logout</button></div>
+          {listState ?
+          <List listState={listState} />
+            : <h2>List Not Found</h2>}
         </div>
       </div>
     )
   } else if (returnError) {
     return (
       <div className="row">
-        <ToDoColumn  userState={userState} listState={listState} setListState={setListState}/>
-        <div className="col" style={{ border: '1px solid blue' }}>
+        <ToDoColumn userState={userState} />
+        <div className="col">
           <Login userState={userState} setUserState={setUserState} />
         </div>
       </div>
@@ -56,8 +59,8 @@ function App() {
   } else {
     return (
       <div className="row">
-        <ToDoColumn userState={userState}/>
-        <div className="col align-middle" style={{ border: '1px solid blue' }}>
+        <ToDoColumn userState={userState} />
+        <div className="col align-middle">
           <h1 className="text-center">Something has gone wrong</h1>
         </div>
       </div>
