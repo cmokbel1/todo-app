@@ -38,7 +38,7 @@ function App() {
   } else if (returnError) {
     return (
       <div className="row">
-        <ToDoColumn userState={userState} />
+        <ToDoColumn />
         <div className="col">
           <Login userState={userState} setUserState={setUserState} />
         </div>
@@ -48,7 +48,7 @@ function App() {
   } else {
     return (
       <div className="row">
-        <ToDoColumn userState={userState} />
+        <ToDoColumn />
         <div className="col align-middle">
           <h1 className="text-center">Something has gone wrong</h1>
         </div>
