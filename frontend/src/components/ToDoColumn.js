@@ -39,7 +39,6 @@ const ToDoColumn = ({ userState, setUserState, listState, setListState, setRetur
             </button> 
             </div>
             : null}
-        
             <ToDoLists lists={lists} listState={listState} setListState={setListState} />
             <div className="text-center">
                 <a className="link-dark align-bottom" target="_blank" rel="noreferrer" href="https://github.com/cmokbel1/todo-app">{gitHub}</a>
