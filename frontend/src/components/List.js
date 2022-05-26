@@ -1,7 +1,7 @@
 
 export const List = ({listState}) => {
     return (
-        <div className="container">
+        <div className="container align-middle text-center">
             <h1><u>{listState.name}</u></h1>
             <ul className="list-group">
                 {listState.items.map((item, index) => {
