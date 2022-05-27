@@ -2,23 +2,27 @@ import { useState } from 'react';
 import { addItem } from "../http/lists";
 
 export const ListDetail = ({ selectedList, setSelectedList }) => {
-    const [messageState, setMessageState] = useState('')
-    const [newItemName, setNewItemName] = useState('')
-// takes an input value and adds it to the selectedList when enter is pressed
+    const [messageState, setMessageState] = useState('');
+    const [errorMessageState, setErrorMessageState] = useState('');
+    const [newItemName, setNewItemName] = useState('');
+    // takes an input value and adds it to the selectedList when enter is pressed
     const handleAddItem = async (event) => {
+        if (!newItemName) {
+            setErrorMessageState('Input Required');
+            return;
+        }
         if (event.charCode === 13) {
             const res = await addItem(selectedList.id, newItemName);
             if (res.error) {
-                setMessageState("Input required");
+                setErrorMessageState(res.error);
             } else {
+                setErrorMessageState('');
                 setMessageState('Post Successful');
-
             }
             setNewItemName('');
             setTimeout(() => {
                 setMessageState('');
             }, 1000)
-
         }
     }
     let body = <h1>Nothing to see here</h1>
@@ -37,7 +41,7 @@ export const ListDetail = ({ selectedList, setSelectedList }) => {
                 })}
             </ul>
             <input type="text" name="item" className="form-input" onChange={(e) => { setNewItemName(e.target.value) }} onKeyPress={(e) => handleAddItem(e)} placeholder="Add Item" value={newItemName}></input>
-            <p className="text-center">{messageState}</p>
+            <p className="text-center">{messageState}</p><p className="text-center" style={{ color: 'red' }}>{errorMessageState}</p>
         </>
     }
     return body
