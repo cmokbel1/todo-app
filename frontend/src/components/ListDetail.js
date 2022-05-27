@@ -8,17 +8,17 @@ export const ListDetail = ({ selectedList }) => {
     const [newItemName, setNewItemName] = useState('');
     // takes an input value and adds it to the selectedList when enter is pressed
     const handleAddItem = async (event) => {
-        if (!newItemName) {
-            setErrorMessageState('Input Required');
-            return;
-        }
         if (event.charCode === 13) {
+            if (!newItemName) {
+                setErrorMessageState('Item name cannot be empty');
+                return;
+            }
             const res = await addItem(selectedList.id, newItemName);
             if (res.error) {
                 setErrorMessageState(res.error);
             } else {
                 setErrorMessageState('');
-                setMessageState('Post Successful');
+                setMessageState('Task Added Successfully');
                 setItems([...items, res])
             }
             setNewItemName('');
@@ -30,7 +30,7 @@ export const ListDetail = ({ selectedList }) => {
 
     useEffect(() => {
         if (selectedList) {
-            setItems(selectedList.items)            
+            setItems(selectedList.items)
         }
 
     })

@@ -18,7 +18,7 @@ const Login = ({ setUserState }) => {
         });
     }
     return (
-        <>
+        <div className="offset-3 col-6">
             <form className="card justify-content-center" style={{ width: '18em' }}>
                 <p className="card-title">You must login to continue</p>
                 <div className="input col-sm-8 mb-3">
@@ -33,7 +33,7 @@ const Login = ({ setUserState }) => {
                 <button type="submit" className="btn btn-primary" onClick={handleLogin} disabled={userInput === "" || passwordInput === ""}>Login</button>
                 
             </form>
-        </>
+        </div>
     )
 }
 
