@@ -1,23 +1,25 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { addItem } from "../http/lists";
 
-export const ListDetail = ({ selectedList, setSelectedList }) => {
+export const ListDetail = ({ selectedList }) => {
     const [messageState, setMessageState] = useState('');
     const [errorMessageState, setErrorMessageState] = useState('');
+    const [items, setItems] = useState([])
     const [newItemName, setNewItemName] = useState('');
     // takes an input value and adds it to the selectedList when enter is pressed
     const handleAddItem = async (event) => {
-        if (!newItemName) {
-            setErrorMessageState('Input Required');
-            return;
-        }
         if (event.charCode === 13) {
+            if (!newItemName) {
+                setErrorMessageState('Item name cannot be empty');
+                return;
+            }
             const res = await addItem(selectedList.id, newItemName);
             if (res.error) {
                 setErrorMessageState(res.error);
             } else {
                 setErrorMessageState('');
-                setMessageState('Post Successful');
+                setMessageState('Task Added Successfully');
+                setItems([...items, res])
             }
             setNewItemName('');
             setTimeout(() => {
@@ -25,12 +27,19 @@ export const ListDetail = ({ selectedList, setSelectedList }) => {
             }, 1000)
         }
     }
+
+    useEffect(() => {
+        if (selectedList) {
+            setItems(selectedList.items)
+        }
+    }, [selectedList])
+
     let body = <h1>Nothing to see here</h1>
     if (selectedList) {
         body = <>
             <h1><u>{selectedList.name}</u></h1>
             <ul className="list-group">
-                {selectedList.items.map((item, index) => {
+                {items.map((item, index) => {
                     return (
                         <li className="list-group-item" key={index}>
                             {item.name}
