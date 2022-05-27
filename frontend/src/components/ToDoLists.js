@@ -7,11 +7,11 @@ export const ToDoLists = ({ lists, selectedList, setSelectedList }) => {
     // this will allow us to render the current list item onto the main page
     const handleListClick = async (id) => {
         const list = await getList(id);
-        if (list.name) {
-            console.log(list)
-            setSelectedList(list)
-        } else {
+        if (!list.name) {
             return list.error
+        } else {
+            console.log(list)
+            setSelectedList(list) 
         }
     }
 
