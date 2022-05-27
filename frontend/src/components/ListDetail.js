@@ -32,8 +32,7 @@ export const ListDetail = ({ selectedList }) => {
         if (selectedList) {
             setItems(selectedList.items)
         }
-
-    })
+    }, [selectedList])
 
     let body = <h1>Nothing to see here</h1>
     if (selectedList) {
