@@ -30,7 +30,7 @@ export const ToDoLists = ({ lists, selectedList, setSelectedList, addList }) => 
                 setErrorMessageState(res.error);
             } else {
                 setErrorMessageState('');
-                setMessageState('Post Successful');
+                setMessageState('List Successfully Added');
             }
             setNewListName('');
             setTimeout(() => {
