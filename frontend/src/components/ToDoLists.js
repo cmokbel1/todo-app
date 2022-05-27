@@ -54,6 +54,7 @@ export const ToDoLists = ({ lists, selectedList, setSelectedList, addList }) => 
                     )}
                 </ul>
                 <input type="text" name="item" className="form-input" onChange={(e) => { setNewListName(e.target.value) }} onKeyPress={(e) => handleAddItem(e)} placeholder="+ add list" value={newListName}></input>
+                <p className="text-center">{messageState}</p><p className="text-center" style={{color: 'red'}}>{errorMessageState}</p>
             </>
     }
 
