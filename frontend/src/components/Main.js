@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { default as Login } from './Login';
 import { ListDetail } from './ListDetail';
 import { ToDoLists } from './ToDoLists';
-import { getLists } from '../http/lists'
+import { getLists, addList } from '../http/lists';
 
 
 export function Main({ userState, setUserState }) {
@@ -27,7 +27,7 @@ export function Main({ userState, setUserState }) {
     }
     return (
         <>
-            <ToDoLists lists={lists} selectedList={selectedList} setSelectedList={setSelectedList} />
+            <ToDoLists lists={lists} selectedList={selectedList} setSelectedList={setSelectedList} addList={addList} />
             {body}
         </>
     )
