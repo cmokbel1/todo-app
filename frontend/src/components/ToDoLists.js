@@ -1,7 +1,7 @@
 import { getList } from '../http/lists';
 import { useState } from 'react';
 
-export const ToDoLists = ({ lists, selectedList, setSelectedList, addList }) => {
+export const ToDoLists = ({ lists, setLists, selectedList, setSelectedList, addList }) => {
     const [newListName, setNewListName] = useState('')
     const [messageState, setMessageState] = useState('');
     const [errorMessageState, setErrorMessageState] = useState('');
@@ -19,7 +19,7 @@ export const ToDoLists = ({ lists, selectedList, setSelectedList, addList }) => 
     }
     
     // need to abstract away this function...
-    const handleAddItem = async (event) => {
+    const handleAddList = async (event) => {
         if (!newListName) {
             setErrorMessageState('Input Required');
             return;
@@ -31,6 +31,7 @@ export const ToDoLists = ({ lists, selectedList, setSelectedList, addList }) => 
             } else {
                 setErrorMessageState('');
                 setMessageState('List Successfully Added');
+                setLists([...lists, res])
             }
             setNewListName('');
             setTimeout(() => {
@@ -53,7 +54,7 @@ export const ToDoLists = ({ lists, selectedList, setSelectedList, addList }) => 
                         </li>
                     )}
                 </ul>
-                <input type="text" name="item" className="form-input" onChange={(e) => { setNewListName(e.target.value) }} onKeyPress={(e) => handleAddItem(e)} placeholder="+ add list" value={newListName}></input>
+                <input type="text" name="item" className="form-input" onChange={(e) => { setNewListName(e.target.value) }} onKeyPress={(e) => handleAddList(e)} placeholder="+ add list" value={newListName}></input>
                 <p className="text-center">{messageState}</p><p className="text-center" style={{color: 'red'}}>{errorMessageState}</p>
             </>
     }
