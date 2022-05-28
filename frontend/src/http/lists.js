@@ -56,7 +56,7 @@ async function addList(item) {
 
 // update functions!
 async function setCompletion(id, completed, listId) {
-    const data = { id: id, completed: !completed }
+    const data = { id: id, completed: completed }
     try {
         const res = await fetch(`/api/todos/${listId}/${id}`,
             {

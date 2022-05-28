@@ -73,7 +73,7 @@ export const ToDoLists = ({ userState }) => {
                     <p className="text-center">{messageState}</p><p className="text-center" style={{ color: 'red' }}>{errorMessageState}</p>
                 </div>
                 <div className='col-12 col-md-9'>
-                    <ListDetail selectedList={selectedList} />
+                    <ListDetail {...selectedList} />
                 </div>
             </div>
     }
