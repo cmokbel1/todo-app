@@ -12,7 +12,8 @@ export const Item = ({ id, name, completed, setCompleted, index}) => {
             <input className="form-check-input p-6"
                 checked={completed}
                 type="checkbox"
-                onClick={() => setCompleted(id, !completed)} />
+                onClick={() => setCompleted(id, !completed)}
+                readOnly={true} />
         </li>
     )
 }
