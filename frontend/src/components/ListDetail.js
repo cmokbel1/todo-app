@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { addItem } from "../http/lists";
+import { Item } from './Item';
 
 export const ListDetail = ({ selectedList }) => {
     const [messageState, setMessageState] = useState('');
@@ -41,11 +42,7 @@ export const ListDetail = ({ selectedList }) => {
             <ul className="list-group">
                 {items.map((item, index) => {
                     return (
-                        <li className="list-group-item" key={index}>
-                            {item.name}
-                            <label className="" htmlFor="checkbox" name="completed">Completed</label>
-                            <input className="form-check-input" type="checkbox" />
-                        </li>
+                        <Item name={item.name} completed={item.completed} key={index} id={item.id} listId={item.listId} />
                     )
                 })}
             </ul>
