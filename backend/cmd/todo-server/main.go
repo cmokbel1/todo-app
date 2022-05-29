@@ -9,7 +9,9 @@ import (
 	"io/ioutil"
 	"os"
 	"os/signal"
+	"strings"
 
+	"github.com/cmokbel1/todo-app/backend/aws"
 	"github.com/cmokbel1/todo-app/backend/crypto"
 	"github.com/cmokbel1/todo-app/backend/http"
 	"github.com/cmokbel1/todo-app/backend/postgres"
@@ -188,9 +190,20 @@ func LoadConfig(filename string) (Config, error) {
 	config := DefaultConfig()
 	if filename == "" {
 		return config, errors.New("must specify a config file path using either TODO_CONFIG environment variable or the --config flag")
-	} else if b, err := ioutil.ReadFile(filename); err != nil {
+	}
+
+	var b []byte
+	var err error
+	if strings.HasPrefix(filename, "ssm") {
+		b, err = aws.GetEncryptedParameter(context.Background(), filename)
+	} else {
+		b, err = ioutil.ReadFile(filename)
+	}
+	if err != nil {
 		return config, err
-	} else if err = json.Unmarshal(b, &config); err != nil {
+	}
+
+	if err = json.Unmarshal(b, &config); err != nil {
 		return config, err
 	}
 
