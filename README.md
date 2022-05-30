@@ -78,6 +78,9 @@ $ # or use the TODO_CONFIG environment variable
 $ TODO_CONFIG=/path/to/config.json go run backend/cmd/todo-server/*.go
 ```
 
+To run the backend code with a config file from AWS param store prefix the path to the parameter with 
+**awsparamstore://**. The param should be stored as an encrypted string.
+
 #### Creating users
 
 Once the backend is running, use the **apiKey** you set in the config file to create test users. The examples below use
@@ -107,6 +110,7 @@ $ go test ./backend/... -cover
 # integration tests with coverage (requires running instance of Postgres)
 $ go test ./backend/... -cover -tags integration 
 ```
+
 ## deploy
 
 Something about how to deploy the app

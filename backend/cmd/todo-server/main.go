@@ -9,7 +9,9 @@ import (
 	"io/ioutil"
 	"os"
 	"os/signal"
+	"strings"
 
+	"github.com/cmokbel1/todo-app/backend/aws"
 	"github.com/cmokbel1/todo-app/backend/crypto"
 	"github.com/cmokbel1/todo-app/backend/http"
 	"github.com/cmokbel1/todo-app/backend/postgres"
@@ -131,7 +133,7 @@ func (app *App) ParseFlagsAndLoadConfig(ctx context.Context, args []string) erro
 
 	if err := fs.Parse(args); err != nil {
 		return err
-	} else if app.Config, err = LoadConfig(configFile); err != nil {
+	} else if app.Config, err = LoadConfig(ctx, configFile); err != nil {
 		return err
 	}
 
@@ -184,13 +186,27 @@ func DefaultConfig() Config {
 	return c
 }
 
-func LoadConfig(filename string) (Config, error) {
+// LoadConfig will load a config file from the path specified by filename. If the filename has the protocol "awsparamstore"
+// then the file will be loaded from AWS System's Manager Param Store. It is assumed that the file, if living in AWS, will
+// be stored encrypted.
+func LoadConfig(ctx context.Context, filename string) (Config, error) {
 	config := DefaultConfig()
 	if filename == "" {
 		return config, errors.New("must specify a config file path using either TODO_CONFIG environment variable or the --config flag")
-	} else if b, err := ioutil.ReadFile(filename); err != nil {
+	}
+
+	var b []byte
+	var err error
+	if strings.HasPrefix(filename, aws.ParamStorePrefix) {
+		b, err = aws.GetEncryptedParameter(ctx, filename)
+	} else {
+		b, err = ioutil.ReadFile(filename)
+	}
+	if err != nil {
 		return config, err
-	} else if err = json.Unmarshal(b, &config); err != nil {
+	}
+
+	if err = json.Unmarshal(b, &config); err != nil {
 		return config, err
 	}
 
