@@ -7,6 +7,7 @@ export const ListDetail = ({ id, name, completed, items }) => {
     const [errorMessageState, setErrorMessageState] = useState('');
     const [itemsState, setItemsState] = useState(items ? items : []);
     const [newItemName, setNewItemName] = useState('');
+    
 
     // takes an input value and adds it to the selectedList when enter is pressed
     const handleAddItem = async (event) => {
@@ -50,7 +51,7 @@ export const ListDetail = ({ id, name, completed, items }) => {
     let body = <h1>Nothing to see here</h1>
     if (id) {
         body = <>
-            <h1><u>{name}</u></h1>
+            <input className="fs-3" rows="2" value={name}></input>
             <ul className="list-group">
                 {itemsState.map((item, index) => {
                     return <Item id={item.id} name={item.name} completed={item.completed} setCompleted={handleSetCompleted} key={index} />

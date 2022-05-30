@@ -1,4 +1,4 @@
-import { getList, getLists, addList } from '../http/lists';
+import { getList, getLists, addList, updateListName } from '../http/lists';
 import { useState, useEffect } from 'react';
 import { ListDetail } from './ListDetail';
 
@@ -9,7 +9,7 @@ export const ToDoLists = ({ userState }) => {
     const [newListName, setNewListName] = useState('')
     const [messageState, setMessageState] = useState('');
     const [errorMessageState, setErrorMessageState] = useState('');
-
+    const [updatedListName, setUpdatedListName] = useState(selectedList)
 
     useEffect(() => {
         getLists().then(res => {
