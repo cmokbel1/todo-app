@@ -9,7 +9,7 @@ export const ToDoLists = ({ userState }) => {
     const [newListName, setNewListName] = useState('')
     const [messageState, setMessageState] = useState('');
     const [errorMessageState, setErrorMessageState] = useState('');
-    const [updatedListName, setUpdatedListName] = useState(selectedList)
+    const [updatedList, setUpdatedList] = useState(selectedList)
 
     useEffect(() => {
         getLists().then(res => {
