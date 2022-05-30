@@ -9,7 +9,7 @@ export const ToDoLists = ({ userState }) => {
     const [newListName, setNewListName] = useState('')
     const [messageState, setMessageState] = useState('');
     const [errorMessageState, setErrorMessageState] = useState('');
-    const [updatedList, setUpdatedList] = useState(selectedList)
+    const [updatedListName, setUpdatedListName] = useState(selectedList)
 
     useEffect(() => {
         getLists().then(res => {
@@ -36,7 +36,7 @@ export const ToDoLists = ({ userState }) => {
     const handleAddList = async (event) => {
         if (event.charCode === 13) {
             if (!newListName) {
-                setErrorMessageState('List name cannot be empty');
+                setErrorMessageState('List name cannot be empty.');
                 return;
             }
             const res = await addList(newListName);
@@ -44,7 +44,7 @@ export const ToDoLists = ({ userState }) => {
                 setErrorMessageState(res.error);
             } else {
                 setErrorMessageState('');
-                setMessageState('List Successfully Added');
+                setMessageState('List successfully added.');
                 setLists([...lists, res])
             }
             setNewListName('');
@@ -53,7 +53,26 @@ export const ToDoLists = ({ userState }) => {
             }, 1000)
         }
     }
-
+    // handler for the list name update
+    const handleListNameUpdate = async (event) => {
+        event.preventDefault();
+        if (event.charCode === 13) {
+            if (!updatedListName) {
+                setErrorMessageState('List name has not changed.');
+                return;
+            }
+            const res = await updateListName(selectedList.id, updatedListName)
+            if (res.error) {
+                setErrorMessageState(res.error)
+            }
+            else {
+                setErrorMessageState('');
+                setMessageState('Successfully updated list name.')
+                const newList = lists.map(l => l.id === selectedList.id ? res : l)
+                setLists(newList)
+            }
+        }
+    }
 
     let body = <p>Nothing to see here</p>
     if (lists) {
