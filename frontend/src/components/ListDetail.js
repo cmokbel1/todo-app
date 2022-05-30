@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react';
-import { addItem } from "../http/lists";
+import { addItem, setCompletion } from "../http/lists";
+import { Item } from './Item';
 
-export const ListDetail = ({ selectedList }) => {
+export const ListDetail = ({ id, name, completed, items }) => {
     const [messageState, setMessageState] = useState('');
     const [errorMessageState, setErrorMessageState] = useState('');
-    const [items, setItems] = useState([])
+    const [itemsState, setItemsState] = useState(items ? items : []);
     const [newItemName, setNewItemName] = useState('');
+
     // takes an input value and adds it to the selectedList when enter is pressed
     const handleAddItem = async (event) => {
         if (event.charCode === 13) {
@@ -13,13 +15,14 @@ export const ListDetail = ({ selectedList }) => {
                 setErrorMessageState('Item name cannot be empty');
                 return;
             }
-            const res = await addItem(selectedList.id, newItemName);
+            const res = await addItem(id, newItemName);
             if (res.error) {
                 setErrorMessageState(res.error);
             } else {
                 setErrorMessageState('');
                 setMessageState('Task Added Successfully');
-                setItems([...items, res])
+                setItemsState([...itemsState, res])
+                console.log(items)
             }
             setNewItemName('');
             setTimeout(() => {
@@ -28,25 +31,29 @@ export const ListDetail = ({ selectedList }) => {
         }
     }
 
-    useEffect(() => {
-        if (selectedList) {
-            setItems(selectedList.items)
+    const handleSetCompleted = async (itemId, completed) => {
+        const res = await setCompletion(itemId, completed, id)
+        if (res.error) {
+            console.log(res.error)
+            return
         }
-    }, [selectedList])
+        const newItems = itemsState.map(i => i.id === itemId ? res : i )
+        setItemsState(newItems)
+    }
+
+    useEffect(() => {
+        if (id) {
+            setItemsState(items)
+        }
+    }, [items, id])
 
     let body = <h1>Nothing to see here</h1>
-    if (selectedList) {
+    if (id) {
         body = <>
-            <h1><u>{selectedList.name}</u></h1>
+            <h1><u>{name}</u></h1>
             <ul className="list-group">
-                {items.map((item, index) => {
-                    return (
-                        <li className="list-group-item" key={index}>
-                            {item.name}
-                            <label className="" htmlFor="checkbox" name="completed">Completed</label>
-                            <input className="form-check-input" type="checkbox" />
-                        </li>
-                    )
+                {itemsState.map((item, index) => {
+                    return <Item id={item.id} name={item.name} completed={item.completed} setCompleted={handleSetCompleted} key={index} />
                 })}
             </ul>
             <input type="text" name="item" className="form-input" onChange={(e) => { setNewItemName(e.target.value) }} onKeyPress={(e) => handleAddItem(e)} placeholder="Add Item" value={newItemName}></input>
