@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"strings"
+	"time"
 
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/ssm"
@@ -17,9 +18,11 @@ func GetEncryptedParameter(ctx context.Context, key string) ([]byte, error) {
 	return getParameter(ctx, key, true)
 }
 
-func getParameter(ctx context.Context, key string, encrypted bool) ([]byte, error) {
+func getParameter(bgCtx context.Context, key string, encrypted bool) ([]byte, error) {
+	ctx, cancel := context.WithTimeout(bgCtx, time.Second*5)
+	defer cancel()
 	svc := ssm.New(session.Must(session.NewSession()))
-	key = stripSSMKeyPrefix(key)
+	key = stripPrefix(key)
 	out, err := svc.GetParameterWithContext(ctx, &ssm.GetParameterInput{
 		Name:           &key,
 		WithDecryption: &encrypted,
@@ -30,11 +33,11 @@ func getParameter(ctx context.Context, key string, encrypted bool) ([]byte, erro
 	return []byte(*out.Parameter.Value), nil
 }
 
-const ssmKeyPrefix = "ssm://"
+const ParamStorePrefix = "awsparamstore://"
 
-func stripSSMKeyPrefix(key string) string {
-	if strings.HasPrefix(key, ssmKeyPrefix) {
-		return strings.TrimPrefix(key, ssmKeyPrefix)
+func stripPrefix(key string) string {
+	if strings.HasPrefix(key, ParamStorePrefix) {
+		return strings.TrimPrefix(key, ParamStorePrefix)
 	}
 	return key
 }
