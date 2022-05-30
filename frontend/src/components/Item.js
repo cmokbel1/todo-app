@@ -1,6 +1,4 @@
 export const Item = ({ id, name, completed, setCompleted, index}) => {
-    // this function passes in a data from the item to a helper function
-    // helper function sets the completed state of an item to true or false
     let styledName = name
     if (completed) {
         styledName = <s>{name}</s>
