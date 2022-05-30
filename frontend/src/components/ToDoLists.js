@@ -88,11 +88,13 @@ export const ToDoLists = ({ userState }) => {
                             </li>
                         )}
                     </ul>
-                    <input type="text" name="item" className="form-input" onChange={(e) => { setNewListName(e.target.value) }} onKeyPress={(e) => handleAddList(e)} placeholder="+ add list" value={newListName}></input>
+                    <input type="text" name="item" className="form-input w-75" 
+                    onChange={(e) => { setNewListName(e.target.value) }} onKeyPress={(e) => handleAddList(e)} 
+                    placeholder="+ add list" value={newListName}></input>
                     <p className="text-center">{messageState}</p><p className="text-center" style={{ color: 'red' }}>{errorMessageState}</p>
                 </div>
                 <div className='col-12 col-md-9'>
-                    <ListDetail {...selectedList} />
+                    <ListDetail {...selectedList} handleUpdate={handleListNameUpdate} setUpdatedName={setUpdatedListName} updatedName={updatedListName}  />
                 </div>
             </div>
     }
