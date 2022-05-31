@@ -21,12 +21,11 @@ export const ToDoLists = ({ userState }) => {
     // we want to set that list item to a state which will then be passed up
     // this will allow us to render the current list item onto the main page
     async function handleListClick(id) {
-        const list = await getList(id);
-        if (!list.name) {
-            return list.error;
-        } else {
-            console.log(list);
-            setSelectedList(list);
+       const res = await getList(id);
+        if (res.error) {
+           return res.error
+        }
+          setSelectedList(res);
         }
     }
 
