@@ -55,7 +55,6 @@ export const ListDetail = ({ id, name, completed, items, handleUpdate }) => {
             return;
         }
         const newItems = itemsState.filter(i => i.id !== id ? i : null)
-        console.log(newItems)
         setItemsState(newItems)
     }
 
