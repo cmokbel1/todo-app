@@ -63,11 +63,27 @@ async function setCompletion(id, completed, listId) {
                 method: 'PATCH',
                 body: JSON.stringify(data)
             })
-            const jsonResponse = await res.json()
-            return jsonResponse
+        const jsonResponse = await res.json()
+        return jsonResponse
     } catch (err) {
         console.log(err);
         return err.error;
     };
 }
-export { getLists, getList, addItem, addList, setCompletion };
+
+async function updateListName(id, name) {
+    const data = { name }
+    try {
+        const res = await fetch(`/api/todos/${id}`,
+            {
+                method: 'PATCH',
+                body: JSON.stringify(data)
+            })
+        const jsonResponse = await res.json();
+        return jsonResponse;
+    } catch (err) {
+        console.log(err);
+        return err.error;
+    };
+}
+export { getLists, getList, addItem, addList, setCompletion, updateListName };
