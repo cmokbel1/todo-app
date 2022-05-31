@@ -9,12 +9,10 @@ export const ToDoLists = ({ userState }) => {
     const [newListName, setNewListName] = useState('')
     const [messageState, setMessageState] = useState('');
     const [errorMessageState, setErrorMessageState] = useState('');
-    const [updatedListName, setUpdatedListName] = useState();
     useEffect(() => {
         getLists().then(res => {
             setLists(res)
             setSelectedList(res[0])
-            setUpdatedListName(selectedList)
         })
     }, [userState])
 
@@ -89,7 +87,7 @@ export const ToDoLists = ({ userState }) => {
                     <p className="text-center">{messageState}</p><p className="text-center" style={{ color: 'red' }}>{errorMessageState}</p>
                 </div>
                 <div className='col-12 col-md-9'>
-                    <ListDetail {...selectedList} handleUpdate={handleListNameUpdate} setUpdatedName={setUpdatedListName} />
+                    <ListDetail {...selectedList} handleUpdate={handleListNameUpdate}/>
                 </div>
             </div>
     }
