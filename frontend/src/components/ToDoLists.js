@@ -20,13 +20,13 @@ export const ToDoLists = ({ userState }) => {
     // when the list button is clicked the API will return a list item and
     // we want to set that list item to a state which will then be passed up
     // this will allow us to render the current list item onto the main page
-    const handleListClick = async (id) => {
+    async function handleListClick(id) {
         const list = await getList(id);
         if (!list.name) {
-            return list.error
+            return list.error;
         } else {
-            console.log(list)
-            setSelectedList(list)
+            console.log(list);
+            setSelectedList(list);
         }
     }
 
@@ -53,18 +53,17 @@ export const ToDoLists = ({ userState }) => {
     }
     // handler for the list name update
     const handleListNameUpdate = async (id, name) => {
-            const res = await updateListName(id, name)
-            if (res.error) {
-                setErrorMessageState(res.error)
-            }
-            else {
-                setErrorMessageState('');
-                setMessageState('Successfully updated list name.')
-
-                const newLists = lists.map(l => l.id === id ? res : l)
-                setLists(newLists)
-                setSelectedList(res)
-            }
+        const res = await updateListName(id, name)
+        if (res.error) {
+            setErrorMessageState(res.error)
+        }
+        else {
+            setErrorMessageState('');
+            setMessageState('Successfully updated list name.')
+            const newLists = lists.map(l => l.id === id ? res : l)
+            setLists(newLists)
+            setSelectedList(res)
+        }
     }
 
     let body = <p>Nothing to see here</p>
@@ -81,13 +80,13 @@ export const ToDoLists = ({ userState }) => {
                             </li>
                         )}
                     </ul>
-                    <input type="text" name="item" className="form-input w-75" 
-                    onChange={(e) => { setNewListName(e.target.value) }} onKeyPress={(e) => handleAddList(e)} 
-                    placeholder="+ add list" value={newListName}></input>
+                    <input type="text" name="item" className="form-input w-75"
+                        onChange={(e) => { setNewListName(e.target.value) }} onKeyPress={(e) => handleAddList(e)}
+                        placeholder="+ add list" value={newListName}></input>
                     <p className="text-center">{messageState}</p><p className="text-center" style={{ color: 'red' }}>{errorMessageState}</p>
                 </div>
                 <div className='col-12 col-md-9'>
-                    <ListDetail {...selectedList} handleUpdate={handleListNameUpdate}/>
+                    <ListDetail {...selectedList} handleUpdate={handleListNameUpdate} />
                 </div>
             </div>
     }
