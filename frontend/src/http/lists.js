@@ -94,10 +94,23 @@ async function deleteItem(listId,id) {
         {
             method: 'DELETE'
         })
-        return res
+        return res;
     } catch(err) {
         console.log(err);
         return err.error;
     }
 }
-export { getLists, getList, addItem, addList, setCompletion, updateListName, deleteItem };
+
+async function deleteList(listId) {
+    try {
+        const res = await fetch(`/api/todos/${listId}`,
+        {
+            method: 'DELETE'
+        })
+    return res;
+    } catch(err) {
+        console.log(err);
+        return err.error;
+    }
+}
+export { getLists, getList, addItem, addList, setCompletion, updateListName, deleteItem, deleteList };

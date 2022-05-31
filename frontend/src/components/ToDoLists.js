@@ -1,4 +1,4 @@
-import { getList, getLists, addList, updateListName } from '../http/lists';
+import { getList, getLists, addList, updateListName, deleteList } from '../http/lists';
 import { useState, useEffect } from 'react';
 import { ListDetail } from './ListDetail';
 
@@ -63,6 +63,17 @@ export const ToDoLists = ({ userState }) => {
             setSelectedList(res)
         }
     }
+    // handler for deleting list
+    const handleDeleteList = async(listId) => {
+        const res = await deleteList(listId);
+        if (res.error) {
+            console.log(res.error);
+            return;
+        }
+        const newLists = lists.filter(l => l.id !== listId ? l : null)
+        setLists(newLists)
+        setSelectedList()
+    }
 
     let body = <p>Nothing to see here</p>
     if (lists) {
@@ -84,7 +95,7 @@ export const ToDoLists = ({ userState }) => {
                     <p className="text-center">{messageState}</p><p className="text-center" style={{ color: 'red' }}>{errorMessageState}</p>
                 </div>
                 <div className='col-12 col-md-9'>
-                    <ListDetail {...selectedList} handleUpdate={handleListNameUpdate} />
+                    <ListDetail {...selectedList} handleUpdate={handleListNameUpdate} removeList={handleDeleteList}/>
                 </div>
             </div>
     }

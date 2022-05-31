@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { addItem, setCompletion, deleteItem } from "../http/lists";
 import { Item } from './Item';
 
-export const ListDetail = ({ id, name, completed, items, handleUpdate }) => {
+export const ListDetail = ({ id, name, completed, items, handleUpdate, removeList }) => {
     const [messageState, setMessageState] = useState('');
     const [errorMessageState, setErrorMessageState] = useState('');
     const [itemsState, setItemsState] = useState(items ? items : []);
@@ -58,6 +58,7 @@ export const ListDetail = ({ id, name, completed, items, handleUpdate }) => {
         setItemsState(newItems)
     }
 
+
     useEffect(() => {
         if (id) {
             setItemsState(items)
@@ -78,7 +79,7 @@ export const ListDetail = ({ id, name, completed, items, handleUpdate }) => {
                 onChange={(e) => { setNewItemName(e.target.value) }} onKeyPress={(e) => handleAddItem(e)}
                 placeholder="Add Item" value={newItemName}></input>
             <p className="text-center">{messageState}</p><p className="text-center" style={{ color: 'red' }}>{errorMessageState}</p>
-            <button className="btn btn-danger">Delete</button>
+            <button className="btn btn-danger" onClick={() => removeList(id)}>Delete</button>
         </>
     }
     return body
