@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { addItem, setCompletion } from "../http/lists";
+import { addItem, setCompletion, deleteItem } from "../http/lists";
 import { Item } from './Item';
 
 export const ListDetail = ({ id, name, completed, items, handleUpdate }) => {
@@ -24,7 +24,6 @@ export const ListDetail = ({ id, name, completed, items, handleUpdate }) => {
                 setErrorMessageState('');
                 setMessageState('Task Added Successfully');
                 setItemsState([...itemsState, res])
-                console.log(items)
             }
             setNewItemName('');
             setTimeout(() => {
@@ -43,10 +42,21 @@ export const ListDetail = ({ id, name, completed, items, handleUpdate }) => {
         setItemsState(newItems)
     }
 
-    const handleListUpdate = (e) => {
+    const handleListUpdate = async(e) => {
         if (e.charCode === 13) {
             handleUpdate(id, currentName)
         }
+    }
+
+    const handleDeleteItem = async(listId, id) => {
+        const res = await deleteItem(listId, id);
+        if (res.error) {
+            console.log(res.error);
+            return;
+        }
+        const newItems = itemsState.filter(i => i.id !== id ? i : null)
+        console.log(newItems)
+        setItemsState(newItems)
     }
 
     useEffect(() => {
@@ -62,7 +72,7 @@ export const ListDetail = ({ id, name, completed, items, handleUpdate }) => {
             <input className="fs-3" rows="2" value={currentName} onChange={(e) => setCurrentName(e.target.value)} onKeyPress={(e) => handleListUpdate(e)}></input>
             <ul className="list-group">
                 {itemsState.map((item, index) => {
-                    return <Item id={item.id} name={item.name} completed={item.completed} setCompleted={handleSetCompleted} key={index} />
+                    return <Item id={item.id} name={item.name} completed={item.completed} listId={id} setCompleted={handleSetCompleted} key={index} deleteItem={handleDeleteItem} />
                 })}
             </ul>
             <input type="text" name="item" className="form-input w-50" rows="2"

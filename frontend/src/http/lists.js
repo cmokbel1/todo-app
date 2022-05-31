@@ -86,4 +86,18 @@ async function updateListName(id, name) {
         return err.error;
     };
 }
-export { getLists, getList, addItem, addList, setCompletion, updateListName };
+
+// delete functions!!!
+async function deleteItem(listId,id) {
+    try {
+        const res = await fetch(`/api/todos/${listId}/${id}`,
+        {
+            method: 'DELETE'
+        })
+        return res
+    } catch(err) {
+        console.log(err);
+        return err.error;
+    }
+}
+export { getLists, getList, addItem, addList, setCompletion, updateListName, deleteItem };
