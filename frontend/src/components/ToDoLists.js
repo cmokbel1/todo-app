@@ -72,7 +72,7 @@ export const ToDoLists = ({ userState }) => {
         }
         const newLists = lists.filter(l => l.id !== listId ? l : null)
         setLists(newLists)
-        setSelectedList()
+        setSelectedList(newLists[0])
     }
 
     let body = <p>Nothing to see here</p>
