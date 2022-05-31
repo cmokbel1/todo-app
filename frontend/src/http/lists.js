@@ -72,7 +72,7 @@ async function setCompletion(id, completed, listId) {
 }
 
 async function updateListName(id, name) {
-    const data = { name: name }
+    const data = { name }
     try {
         const res = await fetch(`/api/todos/${id}`,
             {
