@@ -9,12 +9,12 @@ export const ToDoLists = ({ userState }) => {
     const [newListName, setNewListName] = useState('')
     const [messageState, setMessageState] = useState('');
     const [errorMessageState, setErrorMessageState] = useState('');
-    const [updatedListName, setUpdatedListName] = useState(selectedList)
-
+    const [updatedListName, setUpdatedListName] = useState();
     useEffect(() => {
         getLists().then(res => {
             setLists(res)
             setSelectedList(res[0])
+            setUpdatedListName(selectedList)
         })
     }, [userState])
 
@@ -54,24 +54,19 @@ export const ToDoLists = ({ userState }) => {
         }
     }
     // handler for the list name update
-    const handleListNameUpdate = async (event) => {
-        event.preventDefault();
-        if (event.charCode === 13) {
-            if (!updatedListName) {
-                setErrorMessageState('List name has not changed.');
-                return;
-            }
-            const res = await updateListName(selectedList.id, updatedListName)
+    const handleListNameUpdate = async (id, name) => {
+            const res = await updateListName(id, name)
             if (res.error) {
                 setErrorMessageState(res.error)
             }
             else {
                 setErrorMessageState('');
                 setMessageState('Successfully updated list name.')
-                const newList = lists.map(l => l.id === selectedList.id ? res : l)
-                setLists(newList)
+
+                const newLists = lists.map(l => l.id === id ? res : l)
+                setLists(newLists)
+                setSelectedList(res)
             }
-        }
     }
 
     let body = <p>Nothing to see here</p>
@@ -94,7 +89,7 @@ export const ToDoLists = ({ userState }) => {
                     <p className="text-center">{messageState}</p><p className="text-center" style={{ color: 'red' }}>{errorMessageState}</p>
                 </div>
                 <div className='col-12 col-md-9'>
-                    <ListDetail {...selectedList} handleUpdate={handleListNameUpdate} setUpdatedName={setUpdatedListName} updatedName={updatedListName}  />
+                    <ListDetail {...selectedList} handleUpdate={handleListNameUpdate} setUpdatedName={setUpdatedListName} />
                 </div>
             </div>
     }

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { addItem, setCompletion } from "../http/lists";
 import { Item } from './Item';
 
-export const ListDetail = ({ id, name, completed, items, handleUpdate, setUpdatedName, updatedName }) => {
+export const ListDetail = ({ id, name, completed, items, handleUpdate, setUpdatedName}) => {
     const [messageState, setMessageState] = useState('');
     const [errorMessageState, setErrorMessageState] = useState('');
     const [itemsState, setItemsState] = useState(items ? items : []);
@@ -46,12 +46,12 @@ export const ListDetail = ({ id, name, completed, items, handleUpdate, setUpdate
         if (id) {
             setItemsState(items)
         }
-    }, [items, id])
+    }, [items, id, name])
 
     let body = <h1>Nothing to see here</h1>
     if (id) {
         body = <>
-            <input className="fs-3" rows="2" value={updatedName} onChange={(e) => { setUpdatedName(e.target.value); console.log(updatedName)}} onKeyPress={(e) => handleUpdate(e)}></input>
+            <input className="fs-3" rows="2" value={name} onChange={(e) => handleUpdate(id, e.target.value)} ></input>
             <ul className="list-group">
                 {itemsState.map((item, index) => {
                     return <Item id={item.id} name={item.name} completed={item.completed} setCompleted={handleSetCompleted} key={index} />
