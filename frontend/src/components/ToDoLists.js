@@ -21,12 +21,12 @@ export const ToDoLists = ({ userState }) => {
     // we want to set that list item to a state which will then be passed up
     // this will allow us to render the current list item onto the main page
     async function handleListClick(id) {
-       const res = await getList(id);
+        const res = await getList(id);
         if (res.error) {
-           return res.error
+            return res.error
         }
-          setSelectedList(res);
-     }
+        setSelectedList(res);
+    }
 
     // need to abstract away this function...
     const handleAddList = async (event) => {
@@ -65,12 +65,11 @@ export const ToDoLists = ({ userState }) => {
         }
     }
     // handler for deleting list
-    const handleDeleteList = async(listId) => {
-        const res = await deleteList(listId);
-        if (res.error) {
-            console.log(res.error);
+    const handleDeleteList = async (listId) => {
+        if (!window.confirm("Are you sure?")) {
             return;
         }
+        await deleteList(listId);
         const newLists = lists.filter(l => l.id !== listId ? l : null)
         setLists(newLists)
         setSelectedList(newLists[0])
@@ -96,7 +95,7 @@ export const ToDoLists = ({ userState }) => {
                     <p className="text-center">{messageState}</p><p className="text-center" style={{ color: 'red' }}>{errorMessageState}</p>
                 </div>
                 <div className='col-12 col-md-9'>
-                    <ListDetail {...selectedList} handleUpdate={handleListNameUpdate} removeList={handleDeleteList}/>
+                    <ListDetail {...selectedList} handleUpdate={handleListNameUpdate} removeList={handleDeleteList} />
                 </div>
             </div>
     }

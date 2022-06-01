@@ -88,14 +88,14 @@ async function updateListName(id, name) {
 }
 
 // delete functions!!!
-async function deleteItem(listId,id) {
+async function deleteItem(listId, id) {
     try {
         const res = await fetch(`/api/todos/${listId}/${id}`,
-        {
-            method: 'DELETE'
-        })
+            {
+                method: 'DELETE'
+            })
         return res;
-    } catch(err) {
+    } catch (err) {
         console.log(err);
         return err.error;
     }
@@ -104,11 +104,13 @@ async function deleteItem(listId,id) {
 async function deleteList(listId) {
     try {
         const res = await fetch(`/api/todos/${listId}`,
-        {
-            method: 'DELETE'
-        })
-    return res;
-    } catch(err) {
+            {
+                method: 'DELETE'
+            })
+        if (res.status === 204) {
+            return 'Successfully removed list.'
+        }
+    } catch (err) {
         console.log(err);
         return err.error;
     }
