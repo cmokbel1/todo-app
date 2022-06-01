@@ -42,6 +42,7 @@ export const ToDoLists = ({ userState }) => {
                 setErrorMessageState('');
                 setMessageState('List successfully added.');
                 setLists([...lists, res])
+                setSelectedList(res);
             }
             setNewListName('');
             setTimeout(() => {
