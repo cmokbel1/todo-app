@@ -51,7 +51,7 @@ export const ListDetail = ({ id, name, completed, items, handleUpdate, removeLis
     const handleDeleteItem = async(listId, id) => {
         const res = await deleteItem(listId, id);
         if (res.error) {
-            console.log(res.error);
+            setErrorMessageState(res.error);
             return;
         }
         const newItems = itemsState.filter(i => i.id !== id ? i : null)
