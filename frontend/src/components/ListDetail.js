@@ -70,8 +70,8 @@ export const ListDetail = ({ id, name, completed, items, handleUpdate, removeLis
     let body = <h1>Nothing to see here</h1>
     if (id) {
         body = <>
-            <input className="fs-3" rows="2" value={currentName} onChange={(e) => setCurrentName(e.target.value)} onKeyPress={(e) => handleListUpdate(e)}></input>
-            <ul className="list-group">
+            <input className="fs-3 mb-4" rows="2" value={currentName} onChange={(e) => setCurrentName(e.target.value)} onKeyPress={(e) => handleListUpdate(e)}></input>
+            <ul className="list-group mb-4">
                 {itemsState.map((item, index) => {
                     return <Item id={item.id} name={item.name}
                         completed={item.completed}
