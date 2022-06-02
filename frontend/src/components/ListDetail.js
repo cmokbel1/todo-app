@@ -42,8 +42,8 @@ export const ListDetail = ({ id, name, completed, items, handleUpdate, removeLis
         setItemsState(newItems)
     }
 
-    const handleListUpdate = async(e) => {
-        if (e.charCode === 13) {
+    const handleListUpdate = (event) => {
+        if (event.charCode === 13) {
             handleUpdate(id, currentName)
         }
     }
