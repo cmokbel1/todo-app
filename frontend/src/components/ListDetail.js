@@ -48,8 +48,8 @@ export const ListDetail = ({ id, name, completed, items, handleUpdate, removeLis
         }
     }
 
-    const handleDeleteItem = async(listId, id) => {
-        const res = await deleteItem(listId, id);
+    const handleDeleteItem = async(itemId) => {
+        const res = await deleteItem(id, itemId);
         if (res.error) {
             setErrorMessageState(res.error);
             return;
@@ -72,7 +72,10 @@ export const ListDetail = ({ id, name, completed, items, handleUpdate, removeLis
             <input className="fs-3" rows="2" value={currentName} onChange={(e) => setCurrentName(e.target.value)} onKeyPress={(e) => handleListUpdate(e)}></input>
             <ul className="list-group">
                 {itemsState.map((item, index) => {
-                    return <Item id={item.id} name={item.name} completed={item.completed} listId={id} setCompleted={handleSetCompleted} key={index} deleteItem={handleDeleteItem} />
+                    return <Item id={item.id} name={item.name}
+                     completed={item.completed}
+                     setCompleted={handleSetCompleted} 
+                     key={index} deleteItem={handleDeleteItem} />
                 })}
             </ul>
             <input type="text" name="item" className="form-input w-50" rows="2"
