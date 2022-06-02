@@ -108,8 +108,9 @@ async function deleteList(listId) {
                 method: 'DELETE'
             })
         if (res.status === 204) {
-            return 'Successfully removed list.'
+            return "";
         }
+        return res.status
     } catch (err) {
         console.log(err);
         return err.error;

@@ -70,10 +70,14 @@ export const ToDoLists = ({ userState }) => {
         if (!window.confirm("Are you sure?")) {
             return;
         }
-        await deleteList(listId);
-        const newLists = lists.filter(l => l.id !== listId ? l : null)
-        setLists(newLists)
-        setSelectedList(newLists[0])
+        const res = await deleteList(listId);
+        if (res === "") {
+            const newLists = lists.filter(l => l.id !== listId ? l : null)
+            setLists(newLists)
+            setSelectedList(newLists[0])   
+        } else {
+            setErrorMessageState('An error occurred.')
+        }
     }
 
     let body = <p>Nothing to see here</p>
