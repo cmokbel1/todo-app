@@ -14,7 +14,6 @@ const Login = ({ setUserState }) => {
             } else {
                 setErrorState(res);
             }
-            console.log(res);
         });
     }
     return (
