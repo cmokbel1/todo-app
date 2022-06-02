@@ -18,7 +18,7 @@ async function loginUser(username, password) {
         return jsonResponse;
     } catch (err) {
         console.log(err);
-        return err.error;
+        return { "error": err.message };
     }
 }
 
@@ -36,7 +36,7 @@ async function getUser() {
         return jsonResponse;
     } catch (err) {
         console.log(err);
-        return err.error;
+        return { "error": err.message };
     }
 }
 
@@ -44,16 +44,16 @@ async function getUser() {
 // the logout was successful, otherwise, error contains the reason for the failure.
 async function logout() {
     try {
-      const res = await fetch('/api/user/logout', {method: 'DELETE'})
-      if (res.status === 204) {
-          console.log('Logout Success');
-          return {ok: true};
-      } else {
-          return {error: 'Unauthorized use of button'};
-      }
-    } catch(err) {
+        const res = await fetch('/api/user/logout', { method: 'DELETE' })
+        if (res.status === 204) {
+            console.log('Logout Success');
+            return { ok: true };
+        } else {
+            return { error: 'Unauthorized use of button' };
+        }
+    } catch (err) {
         console.log(err);
-        return err;
+        return { "error": err.message };
     }
 }
 export { loginUser, getUser, logout };

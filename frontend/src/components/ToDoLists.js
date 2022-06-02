@@ -74,7 +74,10 @@ export const ToDoLists = ({ userState }) => {
         if (res === "") {
             const newLists = lists.filter(l => l.id !== listId ? l : null)
             setLists(newLists)
-            setSelectedList(newLists[0])   
+            // only reset the selectedList if we delete the selectedList
+            if (listId === selectedList.id) {
+                setSelectedList(newLists[0])
+            }
         } else {
             setErrorMessageState('An error occurred.')
         }

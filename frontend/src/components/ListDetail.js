@@ -48,7 +48,7 @@ export const ListDetail = ({ id, name, completed, items, handleUpdate, removeLis
         }
     }
 
-    const handleDeleteItem = async(itemId) => {
+    const handleDeleteItem = async (itemId) => {
         const res = await deleteItem(id, itemId);
         if (res.error) {
             setErrorMessageState(res.error);
@@ -73,9 +73,9 @@ export const ListDetail = ({ id, name, completed, items, handleUpdate, removeLis
             <ul className="list-group">
                 {itemsState.map((item, index) => {
                     return <Item id={item.id} name={item.name}
-                     completed={item.completed}
-                     setCompleted={handleSetCompleted} 
-                     key={index} deleteItem={handleDeleteItem} />
+                        completed={item.completed}
+                        setCompleted={handleSetCompleted}
+                        key={index} deleteItem={handleDeleteItem} />
                 })}
             </ul>
             <input type="text" name="item" className="form-input w-50" rows="2"
