@@ -6,7 +6,7 @@ async function getLists() {
         return jsonResponse;
     } catch (err) {
         console.log(err);
-        return err.error;
+        return { "error": err.message };
     }
 }
 
@@ -17,7 +17,7 @@ async function getList(id) {
         return jsonResponse;
     } catch (err) {
         console.log(err);
-        return err.error;
+        return { "error": err.message };
     }
 }
 
@@ -34,7 +34,7 @@ async function addItem(id, item) {
         return jsonResponse;
     } catch (err) {
         console.log(err);
-        return err.error;
+        return { "error": err.message };
     }
 }
 
@@ -47,10 +47,10 @@ async function addList(item) {
                 body: JSON.stringify(data)
             })
         const jsonResponse = await res.json();
-        return jsonResponse;
+        return jsonResponse; // {"error": "asdfas"}
     } catch (err) {
         console.log(err);
-        return err.error;
+        return { "error": err.message };
     }
 }
 
@@ -67,7 +67,7 @@ async function setCompletion(id, completed, listId) {
         return jsonResponse
     } catch (err) {
         console.log(err);
-        return err.error;
+        return { "error": err.message };
     };
 }
 
@@ -83,7 +83,40 @@ async function updateListName(id, name) {
         return jsonResponse;
     } catch (err) {
         console.log(err);
-        return err.error;
+        return { "error": err.message };
     };
 }
-export { getLists, getList, addItem, addList, setCompletion, updateListName };
+
+// delete functions!!!
+async function deleteItem(listId, id) {
+    try {
+        const res = await fetch(`/api/todos/${listId}/${id}`,
+            {
+                method: 'DELETE'
+            })
+        if (res.status === 204) {
+            return "";
+        }
+        return res.status
+    } catch (err) {
+        console.log(err);
+        return { "error": err.message };
+    }
+}
+
+async function deleteList(listId) {
+    try {
+        const res = await fetch(`/api/todos/${listId}`,
+            {
+                method: 'DELETE'
+            })
+        if (res.status === 204) {
+            return "";
+        }
+        return res.status
+    } catch (err) {
+        console.log(err);
+        return { "error": err.message };
+    }
+}
+export { getLists, getList, addItem, addList, setCompletion, updateListName, deleteItem, deleteList };

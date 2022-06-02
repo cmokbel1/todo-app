@@ -1,4 +1,4 @@
-import { getList, getLists, addList, updateListName } from '../http/lists';
+import { getList, getLists, addList, updateListName, deleteList } from '../http/lists';
 import { useState, useEffect } from 'react';
 import { ListDetail } from './ListDetail';
 
@@ -21,11 +21,12 @@ export const ToDoLists = ({ userState }) => {
     // we want to set that list item to a state which will then be passed up
     // this will allow us to render the current list item onto the main page
     async function handleListClick(id) {
-       const res = await getList(id);
+        const res = await getList(id);
         if (res.error) {
-           return res.error
+            return res.error
         }
-          setSelectedList(res);
+        setSelectedList(res);
+
     }
 
     // need to abstract away this function...
@@ -42,6 +43,7 @@ export const ToDoLists = ({ userState }) => {
                 setErrorMessageState('');
                 setMessageState('List successfully added.');
                 setLists([...lists, res])
+                setSelectedList(res);
             }
             setNewListName('');
             setTimeout(() => {
@@ -61,6 +63,24 @@ export const ToDoLists = ({ userState }) => {
             const newLists = lists.map(l => l.id === id ? res : l)
             setLists(newLists)
             setSelectedList(res)
+        }
+    }
+    // handler for deleting list
+    const handleDeleteList = async (listId) => {
+        // TODO(cmokbel1): use custom modal instead of window confirm
+        if (!window.confirm("Are you sure?")) {
+            return;
+        }
+        const res = await deleteList(listId);
+        if (res === "") {
+            const newLists = lists.filter(l => l.id !== listId ? l : null)
+            setLists(newLists)
+            // only reset the selectedList if we delete the selectedList
+            if (listId === selectedList.id) {
+                setSelectedList(newLists[0])
+            }
+        } else {
+            setErrorMessageState('An error occurred.')
         }
     }
 
@@ -84,7 +104,7 @@ export const ToDoLists = ({ userState }) => {
                     <p className="text-center">{messageState}</p><p className="text-center" style={{ color: 'red' }}>{errorMessageState}</p>
                 </div>
                 <div className='col-12 col-md-9'>
-                    <ListDetail {...selectedList} handleUpdate={handleListNameUpdate} />
+                    <ListDetail {...selectedList} handleUpdate={handleListNameUpdate} removeList={handleDeleteList} />
                 </div>
             </div>
     }
