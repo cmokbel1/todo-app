@@ -66,6 +66,7 @@ export const ToDoLists = ({ userState }) => {
     }
     // handler for deleting list
     const handleDeleteList = async (listId) => {
+        // TODO(cmokbel1): use custom modal instead of window confirm
         if (!window.confirm("Are you sure?")) {
             return;
         }
