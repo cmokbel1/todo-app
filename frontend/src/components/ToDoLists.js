@@ -26,6 +26,7 @@ export const ToDoLists = ({ userState }) => {
             return res.error
         }
         setSelectedList(res);
+
     }
 
     // need to abstract away this function...
