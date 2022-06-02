@@ -100,8 +100,7 @@ export const ToDoLists = ({ userState }) => {
                                 <button className="btn" onClick={() => handleListClick(list.id)}>
                                     {list.name}
                                 </button>
-                                <button className="btn btn-secondary" onClick={ () => handleDeleteList(list.id)}>{trash}</button>
-
+                                <button className="btn btn-secondary" onClick={() => handleDeleteList(list.id)}>{trash}</button>
                             </li>
                         )}
                     </ul>
