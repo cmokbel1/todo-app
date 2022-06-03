@@ -21,13 +21,15 @@ function App() {
   }, [userState])
 
   return (
-    <div className="container-fluid">
+    <>
       <Header userState={userState} setUserState={setUserState} setReturnError={setReturnError} />
-      <div className="row">
-        <Main userState={userState} setUserState={setUserState} setReturnError={setReturnError} />
+      <div className="container-fluid">
+        <div className="row">
+          <Main userState={userState} setUserState={setUserState} setReturnError={setReturnError} />
+        </div>
+        <Footer />
       </div>
-      <Footer />
-    </div>
+    </>
   )
 }
 
