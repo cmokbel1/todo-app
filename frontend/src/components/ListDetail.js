@@ -69,7 +69,7 @@ export const ListDetail = ({ id, name, completed, items, handleUpdate, removeLis
 
     let body = <h1>Nothing to see here</h1>
     if (id) {
-        body = <div className="container text-center col-10 border border-dark rounded">
+        body = <div className="container text-center col-10 border border-dark rounded shadow">
             <input className="fs-3 mb-4 mt-2 text-center w-50" rows="2" type="text" value={currentName} onChange={(e) => setCurrentName(e.target.value)} onKeyPress={(e) => handleListUpdate(e)}></input>
             <ul className="list-group mb-4">
                 {itemsState.map((item, index) => {
