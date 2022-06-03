@@ -9,15 +9,17 @@ export const Item = ({ id, name, completed, setCompleted, index, deleteItem }) =
     }
 
     return (
-        <li className="list-group-item" key={index}>
+        <li className="list-group-item d-flex justify-content-between" key={index}>
             <span className="mr-3">{styledName}</span>
-            <input className="form-check-input p-6"
-                checked={completed}
-                type="checkbox"
-                style={{width:'1.5rem', height: '1.5rem'}}
-                onClick={() => setCompleted(id, !completed)}
-                readOnly={true} />
+            <div className="d-flex align-items-center">
+                <input className="form-check-input me-3"
+                    checked={completed}
+                    type="checkbox"
+                    style={{ width: '1.5rem', height: '1.5rem' }}
+                    onClick={() => setCompleted(id, !completed)}
+                    readOnly={true} />
                 <button className="btn btn-danger ml-auto" onClick={() => deleteItem(id)}>{trash}</button>
+            </div>
         </li>
     )
 }
