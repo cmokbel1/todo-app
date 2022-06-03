@@ -13,7 +13,7 @@ function Header({ userState, setUserState, setReturnError }) {
   }
 
   return (
-    <nav className="navbar navbar-light bg-light mb-4 shadow">
+    <nav className="navbar navbar-light bg-light mb-4 shadow px-2">
       <a className="navbar-brand fs-3" href="/">TODO</a>
       {
         userState ? 
