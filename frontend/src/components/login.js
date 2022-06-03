@@ -8,7 +8,7 @@ const Login = ({ setUserState }) => {
 
     const handleLogin = event => {
         //trim username and set to lowercase
-        const userTrim = userInput.trim().toLowerCase();
+        const userTrim = userInput.trim();
         event.preventDefault();
         loginUser(userTrim, passwordInput.trim()).then(res => {
             if (res.name) {
