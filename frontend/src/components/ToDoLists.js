@@ -94,7 +94,7 @@ export const ToDoLists = ({ userState }) => {
         body =
             <div className='row'>
                 <div className='col-12 col-md-3'>
-                    <ul className="list-group border rounded border-dark">
+                    <ul className="list-group border rounded border-dark shadow mb-2">
                         {lists.map((list, index) =>
                             <li className="list-group-item d-flex justify-content-between" key={index}>
                                 <button className="btn" onClick={() => handleListClick(list.id)}>
