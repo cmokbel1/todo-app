@@ -2,6 +2,7 @@ package todo_test
 
 import (
 	"errors"
+	"fmt"
 	"testing"
 
 	"github.com/cmokbel1/todo-app/backend/todo"
@@ -45,6 +46,13 @@ func TestError(t *testing.T) {
 		},
 		{
 			Error:       todo.Err(todo.ECONFLICT, ""),
+			InTarget:    todo.Conflict,
+			Want:        true,
+			WantMessage: "",
+			WantCode:    todo.ECONFLICT,
+		},
+		{
+			Error:       fmt.Errorf("wrapped %w", todo.Err(todo.ECONFLICT, "")),
 			InTarget:    todo.Conflict,
 			Want:        true,
 			WantMessage: "",

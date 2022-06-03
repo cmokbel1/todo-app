@@ -8,6 +8,7 @@ import (
 
 	"github.com/cmokbel1/todo-app/backend/crypto"
 	"github.com/cmokbel1/todo-app/backend/todo"
+	"github.com/jackc/pgconn"
 )
 
 var _ todo.UserService = (*UserService)(nil)
@@ -94,12 +95,6 @@ func createUser(ctx context.Context, tx *Tx, user *todo.User) (err error) {
 	user.APIKey = crypto.RandomString()
 
 	// create the user if they don't already exist
-	if other, err := findUserByName(ctx, tx, user.Name); err != nil && !errors.Is(err, todo.NotFound) {
-		return err
-	} else if other != nil {
-		return todo.Err(todo.ECONFLICT, "name %q is taken", user.Name)
-	}
-
 	var id int64
 	err = tx.QueryRowContext(ctx, `
 INSERT INTO users (name, email, password, api_key, created_at, updated_at) 
@@ -112,6 +107,15 @@ RETURNING id`,
 		user.CreatedAt,
 		user.UpdatedAt).Scan(&id)
 	if err != nil {
+		var pgErr *pgconn.PgError
+		if errors.As(err, &pgErr) {
+			if pgErr.Code == "23505" { // unique constraint violation
+				if pgErr.ConstraintName == "users_email_key" {
+					return todo.Err(todo.ECONFLICT, "email is already taken")
+				}
+				return todo.Err(todo.ECONFLICT, "name is already taken")
+			}
+		}
 		return err
 	}
 	user.ID = int(id)
