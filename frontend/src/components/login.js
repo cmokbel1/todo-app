@@ -7,8 +7,11 @@ const Login = ({ setUserState }) => {
     const [errorState, setErrorState] = useState('');
 
     const handleLogin = event => {
+        //trim username and set to lowercase
+        const userTrim = userInput.trim();
+        const passTrim = passwordInput.trim();
         event.preventDefault();
-        loginUser(userInput, passwordInput).then(res => {
+        loginUser(userTrim, passTrim).then(res => {
             if (res.name) {
                  setUserState(res.name);
             } else {

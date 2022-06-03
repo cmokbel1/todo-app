@@ -63,12 +63,15 @@ export const ToDoLists = ({ userState }) => {
             const newLists = lists.map(l => l.id === id ? res : l)
             setLists(newLists)
             setSelectedList(res)
+            setTimeout(() => {
+                setMessageState('');
+            }, 1000)
         }
     }
     // handler for deleting list
     const handleDeleteList = async (listId) => {
         // TODO(cmokbel1): use custom modal instead of window confirm
-        if (!window.confirm("Are you sure?")) {
+        if (!window.confirm("Delete entire list?")) {
             return;
         }
         const res = await deleteList(listId);
