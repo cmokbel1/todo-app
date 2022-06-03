@@ -24,7 +24,7 @@ function App() {
     <>
       <Header userState={userState} setUserState={setUserState} setReturnError={setReturnError} />
       <div className="container-fluid">
-        <div className="row">
+        <div className="row justify-content-center" style={{ width: '100%' }}>
           <Main userState={userState} setUserState={setUserState} setReturnError={setReturnError} />
         </div>
         <Footer />
