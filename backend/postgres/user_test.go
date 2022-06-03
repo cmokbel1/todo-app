@@ -15,7 +15,7 @@ import (
 
 func newUser() *todo.User {
 	v := *randstr(10)
-	return &todo.User{Name: v, Password: v}
+	return &todo.User{Name: v, Password: v, Email: &v}
 }
 
 func TestUserService_LoginUser(t *testing.T) {
@@ -100,9 +100,18 @@ func TestUserService_CreateUser(t *testing.T) {
 		}
 	})
 
-	t.Run("ErrConflictUserAlreadyExists", func(t *testing.T) {
+	t.Run("ErrConflictNameTaken", func(t *testing.T) {
 		ctx, user := createUser(t, db)
 		user.Name = strings.ToUpper(user.Name)
+
+		if got, want := s.CreateUser(ctx, user), todo.Conflict; !errors.Is(got, want) {
+			t.Fatalf("want error %v got %v", want, got)
+		}
+	})
+
+	t.Run("ErrConflictEmailTaken", func(t *testing.T) {
+		ctx, user := createUser(t, db)
+		user.Name = user.Name + "1"
 
 		if got, want := s.CreateUser(ctx, user), todo.Conflict; !errors.Is(got, want) {
 			t.Fatalf("want error %v got %v", want, got)
