@@ -94,9 +94,9 @@ export const ToDoLists = ({ userState }) => {
         body =
             <div className='row'>
                 <div className='col-12 col-md-3'>
-                    <ul className="list-group">
+                    <ul className="list-group border rounded border-dark">
                         {lists.map((list, index) =>
-                            <li className="list-group-item" key={index}>
+                            <li className="list-group-item d-flex justify-content-between" key={index}>
                                 <button className="btn" onClick={() => handleListClick(list.id)}>
                                     {list.name}
                                 </button>
@@ -104,7 +104,7 @@ export const ToDoLists = ({ userState }) => {
                             </li>
                         )}
                     </ul>
-                    <input type="text" name="item" className="form-input w-75"
+                    <input type="text" name="item" className="form-input w-100 mt-2"
                         onChange={(e) => { setNewListName(e.target.value) }} onKeyPress={(e) => handleAddList(e)}
                         placeholder="+ add list" value={newListName}></input>
                     <p className="text-center">{messageState}</p><p className="text-center" style={{ color: 'red' }}>{errorMessageState}</p>
