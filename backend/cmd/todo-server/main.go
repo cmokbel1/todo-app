@@ -100,6 +100,7 @@ func (app *App) Run(ctx context.Context) error {
 
 	app.HTTPServer.Addr = app.Config.HTTP.Addr
 	app.HTTPServer.APIKey = *app.Config.HTTP.APIKey
+	app.HTTPServer.AssetsDirectory = app.Config.HTTP.AssetsDirectory
 	app.HTTPServer.Domain = app.Config.HTTP.Domain
 	app.HTTPServer.TLS = app.Config.HTTP.TLS
 	app.HTTPServer.CORSAllowedOrigins = app.Config.HTTP.CORSAllowedOrigins
@@ -169,6 +170,7 @@ type Config struct {
 		Domain             string  `json:"domain"`
 		TLS                bool    `json:"tls"`
 		CORSAllowedOrigins string  `json:"cors_allowed_origins"`
+		AssetsDirectory    string  `json:"assets_directory"`
 	} `json:"http"`
 
 	Log struct {

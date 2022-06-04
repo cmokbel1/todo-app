@@ -8,7 +8,8 @@
     "api_key": "test",
     "domain": "localhost",
     "tls": false,
-    "cors_allow_origins": "localhost:3000"
+    "cors_allow_origins": "localhost:3000",
+    "assets_directory": ""
   },
   "log" : {
     "enabled": true,
