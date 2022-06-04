@@ -1,4 +1,4 @@
-FROM golang:1.18-alpine as base
+FROM golang:1.18-alpine AS base
 
 RUN apk add --update --no-cache bash musl-dev make git && adduser -D -g '' appuser
 
@@ -7,7 +7,7 @@ COPY go.mod go.mod
 COPY go.sum go.sum
 RUN go mod download
 
-FROM base as builder
+FROM base AS builder
 
 ARG VERSION=NA
 ARG COMMIT=NA
