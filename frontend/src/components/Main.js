@@ -3,8 +3,8 @@ import { ToDoLists } from './ToDoLists';
 
 
 
-export function Main({ userState, setUserState }) {
-    let body = <Login setUserState={setUserState} />
+export function Main({ userState, setUserState, setReturnError }) {
+    let body = <Login setUserState={setUserState} setReturnError={setReturnError} />
     if (userState) {
         body = <ToDoLists userState={userState} />
     }

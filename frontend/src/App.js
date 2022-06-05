@@ -4,6 +4,7 @@ import './App.css';
 import { Main } from './components/Main';
 import { getUser } from './http/user';
 import { Header, Footer } from './components/Nav';
+import { FlashMessage } from './components/FlashMessage';
 
 function App() {
 
@@ -13,9 +14,10 @@ function App() {
   useEffect(() => {
     getUser().then(res => {
       if (res.name) {
-        setUserState(res.name)
+        setReturnError("");
+        setUserState(res.name);
       } else {
-        setReturnError(res)
+        setReturnError(res);
       }
     });
   }, [userState])
@@ -26,6 +28,7 @@ function App() {
       <div className="container-fluid">
         <div className="row">
           <Main userState={userState} setUserState={setUserState} setReturnError={setReturnError} />
+          <FlashMessage errorMessage={returnError} />
         </div>
         <Footer />
       </div>

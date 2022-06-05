@@ -4,7 +4,7 @@ export const FlashMessage = ({ errorMessage, successMessage }) => {
 
     if (errorMessage) {
         return (
-            <div className="container" style={{backgroundColor: 'red'}}>
+            <div className="container" style={{backgroundColor: 'red', color: 'white'}}>
                 <div className="text-center">
                     <p>{errorMessage}</p>
                 </div>
