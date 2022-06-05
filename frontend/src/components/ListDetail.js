@@ -2,9 +2,7 @@ import { useEffect, useState } from 'react';
 import { addItem, setCompletion, deleteItem } from "../http/lists";
 import { Item } from './Item';
 
-export const ListDetail = ({ id, name, completed, items, handleUpdate, removeList }) => {
-    const [messageState, setMessageState] = useState('');
-    const [errorMessageState, setErrorMessageState] = useState('');
+export const ListDetail = ({ id, name, completed, items, handleUpdate, removeList, setReturnError, setMessageState }) => {
     const [itemsState, setItemsState] = useState(items ? items : []);
     const [newItemName, setNewItemName] = useState('');
     const [currentName, setCurrentName] = useState(name)
@@ -14,15 +12,15 @@ export const ListDetail = ({ id, name, completed, items, handleUpdate, removeLis
     const handleAddItem = async (event) => {
         if (event.charCode === 13) {
             if (!newItemName) {
-                setErrorMessageState('Item name cannot be empty');
+                setReturnError('Item name cannot be empty.');
                 return;
             }
             const res = await addItem(id, newItemName);
             if (res.error) {
-                setErrorMessageState(res.error);
+                setReturnError(res.error);
             } else {
-                setErrorMessageState('');
-                setMessageState('Task Added Successfully');
+                setReturnError('');
+                setMessageState('Item added successfully.');
                 setItemsState([...itemsState, res])
             }
             setNewItemName('');
@@ -51,7 +49,7 @@ export const ListDetail = ({ id, name, completed, items, handleUpdate, removeLis
     const handleDeleteItem = async (itemId) => {
         const res = await deleteItem(id, itemId);
         if (res.error) {
-            setErrorMessageState(res.error);
+            setReturnError(res.error);
             return;
         }
         const newItems = itemsState.filter(i => i.id !== itemId ? i : null)
@@ -82,7 +80,6 @@ export const ListDetail = ({ id, name, completed, items, handleUpdate, removeLis
             <input type="text" name="item" className="form-input w-50"
                 onChange={(e) => { setNewItemName(e.target.value) }} onKeyPress={(e) => handleAddItem(e)}
                 placeholder="Add Item" value={newItemName}></input>
-            <p className="text-center">{messageState}</p><p className="text-center" style={{ color: 'red' }}>{errorMessageState}</p>
             <button className="btn btn-danger mb-2" onClick={() => removeList(id)}>Delete</button>
         </div>
     }
