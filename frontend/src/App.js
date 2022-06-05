@@ -28,8 +28,8 @@ function App() {
       <Header userState={userState} setUserState={setUserState} setReturnError={setReturnError} />
       <div className="container-fluid">
         <div className="row">
-          <Main userState={userState} setUserState={setUserState} setReturnError={setReturnError} setMessageState={setMessageState} />
           <FlashMessage errorMessage={returnError} successMessage={messageState} />
+          <Main userState={userState} setUserState={setUserState} setReturnError={setReturnError} setMessageState={setMessageState} />
         </div>
         <Footer />
       </div>
