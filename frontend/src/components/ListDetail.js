@@ -6,27 +6,29 @@ export const ListDetail = ({ id, name, completed, items, handleUpdate, removeLis
     const [itemsState, setItemsState] = useState(items ? items : []);
     const [newItemName, setNewItemName] = useState('');
     const [currentName, setCurrentName] = useState(name)
+    const [errorMessage, setErrorMessage] = useState(null)
 
 
     // takes an input value and adds it to the selectedList when enter is pressed
     const handleAddItem = async (event) => {
         if (event.charCode === 13) {
             if (!newItemName) {
-                setReturnError('Item name cannot be empty.');
+                setErrorMessage('Item name cannot be empty.');
                 return;
             }
             const res = await addItem(id, newItemName);
             if (res.error) {
                 setReturnError(res.error);
             } else {
-                setReturnError('');
+                setReturnError(null);
+                setErrorMessage(null)
                 setMessageState('Item added successfully.');
                 setItemsState([...itemsState, res])
             }
             setNewItemName('');
             setTimeout(() => {
                 setMessageState('');
-            }, 1000)
+            }, 2000)
         }
     }
 
@@ -79,7 +81,8 @@ export const ListDetail = ({ id, name, completed, items, handleUpdate, removeLis
             </ul>
             <input type="text" name="item" className="form-input w-50"
                 onChange={(e) => { setNewItemName(e.target.value) }} onKeyPress={(e) => handleAddItem(e)}
-                placeholder="Add Item" value={newItemName}></input>
+                placeholder="+ add item" value={newItemName}></input>
+                <p style={{color:'red'}}>{errorMessage}</p>
             <button className="btn btn-danger mb-2" onClick={() => removeList(id)}>Delete</button>
         </div>
     }
