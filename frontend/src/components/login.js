@@ -16,7 +16,7 @@ const Login = ({ setUserState, setReturnError }) => {
             if (res.name) {
                 setUserState(res.name);
             } else {
-                
+
                 setLoginError(res);
             }
         });
@@ -34,7 +34,7 @@ const Login = ({ setUserState, setReturnError }) => {
                         <label className="input-text pb-2" htmlFor="password">Password</label>
                         <input type="password" id="password" name="password" className="form-control" aria-label="password-input" aria-describedby="password-input" onChange={(e) => setPasswordInput(e.target.value)} />
                     </div>
-                    <p style={{color: 'red'}}>{loginError}</p>
+                    <p style={{ color: 'red' }}>{loginError}</p>
                     <button type="submit" className="btn btn-primary w-100 text-center mt-3" onClick={handleLogin} disabled={userInput === "" || passwordInput === ""}>Login</button>
                 </div>
             </form>
