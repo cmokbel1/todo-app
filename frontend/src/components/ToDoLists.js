@@ -5,7 +5,7 @@ import { ListDetail } from './ListDetail';
 export const ToDoLists = ({ userState, setReturnError, setMessageState }) => {
     const [lists, setLists] = useState([]);
     const [selectedList, setSelectedList] = useState();
-
+    const [errorMessage, setErrorMessage] = useState('')
     const [newListName, setNewListName] = useState('')
   
     useEffect(() => {
@@ -32,13 +32,14 @@ export const ToDoLists = ({ userState, setReturnError, setMessageState }) => {
     const handleAddList = async (event) => {
         if (event.charCode === 13) {
             if (!newListName) {
-                setReturnError('List name cannot be empty.');
+                setErrorMessage('List name cannot be empty.');
                 return;
             }
             const res = await addList(newListName);
             if (res.error) {
                 setReturnError(res.error);
             } else {
+                setErrorMessage('');
                 setReturnError('');
                 setMessageState('List successfully added.');
                 setLists([...lists, res])
@@ -109,6 +110,7 @@ export const ToDoLists = ({ userState, setReturnError, setMessageState }) => {
                     <input type="text" name="item" className="form-input w-100 mt-2"
                         onChange={(e) => { setNewListName(e.target.value) }} onKeyPress={(e) => handleAddList(e)}
                         placeholder="+ add list" value={newListName}></input>
+                        <p style={{color: 'red'}}>{errorMessage}</p>
                 </div>
                 <div className='col-12 col-md-9'>
                     <ListDetail {...selectedList} handleUpdate={handleListNameUpdate} removeList={handleDeleteList} setReturnError={setReturnError} setMessageState={setMessageState} />
