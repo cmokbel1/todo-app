@@ -28,7 +28,7 @@ export const ListDetail = ({ id, name, completed, items, handleUpdate, removeLis
             setNewItemName('');
             setTimeout(() => {
                 setMessageState('');
-            }, 2000)
+            }, 1000)
         }
     }
 
