@@ -6,7 +6,7 @@ export const ListDetail = ({ id, name, completed, items, handleUpdate, removeLis
     const [itemsState, setItemsState] = useState(items ? items : []);
     const [newItemName, setNewItemName] = useState('');
     const [currentName, setCurrentName] = useState(name)
-    const [errorMessage, setErrorMessage] = useState(null)
+    const [errorMessage, setErrorMessage] = useState('')
 
 
     // takes an input value and adds it to the selectedList when enter is pressed

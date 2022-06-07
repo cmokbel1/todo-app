@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { loginUser } from '../http/user'
 
-const Login = ({ setUserState, setReturnError }) => {
+const Login = ({ setUserState }) => {
     const [userInput, setUserInput] = useState('');
     const [passwordInput, setPasswordInput] = useState('');
     const [loginError, setLoginError] = useState('');
@@ -16,7 +16,6 @@ const Login = ({ setUserState, setReturnError }) => {
             if (res.name) {
                 setUserState(res.name);
             } else {
-
                 setLoginError(res);
             }
         });

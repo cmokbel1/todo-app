@@ -3,7 +3,7 @@
 export const FlashMessage = ({ messageState, returnError }) => {
     if (messageState) {
         return (
-            <div className="container mb-4" style={{ backgroundColor: 'green', color: 'snow' }}>
+            <div className="container mb-4 alert alert-success">
                 <div className="text-center">
                     <p>{messageState}</p>
                 </div>
@@ -11,7 +11,7 @@ export const FlashMessage = ({ messageState, returnError }) => {
         )
     } else if (returnError) {
         return (
-            <div className="container mb-4" style={{ backgroundColor: 'red', color: 'snow' }}>
+            <div className="container mb-4 alert alert-danger">
                 <div className="text-center">
                     <p>{returnError}</p>
                 </div>
