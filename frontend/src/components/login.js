@@ -37,7 +37,7 @@ const Login = ({ setUserState, setReturnError }) => {
                     <p style={{ color: 'red' }}>{loginError}</p>
                     <button type="submit" className="btn btn-primary w-100 text-center mt-3" onClick={handleLogin} disabled={userInput === "" || passwordInput === ""}>Login</button>
                 </div>
-            </form>
+            </form> 
         </div>
     )
 }

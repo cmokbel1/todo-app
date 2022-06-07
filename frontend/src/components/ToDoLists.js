@@ -41,7 +41,7 @@ export const ToDoLists = ({ userState, setReturnError, setMessageState }) => {
             } else {
                 setErrorMessage('');
                 setReturnError('');
-                setMessageState('List successfully added.');
+                setMessageState('List added successfully.');
                 setLists([...lists, res])
                 setSelectedList(res);
             }
