@@ -17,7 +17,6 @@ async function loginUser(username, password) {
         }
         return jsonResponse;
     } catch (err) {
-        console.log(err);
         return { "error": err.message };
     }
 }
