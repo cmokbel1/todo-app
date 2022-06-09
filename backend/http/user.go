@@ -16,7 +16,7 @@ func (s *Server) registerUserRoutes(r chi.Router) {
 	r.With(s.requireAuth).Delete("/user/logout", s.handleLogout)
 
 	r.With(s.requireAPIKey).Get("/users", s.handleUsersIndex)
-	r.With(s.requireAPIKey).Post("/users", s.handleUserCreate)
+	r.With(s.requireNoAuth).Post("/users", s.handleUserCreate)
 	r.Route("/users/{id}", func(r chi.Router) {
 		r.Use(s.requireIntParam("id"))
 		r.With(s.requireAPIKey).Delete("/", s.handleUserDelete)
@@ -119,6 +119,7 @@ func (s *Server) handleUserCreate(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	s.Logger.Infof("created default list for user %q (list id = %d)", user.Name, list.ID)
+	user.Password = ""
 	s.json(w, r, http.StatusCreated, user)
 }
 
