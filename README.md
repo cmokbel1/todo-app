@@ -83,13 +83,12 @@ To run the backend code with a config file from AWS param store prefix the path 
 
 #### Creating users
 
-Once the backend is running, use the **apiKey** you set in the config file to create test users. The examples below use
-the default example port and API key.
+Once the backend is running you can create test users. The examples below use the default example port and API key.
 
 ```shell
 # create a test user named george
-curl -X POST -H "Todo-Api-Key: test" http://localhost:8080/api/users -d '{"name":"george", "password":"password"}'
-# fetch all users
+curl -X POST http://localhost:8080/api/users -d '{"name":"george", "password":"password"}'
+# fetch all users (requires the server API key)
 curl -H "Todo-Api-Key: test" http://localhost:8080/api/users
 # login with the newly created user named george and save the cookie in a file name httpcookie
 curl -X POST -d '{"name":"george","password":"password"}' http://localhost:8080/api/user/login -c httpcookie
@@ -97,9 +96,13 @@ curl -X POST -d '{"name":"george","password":"password"}' http://localhost:8080/
 curl -b httpcookie http://localhost:8080/api/user/key
 # read the user info
 curl -b httpcookie http://localhost:8080/api/user
+# user the user API key to read the user info
+curl -H "Authorization: Bearer <apikey>" http://localhost:8080/api/user
 # logout and delete the cookie
 curl -X DELETE -b httpcookie http://localhost:8080/api/user/logout && rm httpcookie
 ```
+
+
 
 #### Tests
 To run backend tests run one of the following commands:
