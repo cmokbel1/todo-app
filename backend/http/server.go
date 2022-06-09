@@ -14,6 +14,7 @@ import (
 	"github.com/cmokbel1/todo-app/backend/todo"
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
+	"github.com/go-chi/httprate"
 )
 
 type Server struct {
@@ -39,7 +40,11 @@ type Server struct {
 
 func NewServer() *Server {
 	s := &Server{
-		server:           &http.Server{},
+		server: &http.Server{
+			ReadTimeout:  time.Second * 6,
+			WriteTimeout: time.Second * 6,
+			IdleTimeout:  time.Second * 6,
+		},
 		Logger:           todo.NewLogger(),
 		LoggerMiddleware: middleware.Logger,
 	}
@@ -57,6 +62,8 @@ func (s *Server) Listen() (err error) {
 
 	r := chi.NewRouter()
 	r.Use(middleware.Recoverer)
+	// hard coded rate limit of 60 requests/minute/IP
+	r.Use(httprate.LimitByIP(60, time.Minute))
 	r.Use(s.LoggerMiddleware)
 	r.Use(s.cors)
 	r.Use(s.sessionMiddleware)

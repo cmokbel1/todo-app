@@ -2,13 +2,12 @@ import { getList, getLists, addList, updateListName, deleteList } from '../http/
 import { useState, useEffect } from 'react';
 import { ListDetail } from './ListDetail';
 
-export const ToDoLists = ({ userState }) => {
+export const ToDoLists = ({ userState, setReturnError, setMessageState }) => {
     const [lists, setLists] = useState([]);
     const [selectedList, setSelectedList] = useState();
-
+    const [errorMessage, setErrorMessage] = useState('')
     const [newListName, setNewListName] = useState('')
-    const [messageState, setMessageState] = useState('');
-    const [errorMessageState, setErrorMessageState] = useState('');
+
     useEffect(() => {
         getLists().then(res => {
             setLists(res)
@@ -33,15 +32,16 @@ export const ToDoLists = ({ userState }) => {
     const handleAddList = async (event) => {
         if (event.charCode === 13) {
             if (!newListName) {
-                setErrorMessageState('List name cannot be empty.');
+                setErrorMessage('List name cannot be empty.');
                 return;
             }
             const res = await addList(newListName);
             if (res.error) {
-                setErrorMessageState(res.error);
+                setReturnError(res.error);
             } else {
-                setErrorMessageState('');
-                setMessageState('List successfully added.');
+                setErrorMessage('');
+                setReturnError('');
+                setMessageState('List added successfully.');
                 setLists([...lists, res])
                 setSelectedList(res);
             }
@@ -55,11 +55,11 @@ export const ToDoLists = ({ userState }) => {
     const handleListNameUpdate = async (id, name) => {
         const res = await updateListName(id, name)
         if (res.error) {
-            setErrorMessageState(res.error)
+            setReturnError(res.error)
         }
         else {
-            setErrorMessageState('');
-            setMessageState('Successfully updated list name.')
+            setReturnError('');
+            setMessageState('List updated successfully.')
             const newLists = lists.map(l => l.id === id ? res : l)
             setLists(newLists)
             setSelectedList(res)
@@ -83,7 +83,7 @@ export const ToDoLists = ({ userState }) => {
                 setSelectedList(newLists[0])
             }
         } else {
-            setErrorMessageState('An error occurred.')
+            setReturnError('An error occurred.')
         }
     }
 
@@ -95,7 +95,7 @@ export const ToDoLists = ({ userState }) => {
     let body = <p>Nothing to see here</p>
     if (lists) {
         body =
-            <div className='row'>
+            <div className="row">
                 <div className='col-12 col-md-3'>
                     <ul className="list-group border rounded border-dark shadow mb-2">
                         {lists.map((list, index) =>
@@ -110,10 +110,10 @@ export const ToDoLists = ({ userState }) => {
                     <input type="text" name="item" className="form-input w-100 mt-2"
                         onChange={(e) => { setNewListName(e.target.value) }} onKeyPress={(e) => handleAddList(e)}
                         placeholder="+ add list" value={newListName}></input>
-                    <p className="text-center">{messageState}</p><p className="text-center" style={{ color: 'red' }}>{errorMessageState}</p>
+                    <p style={{ color: 'red' }}>{errorMessage}</p>
                 </div>
                 <div className='col-12 col-md-9'>
-                    <ListDetail {...selectedList} handleUpdate={handleListNameUpdate} removeList={handleDeleteList} />
+                    <ListDetail {...selectedList} handleUpdate={handleListNameUpdate} removeList={handleDeleteList} setReturnError={setReturnError} setMessageState={setMessageState} />
                 </div>
             </div>
     }
