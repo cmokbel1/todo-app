@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { registerUser, loginUser } from '../http/user'
 
-const Login = ({ setUserState }) => {
+const Login = ({ setUserState, setMessage, setReturnError }) => {
     //login states
     const [userInput, setUserInput] = useState('');
     const [passwordInput, setPasswordInput] = useState('');
@@ -22,6 +22,7 @@ const Login = ({ setUserState }) => {
         event.preventDefault();
         loginUser(userTrim, passTrim).then(res => {
             if (res.name) {
+                setReturnError("");
                 setUserState(res.name);
             } else {
                 setErrorState(res);
@@ -36,9 +37,14 @@ const Login = ({ setUserState }) => {
             setErrorState(res.error);
             return res.error;
         } else {
+            setReturnError("")
+            setMessage('Successfully created account.')
             setUserRegInput('');
             setPasswordRegInput('');
             setEmailRegInput('');
+            setTimeout(() => {
+                setMessage('')
+            }, 1000)
         }
 
     }

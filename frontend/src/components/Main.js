@@ -4,7 +4,7 @@ import { ToDoLists } from './ToDoLists';
 
 
 export function Main({ userState, setUserState, setReturnError, setMessageState }) {
-    let body = <Login setUserState={setUserState} setReturnError={setReturnError} />
+    let body = <Login setUserState={setUserState} setReturnError={setReturnError} setMessage={setMessageState} />
     if (userState) {
         body = <ToDoLists userState={userState} setReturnError={setReturnError} setMessageState={setMessageState} />
     }
