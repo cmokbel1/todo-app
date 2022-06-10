@@ -46,7 +46,7 @@ const Login = ({ setUserState, setMessage, setReturnError }) => {
                 setMessage('')
             }, 1000)
         }
-
+        setShowRegister(false);
     }
     const handleToggler = async (event) => {
         if (!showRegister) {
