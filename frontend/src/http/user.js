@@ -1,3 +1,22 @@
+//register a new user
+async function registerUser(username, email, password) {
+    const data = { name: username, email: email, password: password };
+    try {
+        const res = await fetch(
+            '/api/users',
+            {
+                method: 'POST',
+                body: JSON.stringify(data),
+            })
+        const jsonResponse = await res.json();
+        if (!res.ok) {
+            return jsonResponse;
+        }
+        return jsonResponse
+    } catch (err) {
+        return { "error": err.message }
+    }
+}
 // loginUser sends a requests to /api/user/login with the provided credentials.
 // If an error occurs a string error message is returned otherwise a User object
 // (with a name property) is returned.
@@ -13,7 +32,7 @@ async function loginUser(username, password) {
         );
         const jsonResponse = await res.json();
         if (!res.ok) {
-            return jsonResponse.error;
+            return jsonResponse;
         }
         return jsonResponse;
     } catch (err) {
@@ -55,4 +74,4 @@ async function logout() {
         return { "error": err.message };
     }
 }
-export { loginUser, getUser, logout };
+export { loginUser, getUser, logout, registerUser };
