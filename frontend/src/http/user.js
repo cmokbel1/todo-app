@@ -10,7 +10,7 @@ async function registerUser(username, email, password) {
             })
         const jsonResponse = await res.json();
         if (!res.ok) {
-            return jsonResponse.error;
+            return jsonResponse;
         }
         return jsonResponse
     } catch (err) {
@@ -32,7 +32,7 @@ async function loginUser(username, password) {
         );
         const jsonResponse = await res.json();
         if (!res.ok) {
-            return jsonResponse.error;
+            return jsonResponse;
         }
         return jsonResponse;
     } catch (err) {

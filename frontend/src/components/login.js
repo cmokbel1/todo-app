@@ -2,21 +2,22 @@ import { useState } from 'react';
 import { registerUser, loginUser } from '../http/user'
 
 const Login = ({ setUserState, setMessage, setReturnError }) => {
-    //login states
+    //login form states
     const [userInput, setUserInput] = useState('');
     const [passwordInput, setPasswordInput] = useState('');
-    //register states
+    //register form states
     const [userRegInput, setUserRegInput] = useState('');
     const [passwordRegInput, setPasswordRegInput] = useState('');
+    const [confirmPasswordRegInput, setConfirmPasswordRegInput] = useState('')
     const [emailRegInput, setEmailRegInput] = useState('');
-    //error and toggler states
+
     const [errorState, setErrorState] = useState('');
     const [showRegister, setShowRegister] = useState(false)
 
 
-    //login function
-    const handleLogin = event => {
-        //trim username and set to lowercase
+
+    const onLoginButtonClick = event => {
+        //trim username && password
         const userTrim = userInput.trim();
         const passTrim = passwordInput.trim();
         event.preventDefault();
@@ -29,11 +30,11 @@ const Login = ({ setUserState, setMessage, setReturnError }) => {
             }
         });
     }
-    //register function
+    
     const handleRegister = async (event) => {
         event.preventDefault();
         const res = await registerUser(userRegInput, emailRegInput, passwordRegInput);
-        if (!res.name) {
+        if (res.error) {
             setErrorState(res.error);
             return res.error;
         } else {
@@ -48,14 +49,7 @@ const Login = ({ setUserState, setMessage, setReturnError }) => {
         }
         setShowRegister(false);
     }
-    const handleToggler = async (event) => {
-        if (!showRegister) {
-            setShowRegister(true);
-        } else {
-            setShowRegister(false);
-        }
 
-    }
     if (showRegister) {
         return (
             <div className="col-12 offset-md-4 col-md-4">
@@ -99,18 +93,34 @@ const Login = ({ setUserState, setMessage, setReturnError }) => {
                                 aria-label="password-input"
                                 aria-describedby="password-input"
                                 defaultValue={passwordRegInput}
+                                style={passwordRegInput === confirmPasswordRegInput && passwordRegInput.length > 1 ? {border: '2px solid green'} : null}
                                 onChange={(e) => setPasswordRegInput(e.target.value)} />
+                        </div>
+                        <div className="input mb-3">
+                            <label className="input-text pb-2"
+                                htmlFor="confirmPassword">confirm</label>
+                            <input
+                                type="password"
+                                id="confirmPassword"
+                                name="confirmPassword"
+                                className="form-control"
+                                aria-label="confirmPassword-input"
+                                aria-describedby="confirmPassword-input"
+                                defaultValue={confirmPasswordRegInput}
+                                disabled={!passwordRegInput.length}
+                                style={passwordRegInput === confirmPasswordRegInput && passwordRegInput.length > 1 ? {border: '2px solid green'} : null}
+                                onChange={(e) => setConfirmPasswordRegInput(e.target.value)} />
                         </div>
                         <p style={{ color: 'red' }}>{errorState}</p>
                         <button
                             type="submit"
                             className="btn btn-primary w-100 text-center mt-3"
                             onClick={handleRegister}
-                            disabled={userRegInput === "" || passwordRegInput === ""}>
+                            disabled={userRegInput === "" || passwordRegInput === "" || (passwordRegInput !== confirmPasswordRegInput)}>
                             Register</button>
                         <button
                             className="btn btn-secondary w-100 text-center mt-3"
-                            onClick={(event) => handleToggler(event)}>Login</button>
+                            onClick={(event) => setShowRegister(false)}>Login</button>
                     </div>
                 </form>
             </div>
@@ -150,11 +160,11 @@ const Login = ({ setUserState, setMessage, setReturnError }) => {
                         <button
                             type="submit"
                             className="btn btn-primary w-100 text-center mt-3"
-                            onClick={handleLogin}
+                            onClick={onLoginButtonClick}
                             disabled={userInput === "" || passwordInput === ""}>Login</button>
                         <button
                             className="btn btn-secondary w-100 text-center mt-3"
-                            onClick={(event) => handleToggler(event)}>Register</button>
+                            onClick={(event) => setShowRegister(true)}>Register</button>
                     </div>
                 </form>
             </div>
