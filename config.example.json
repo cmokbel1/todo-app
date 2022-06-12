@@ -1,0 +1,17 @@
+{
+  "db": {
+    "dsn": "host=postgres port=5432 user=dbuser password=dbpassword dbname=todo sslmode=disable",
+    "query_logging_enabled": false
+  },
+  "http": {
+    "addr": ":8080",
+    "api_key": "test",
+    "domain": "localhost",
+    "tls": false,
+    "assets_directory": "/app/assets"
+  },
+  "log" : {
+    "enabled": true,
+    "level": "info"
+  }
+}
