@@ -30,13 +30,12 @@ const Login = ({ setUserState, setMessage, setReturnError }) => {
             }
         });
     }
-    
+
     const handleRegister = async (event) => {
         event.preventDefault();
         const res = await registerUser(userRegInput, emailRegInput, passwordRegInput);
         if (res.error) {
             setErrorState(res.error);
-            return res.error;
         } else {
             setReturnError("")
             setMessage('Successfully created account.')
@@ -93,7 +92,7 @@ const Login = ({ setUserState, setMessage, setReturnError }) => {
                                 aria-label="password-input"
                                 aria-describedby="password-input"
                                 defaultValue={passwordRegInput}
-                                style={passwordRegInput === confirmPasswordRegInput && passwordRegInput.length > 1 ? {border: '2px solid green'} : null}
+                                style={passwordRegInput === confirmPasswordRegInput && passwordRegInput.length > 1 ? { border: '2px solid green' } : null}
                                 onChange={(e) => setPasswordRegInput(e.target.value)} />
                         </div>
                         <div className="input mb-3">
@@ -108,7 +107,7 @@ const Login = ({ setUserState, setMessage, setReturnError }) => {
                                 aria-describedby="confirmPassword-input"
                                 defaultValue={confirmPasswordRegInput}
                                 disabled={!passwordRegInput.length}
-                                style={passwordRegInput === confirmPasswordRegInput && passwordRegInput.length > 1 ? {border: '2px solid green'} : null}
+                                style={passwordRegInput === confirmPasswordRegInput && passwordRegInput.length > 1 ? { border: '2px solid green' } : null}
                                 onChange={(e) => setConfirmPasswordRegInput(e.target.value)} />
                         </div>
                         <p style={{ color: 'red' }}>{errorState}</p>
