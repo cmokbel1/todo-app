@@ -98,7 +98,7 @@ const Login = ({ setUserState, setMessage, setReturnError }) => {
                         </div>
                         <div className="input mb-3">
                             <label className="input-text pb-2"
-                                htmlFor="confirmPassword">confirm</label>
+                                htmlFor="confirmPassword">confirm pasword</label>
                             <input
                                 type="password"
                                 id="confirmPassword"
