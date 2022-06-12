@@ -76,6 +76,10 @@ To run the backend code with a custom configuration use one of the following com
 $ go run backend/cmd/todo-server/*.go --config /path/to/config.json
 $ # or use the TODO_CONFIG environment variable
 $ TODO_CONFIG=/path/to/config.json go run backend/cmd/todo-server/*.go
+$ # you can specify the path to serve frontend assets from my using the --assets flag
+$ go run backend/cmd/todo-server/*.go --config /path/to/config.json --assets /path/to/assets/
+$ # or use the TODO_ASSETS evironment variable
+$ TODO_ASSETS=/path/to/assets go run backend/cmd/todo-server/*.go --config /path/to/config.json
 ```
 
 To run the backend code with a config file from AWS param store prefix the path to the parameter with 
