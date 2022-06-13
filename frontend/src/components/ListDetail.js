@@ -5,8 +5,8 @@ import { Item } from './Item';
 export const ListDetail = ({ id, name, completed, items, handleUpdate, removeList, setReturnError, setMessageState }) => {
     const [itemsState, setItemsState] = useState(items ? items : []);
     const [newItemName, setNewItemName] = useState('');
-    const [currentName, setCurrentName] = useState(name)
-    const [errorMessage, setErrorMessage] = useState('')
+    const [currentName, setCurrentName] = useState(name ? name : '');
+    const [errorMessage, setErrorMessage] = useState('');
 
 
     // takes an input value and adds it to the selectedList when enter is pressed
@@ -20,8 +20,8 @@ export const ListDetail = ({ id, name, completed, items, handleUpdate, removeLis
             if (res.error) {
                 setReturnError(res.error);
             } else {
-                setReturnError(null);
-                setErrorMessage(null)
+                setReturnError('');
+                setErrorMessage('');
                 setMessageState('Item added successfully.');
                 setItemsState([...itemsState, res])
             }
