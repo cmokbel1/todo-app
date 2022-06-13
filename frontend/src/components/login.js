@@ -26,7 +26,7 @@ const Login = ({ setUserState, setMessage, setReturnError }) => {
                 setReturnError("");
                 setUserState(res.name);
             } else {
-                setErrorState(res);
+                setErrorState(res.error);
             }
         });
     }

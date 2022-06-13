@@ -107,7 +107,7 @@ export const ToDoLists = ({ userState, setReturnError, setMessageState }) => {
                             </li>
                         )}
                     </ul>
-                    <input type="text" name="item" className="form-input w-100 mt-2"
+                    <input type="text" name="item" className="form-input w-100 mt-2 add-item-list"
                         onChange={(e) => { setNewListName(e.target.value) }} onKeyPress={(e) => handleAddList(e)}
                         placeholder="+ add list" value={newListName}></input>
                     <p style={{ color: 'red' }}>{errorMessage}</p>
