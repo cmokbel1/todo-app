@@ -1,0 +1,66 @@
+name: publish-docker-image
+
+on:
+  push:
+    branches:
+      - 'main'
+      - 'feat/dockerize'
+
+jobs:
+  build_and_publish_docker_image:
+    runs-on: ubuntu-latest
+    steps:
+      -
+        name: Setup image build args
+        id: vars
+        shell: bash
+        run: |
+          DOCKER_IMAGE=${{ secrets.DOCKER_USERNAME }}/${GITHUB_REPOSITORY#*/}
+          VERSION=latest
+          COMMIT=${GITHUB_SHA::8}
+          DATE=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+
+          # If this is git tag, use the tag name as a docker tag
+          if [[ $GITHUB_REF == refs/tags/* ]]; then
+            VERSION=${GITHUB_REF#refs/tags/v}
+          fi
+          TAGS="${DOCKER_IMAGE}:${VERSION},${DOCKER_IMAGE}:${COMMIT}"
+
+          # If the VERSION looks like a version number, assume that
+          # this is the most recent version of the image and also
+          # tag it 'latest'.
+          if [[ $VERSION =~ ^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$ ]]; then
+            TAGS="$TAGS,${DOCKER_IMAGE}:latest"
+          fi
+
+          echo ::set-output name=commit::${COMMIT}
+          echo ::set-output name=version::${VERSION}
+          echo ::set-output name=docker_image::${DOCKER_IMAGE}
+          echo ::set-output name=tags::${TAGS}
+          echo ::set-output name=date::${DATE}
+      -
+        name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+      -
+        name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      -
+        name: Login to DockerHub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_TOKEN }}
+      -
+        name: Build and push
+        id: docker_build
+        uses: docker/build-push-action@v3
+        with:
+          push: true
+          tags: ${{ steps.vars.outputs.tags }}
+          build-args: |
+            VERSION=${{ steps.vars.outputs.version }}
+            DATE=${{ steps.vars.outputs.date }}
+            COMMIT=${{ steps.vars.outputs.commit }}
+      -
+        name: Image digest
+        run: echo ${{ steps.docker_build.outputs.digest }}
