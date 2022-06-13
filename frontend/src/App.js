@@ -15,10 +15,7 @@ function App() {
   useEffect(() => {
     getUser().then(res => {
       if (res.name) {
-        setReturnError("");
         setUserState(res.name);
-      } else {
-        setReturnError(res);
       }
     });
   }, [userState])
