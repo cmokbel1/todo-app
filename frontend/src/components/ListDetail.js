@@ -69,7 +69,7 @@ export const ListDetail = ({ id, name, completed, items, handleUpdate, removeLis
     let body = <h1>Nothing to see here</h1>
     if (id) {
         body = <div className="text-center border border-dark rounded shadow">
-            <input className="fs-3 mb-4 mt-2 text-center w-50" rows="2" type="text"
+            <input className="fs-3 mb-4 mt-2 text-center w-50 add-item-list" rows="2" type="text"
                 value={currentName} onChange={(e) => setCurrentName(e.target.value)} onKeyPress={(e) => handleListUpdate(e)}></input>
             <ul className="list-group mb-4">
                 {itemsState.map((item, index) => {
@@ -79,7 +79,7 @@ export const ListDetail = ({ id, name, completed, items, handleUpdate, removeLis
                         key={index} deleteItem={handleDeleteItem} />
                 })}
             </ul>
-            <input type="text" name="item" className="form-input w-50"
+            <input type="text" name="item" className="form-input w-50 add-item-list"
                 onChange={(e) => { setNewItemName(e.target.value) }} onKeyPress={(e) => handleAddItem(e)}
                 placeholder="+ add item" value={newItemName}></input>
             <p style={{ color: 'red' }}>{errorMessage}</p>
