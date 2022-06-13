@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - 'main'
-      - 'feat/dockerize'
 
 jobs:
   build_and_publish_docker_image:
