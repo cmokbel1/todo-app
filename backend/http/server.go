@@ -7,6 +7,7 @@ import (
 	"net"
 	"net/http"
 	"strconv"
+	"strings"
 	"time"
 
 	"github.com/alexedwards/scs/v2"
@@ -26,6 +27,8 @@ type Server struct {
 	TLS                bool
 	APIKey             string
 	CORSAllowedOrigins string
+	// AssetsDirectory is the path to the frontend HTML/CSS/JavaScript
+	AssetsDirectory string
 
 	Logger todo.Logger
 	// LoggerMiddleware is exposed for testing purposes.
@@ -72,6 +75,12 @@ func (s *Server) Listen() (err error) {
 		s.registerUserRoutes(r)
 		s.registerBuildRoute(r)
 	})
+
+	if s.AssetsDirectory != "" {
+		s.Logger.Infof("serving assets out of %q", s.AssetsDirectory)
+		r.Get("/*", s.assetsHandler(s.AssetsDirectory, "index.html", "asset-manifest.json", "manifest.json"))
+	}
+
 	r.NotFound(s.notFound)
 	s.server.Handler = r
 
@@ -234,4 +243,28 @@ func (s *Server) cors(next http.Handler) http.Handler {
 		}
 		next.ServeHTTP(w, r)
 	})
+}
+
+func (s *Server) assetsHandler(dir string, allowed ...string) http.HandlerFunc {
+	fs := http.FileServer(http.Dir(dir))
+	return func(w http.ResponseWriter, r *http.Request) {
+		for _, path := range allowed {
+			if r.URL.Path == path {
+				fs.ServeHTTP(w, r)
+				return
+			}
+		}
+		if r.URL.Path == "/" || r.URL.Path == "/index.html" || r.URL.Path == "/favicon.ico" {
+			fs.ServeHTTP(w, r)
+			return //
+		}
+
+		// Prevent directory browsing
+		if strings.HasSuffix(r.URL.Path, "/") {
+			http.NotFound(w, r)
+			return
+		}
+
+		fs.ServeHTTP(w, r)
+	}
 }

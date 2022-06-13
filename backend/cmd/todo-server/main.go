@@ -100,6 +100,7 @@ func (app *App) Run(ctx context.Context) error {
 
 	app.HTTPServer.Addr = app.Config.HTTP.Addr
 	app.HTTPServer.APIKey = *app.Config.HTTP.APIKey
+	app.HTTPServer.AssetsDirectory = app.Config.HTTP.AssetsDirectory
 	app.HTTPServer.Domain = app.Config.HTTP.Domain
 	app.HTTPServer.TLS = app.Config.HTTP.TLS
 	app.HTTPServer.CORSAllowedOrigins = app.Config.HTTP.CORSAllowedOrigins
@@ -127,13 +128,15 @@ func (app *App) Run(ctx context.Context) error {
 
 func (app *App) ParseFlagsAndLoadConfig(ctx context.Context, args []string) error {
 	var configFile string
+	var assetsDir string
 
 	fs := flag.NewFlagSet("todo", flag.ContinueOnError)
 	fs.StringVar(&configFile, "config", os.Getenv("TODO_CONFIG"), "path to the config file")
+	fs.StringVar(&assetsDir, "assets", os.Getenv("TODO_ASSETS"), "path to the frontend assets directory")
 
 	if err := fs.Parse(args); err != nil {
 		return err
-	} else if app.Config, err = LoadConfig(ctx, configFile); err != nil {
+	} else if app.Config, err = LoadConfig(ctx, configFile, assetsDir); err != nil {
 		return err
 	}
 
@@ -169,6 +172,7 @@ type Config struct {
 		Domain             string  `json:"domain"`
 		TLS                bool    `json:"tls"`
 		CORSAllowedOrigins string  `json:"cors_allowed_origins"`
+		AssetsDirectory    string  `json:"assets_directory"`
 	} `json:"http"`
 
 	Log struct {
@@ -189,7 +193,7 @@ func DefaultConfig() Config {
 // LoadConfig will load a config file from the path specified by filename. If the filename has the protocol "awsparamstore"
 // then the file will be loaded from AWS System's Manager Param Store. It is assumed that the file, if living in AWS, will
 // be stored encrypted.
-func LoadConfig(ctx context.Context, filename string) (Config, error) {
+func LoadConfig(ctx context.Context, filename string, assetsDir string) (Config, error) {
 	config := DefaultConfig()
 	if filename == "" {
 		return config, errors.New("must specify a config file path using either TODO_CONFIG environment variable or the --config flag")
@@ -213,6 +217,10 @@ func LoadConfig(ctx context.Context, filename string) (Config, error) {
 	if config.HTTP.APIKey == nil {
 		apiKey := crypto.RandomString()
 		config.HTTP.APIKey = &apiKey
+	}
+
+	if assetsDir != "" {
+		config.HTTP.AssetsDirectory = assetsDir
 	}
 	return config, nil
 }
