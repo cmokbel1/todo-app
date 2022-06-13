@@ -10,7 +10,7 @@ To develop the code you'll need a Linux or Mac machine and the following softwar
 
 * [go 1.18+](https://go.dev/dl/) (backend server)
 * [docker](https://docs.docker.com/desktop/) (Postgres database container)
-* other things here...
+* make (if intending to use the Makefile)
 
 ### frontend
 
@@ -117,6 +117,8 @@ $ go test ./backend/... -cover
 # integration tests with coverage (requires running instance of Postgres)
 $ go test ./backend/... -cover -tags integration 
 ```
+
+
 
 ## deploy
 
