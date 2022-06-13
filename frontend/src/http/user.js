@@ -53,7 +53,6 @@ async function getUser() {
         const jsonResponse = await res.json();
         return jsonResponse;
     } catch (err) {
-        console.log(err);
         return { "error": err.message };
     }
 }

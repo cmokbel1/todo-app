@@ -1,5 +1,3 @@
-
-
 export const FlashMessage = ({ messageState, returnError }) => {
     if (messageState) {
         return (
