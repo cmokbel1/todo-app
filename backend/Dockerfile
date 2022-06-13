@@ -26,7 +26,6 @@ FROM scratch
 VOLUME /data
 WORKDIR /app/
 COPY --from=builder /build/bin /app
-COPY --from=builder /build/backend/cmd/todo-server/config.example.json /app/config.json
 COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-certificates.crt
 COPY --from=builder /etc/passwd /etc/passwd
 USER appuser
