@@ -92,8 +92,9 @@ const Login = ({ setUserState, setMessage, setReturnError }) => {
                                 aria-label="password-input"
                                 aria-describedby="password-input"
                                 defaultValue={passwordRegInput}
-                                style={passwordRegInput === confirmPasswordRegInput && passwordRegInput.length > 1 ? { border: '2px solid green' } : null}
+                                style={passwordRegInput === confirmPasswordRegInput && passwordRegInput.length >= 8 ? { border: '2px solid green' } : null}
                                 onChange={(e) => setPasswordRegInput(e.target.value)} />
+                                <p className="text-muted" style={passwordRegInput.length < 8 ? {display: 'block'} : {display: 'none'}}>password must be a minimum of 8 characters</p>
                         </div>
                         <div className="input mb-3">
                             <label className="input-text pb-2"
@@ -107,7 +108,7 @@ const Login = ({ setUserState, setMessage, setReturnError }) => {
                                 aria-describedby="confirmPassword-input"
                                 defaultValue={confirmPasswordRegInput}
                                 disabled={!passwordRegInput.length}
-                                style={passwordRegInput === confirmPasswordRegInput && passwordRegInput.length > 1 ? { border: '2px solid green' } : null}
+                                style={passwordRegInput === confirmPasswordRegInput && passwordRegInput.length >= 8 ? { border: '2px solid green' } : null}
                                 onChange={(e) => setConfirmPasswordRegInput(e.target.value)} />
                         </div>
                         <p style={{ color: 'red' }}>{errorState}</p>
@@ -115,7 +116,7 @@ const Login = ({ setUserState, setMessage, setReturnError }) => {
                             type="submit"
                             className="btn btn-primary w-100 text-center mt-3"
                             onClick={handleRegister}
-                            disabled={userRegInput === "" || passwordRegInput === "" || (passwordRegInput !== confirmPasswordRegInput)}>
+                            disabled={userRegInput === "" || passwordRegInput.length < 8 || (passwordRegInput !== confirmPasswordRegInput)}>
                             Register</button>
                         <button
                             className="btn btn-secondary w-100 text-center mt-3"
