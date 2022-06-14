@@ -23,7 +23,7 @@ function App() {
   return (
     <>
       <Header userState={userState} setUserState={setUserState} setReturnError={setReturnError} />
-      <div className="container-fluid body">
+      <div className="container-fluid">
         <div className="row">
           <FlashMessage messageState={messageState} returnError={returnError} />
           <Main userState={userState} setUserState={setUserState} setReturnError={setReturnError} setMessageState={setMessageState} />
