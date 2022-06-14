@@ -9,8 +9,12 @@
 }
 
 .app {
-    height: calc(100% - 50px);
-    display: block;
+    position: relative;
+    height: calc(100vh - 50px);
+}
+
+.content-wrapper {
+    min-height: 100vh;
 }
 
 .footer {
