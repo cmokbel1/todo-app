@@ -86,7 +86,6 @@ export const ListDetail = ({ id, name, completed, items, handleUpdate, removeLis
                 onKeyPress={(e) => handleAddItem(e)}
                 placeholder="+ add item" value={newItemName}></input>
             <p style={{ color: 'red' }}>{errorMessage}</p>
-            <button className="btn btn-danger mb-2" onClick={() => removeList(id)}>Delete</button>
         </div>
     }
     return body
