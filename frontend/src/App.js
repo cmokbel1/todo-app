@@ -26,7 +26,9 @@ function App() {
         <Header userState={userState} setUserState={setUserState} setReturnError={setReturnError} />
         <div className="container-fluid flex-fill">
           <div className="row">
-            <FlashMessage messageState={messageState} returnError={returnError} />
+            <FlashMessage messageState={messageState}
+              setMessageState={setMessageState}
+              returnError={returnError} />
             <Main userState={userState}
               setUserState={setUserState}
               setReturnError={setReturnError}

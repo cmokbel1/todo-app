@@ -46,9 +46,6 @@ export const ToDoLists = ({ userState, setReturnError, setMessageState }) => {
                 setSelectedList(res);
             }
             setNewListName('');
-            setTimeout(() => {
-                setMessageState('');
-            }, 1000)
         }
     }
     // handler for the list name update
@@ -63,9 +60,6 @@ export const ToDoLists = ({ userState, setReturnError, setMessageState }) => {
             const newLists = lists.map(l => l.id === id ? res : l)
             setLists(newLists)
             setSelectedList(res)
-            setTimeout(() => {
-                setMessageState('');
-            }, 1000)
         }
     }
     // handler for deleting list

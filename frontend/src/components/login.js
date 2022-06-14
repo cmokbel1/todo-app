@@ -42,9 +42,6 @@ const Login = ({ setUserState, setMessage, setReturnError }) => {
             setUserRegInput('');
             setPasswordRegInput('');
             setEmailRegInput('');
-            setTimeout(() => {
-                setMessage('')
-            }, 1000)
         }
         setShowRegister(false);
     }
@@ -94,7 +91,7 @@ const Login = ({ setUserState, setMessage, setReturnError }) => {
                                 defaultValue={passwordRegInput}
                                 style={passwordRegInput === confirmPasswordRegInput && passwordRegInput.length >= 8 ? { border: '2px solid green' } : null}
                                 onChange={(e) => setPasswordRegInput(e.target.value)} />
-                                <p className="text-muted" style={passwordRegInput.length < 8 ? {display: 'block'} : {display: 'none'}}>password must be a minimum of 8 characters</p>
+                            <p className="text-muted" style={passwordRegInput.length < 8 ? { display: 'block' } : { display: 'none' }}>password must be a minimum of 8 characters</p>
                         </div>
                         <div className="input mb-3">
                             <label className="input-text pb-2"
