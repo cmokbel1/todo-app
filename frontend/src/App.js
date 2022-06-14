@@ -22,7 +22,7 @@ function App() {
 
   return (
     <>
-      <div className="body">
+      <div>
         <Header userState={userState} setUserState={setUserState} setReturnError={setReturnError} />
         <div className="container-fluid">
           <div className="row">
@@ -30,8 +30,8 @@ function App() {
             <Main userState={userState} setUserState={setUserState} setReturnError={setReturnError} setMessageState={setMessageState} />
           </div>
         </div>
+        <Footer />
       </div>
-      <Footer />
     </>
   )
 }

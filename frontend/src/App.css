@@ -9,6 +9,10 @@
 }
 
 .footer {
+    display: block;
     position: fixed;
     bottom: 0;
+    left: 45%;
+    right: 0;
+    height: 50px;
 }
