@@ -10,17 +10,9 @@
 
 .app {
     position: relative;
-    height: calc(100vh - 50px);
-}
-
-.content-wrapper {
     min-height: 100vh;
 }
 
-.footer {
-    position: fixed;
-    bottom: 0;
-    left: 45%;
-    right: 0;
-    height: 50px;
+.flex-fill {
+    flex: 1 1 auto;
 }
