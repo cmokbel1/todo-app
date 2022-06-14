@@ -22,11 +22,16 @@ function App() {
 
   return (
     <>
-      <Header userState={userState} setUserState={setUserState} setReturnError={setReturnError} />
-      <div className="container-fluid">
-        <div className="row">
-          <FlashMessage messageState={messageState} returnError={returnError} />
-          <Main userState={userState} setUserState={setUserState} setReturnError={setReturnError} setMessageState={setMessageState} />
+      <div className="app d-flex flex-column">
+        <Header userState={userState} setUserState={setUserState} setReturnError={setReturnError} />
+        <div className="container-fluid flex-fill">
+          <div className="row">
+            <FlashMessage messageState={messageState} returnError={returnError} />
+            <Main userState={userState}
+              setUserState={setUserState}
+              setReturnError={setReturnError}
+              setMessageState={setMessageState} />
+          </div>
         </div>
         <Footer />
       </div>

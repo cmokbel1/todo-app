@@ -2,3 +2,16 @@
     border: none;
     border-bottom: 1px solid black;
 }
+
+.flash {
+    position: absolute;
+    z-index: 1;
+}
+
+.app {
+    min-height: 100vh;
+}
+
+.flex-fill {
+    flex: 1 1 auto;
+}
