@@ -8,8 +8,12 @@
     z-index: 1;
 }
 
-.footer {
+.app {
+    height: calc(100% - 50px);
     display: block;
+}
+
+.footer {
     position: fixed;
     bottom: 0;
     left: 45%;
