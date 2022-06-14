@@ -1,7 +1,7 @@
 export const FlashMessage = ({ messageState, returnError }) => {
     if (messageState) {
         return (
-            <div className="container alert alert-success flash w-75">
+            <div className="container alert alert-success flash">
                 <div className="text-center">
                     <p>{messageState}</p>
                 </div>
@@ -9,7 +9,7 @@ export const FlashMessage = ({ messageState, returnError }) => {
         )
     } else if (returnError) {
         return (
-            <div className="container alert alert-danger flash w-75">
+            <div className="container alert alert-danger flash">
                 <div className="text-center">
                     <p>{returnError}</p>
                 </div>
