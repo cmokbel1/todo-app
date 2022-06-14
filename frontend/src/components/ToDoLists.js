@@ -100,20 +100,27 @@ export const ToDoLists = ({ userState, setReturnError, setMessageState }) => {
                     <ul className="list-group border rounded border-dark shadow mb-2">
                         {lists.map((list, index) =>
                             <li className="list-group-item d-flex justify-content-between" key={index}>
-                                <button className="btn" onClick={() => handleListClick(list.id)}>
+                                <button className="btn"
+                                    onClick={() => handleListClick(list.id)}>
                                     {list.name}
                                 </button>
-                                <button className="btn btn-secondary" onClick={() => handleDeleteList(list.id)}>{trash}</button>
+                                <button className="btn btn-danger"
+                                    onClick={() => handleDeleteList(list.id)}>{trash}</button>
                             </li>
                         )}
                     </ul>
                     <input type="text" name="item" className="form-input w-100 mt-2 add-item-list"
-                        onChange={(e) => { setNewListName(e.target.value) }} onKeyPress={(e) => handleAddList(e)}
+                        onChange={(e) => { setNewListName(e.target.value) }}
+                        onKeyPress={(e) => handleAddList(e)}
                         placeholder="+ add list" value={newListName}></input>
                     <p style={{ color: 'red' }}>{errorMessage}</p>
                 </div>
                 <div className='col-12 col-md-9'>
-                    <ListDetail {...selectedList} handleUpdate={handleListNameUpdate} removeList={handleDeleteList} setReturnError={setReturnError} setMessageState={setMessageState} />
+                    <ListDetail {...selectedList}
+                        handleUpdate={handleListNameUpdate}
+                        removeList={handleDeleteList}
+                        setReturnError={setReturnError}
+                        setMessageState={setMessageState} />
                 </div>
             </div>
     }
