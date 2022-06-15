@@ -14,7 +14,7 @@ export const FlashMessage = ({ messageState, setMessageState, returnError }) => 
     }
     return (
         <div className={classes}>
-            <div className="text-center">
+            <div className="text-center flash">
                 <p>{text}</p>
             </div>
         </div>
