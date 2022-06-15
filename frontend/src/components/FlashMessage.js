@@ -1,22 +1,20 @@
 export const FlashMessage = ({ messageState, setMessageState, returnError }) => {
     let text;
-    let classes;
+    let classes = "flash container text-center alert ";
 
     if (messageState) {
-        classes = "container alert alert-success flash";
+        classes += "alert-success";
         text = messageState;
         setTimeout(() => {
             setMessageState("");
         }, 1000)
     } else if (returnError) {
-        classes = "container alert alert-danger flash";
+        classes += "alert-danger";
         text = returnError;
     }
     return (
         <div className={classes}>
-            <div className="text-center flash">
-                <p>{text}</p>
-            </div>
+            <p>{text}</p>
         </div>
     )
 }
