@@ -26,9 +26,6 @@ export const ListDetail = ({ id, name, completed, items, handleUpdate, removeLis
                 setItemsState([...itemsState, res])
             }
             setNewItemName('');
-            setTimeout(() => {
-                setMessageState('');
-            }, 1000)
         }
     }
 
@@ -44,7 +41,12 @@ export const ListDetail = ({ id, name, completed, items, handleUpdate, removeLis
 
     const handleListUpdate = (event) => {
         if (event.charCode === 13) {
+            if (currentName === name) {
+                setErrorMessage('List name has not changed.');
+                return;
+            }
             handleUpdate(id, currentName)
+            setErrorMessage('')
         }
     }
 
