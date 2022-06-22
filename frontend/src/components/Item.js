@@ -10,7 +10,7 @@ export const Item = ({ id, name, completed, setCompleted, index, deleteItem }) =
 
     return (
         <li className="list-group-item d-flex justify-content-between" key={index}>
-            <span className="mr-3">{styledName}</span>
+            <span className="mr-3" style={{paddingTop: '.35em'}}>{styledName}</span>
             <div className="d-flex align-items-center">
                 <input className="form-check-input me-3"
                     checked={completed}
