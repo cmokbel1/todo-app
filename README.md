@@ -1,6 +1,6 @@
 # todo-app
 
-A todo tracker for learning purposes.
+A todo tracker for learning purposes. https://todo.claudemokbel.com
 
 ## develop
 
