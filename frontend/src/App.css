@@ -15,3 +15,11 @@
 .flex-fill {
     flex: 1 1 auto;
 }
+
+.alert {
+    margin-bottom: 1px;
+    height: 50px;
+    line-height:50px;
+    padding:0px 15px;
+  }
+  
