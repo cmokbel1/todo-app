@@ -127,3 +127,8 @@ Something about how to deploy the app
 ## credits
 
 Something about the people that worked on this and their roles.
+
+## Images
+
+<img width="1680" alt="Screen Shot 2022-07-07 at 2 14 36 PM" src="https://user-images.githubusercontent.com/68614831/177872565-52597330-0bf2-4f95-992e-8c017d366225.png">
+
