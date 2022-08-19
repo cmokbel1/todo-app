@@ -12,9 +12,7 @@ const Login = ({ setUserState, setMessage, setReturnError }) => {
     const [emailRegInput, setEmailRegInput] = useState('');
 
     const [errorState, setErrorState] = useState('');
-    const [showRegister, setShowRegister] = useState(false)
-
-
+    const [showRegister, setShowRegister] = useState(false);
 
     const onLoginButtonClick = event => {
         //trim username && password
@@ -125,7 +123,7 @@ const Login = ({ setUserState, setMessage, setReturnError }) => {
     } else {
         return (
             <div className="col-12 offset-md-4 col-md-4">
-                <form className="card mx-auto px-4 py-2">
+                <form className="card mx-auto px-4 py-2" autoComplete="off">
                     <div className="card-body">
                         <p className="card-title lead text-center mb-4">You must login to continue</p>
                         <div className="input mb-3">
