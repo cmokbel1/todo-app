@@ -34,6 +34,7 @@ const Login = ({ setUserState, setMessage, setReturnError }) => {
         const res = await registerUser(userRegInput, emailRegInput, passwordRegInput);
         if (res.error) {
             setErrorState(res.error);
+            return;
         } else {
             setReturnError("")
             setMessage('Successfully created account.')
