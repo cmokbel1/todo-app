@@ -12,9 +12,7 @@ const Login = ({ setUserState, setMessage, setReturnError }) => {
     const [emailRegInput, setEmailRegInput] = useState('');
 
     const [errorState, setErrorState] = useState('');
-    const [showRegister, setShowRegister] = useState(false)
-
-
+    const [showRegister, setShowRegister] = useState(false);
 
     const onLoginButtonClick = event => {
         //trim username && password
@@ -67,19 +65,6 @@ const Login = ({ setUserState, setMessage, setReturnError }) => {
                         </div>
                         <div className="input mb-3">
                             <label className="input-text pb-2"
-                                htmlFor="email">email</label>
-                            <input
-                                type="text"
-                                id="rEmail"
-                                name="email"
-                                className="form-control"
-                                aria-label="email-input"
-                                aria-describedby="email-input"
-                                defaultValue={emailRegInput}
-                                onChange={(e) => setEmailRegInput(e.target.value)} />
-                        </div>
-                        <div className="input mb-3">
-                            <label className="input-text pb-2"
                                 htmlFor="password">password</label>
                             <input
                                 type="password"
@@ -107,6 +92,19 @@ const Login = ({ setUserState, setMessage, setReturnError }) => {
                                 disabled={!passwordRegInput.length}
                                 style={passwordRegInput === confirmPasswordRegInput && passwordRegInput.length >= 8 ? { border: '2px solid green' } : null}
                                 onChange={(e) => setConfirmPasswordRegInput(e.target.value)} />
+                        </div>
+                        <div className="input mb-3">
+                            <label className="input-text pb-2"
+                                htmlFor="email">email</label>
+                            <input
+                                type="text"
+                                id="rEmail"
+                                name="email"
+                                className="form-control"
+                                aria-label="email-input"
+                                aria-describedby="email-input"
+                                defaultValue={emailRegInput}
+                                onChange={(e) => setEmailRegInput(e.target.value)} />
                         </div>
                         <p style={{ color: 'red' }}>{errorState}</p>
                         <button
